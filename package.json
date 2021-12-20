@@ -1,0 +1,24 @@
+{
+  "name": "Soomgo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/top-hoon/Soomgo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/top-hoon/Soomgo/issues"
+  },
+  "homepage": "https://github.com/top-hoon/Soomgo#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "react-redux": "^7.2.6"
+  }
+}

@@ -11,7 +11,7 @@ CREATE TABLE tb_members (
     sms_flag boolean,
     gosu_idx bigint,
     mem_site bigint,
-    regdate varchar(20),
+    regdate datetime,
     PRIMARY KEY (idx)
 );
 
@@ -51,17 +51,18 @@ CREATE TABLE tb_gosus (
     insta_url varchar(500),
     blog_url varchar(500),
     kakao_url varchar(500),
-    regdate varchar(20),
+    regdate datetime,
     cash int,
     cash_bonus int,
     PRIMARY KEY (idx),
     foreign key(mem_idx) references tb_members(idx)
 );
 
-CREATE TABLE tb_gosus_personal(
+CREATE TABLE tb_gosus_services(
     idx bigint AUTO_INCREMENT,
     gosu_idx bigint,
     cate3_idx bigint,
+    regdate datetime,
     PRIMARY KEY (idx),
     foreign key(gosu_idx) references tb_gosus(idx),
     foreign key(cate3_idx) references tb_members(idx)
@@ -73,6 +74,7 @@ CREATE TABLE tb_gosus_personal(
     email varchar(100),
     bank varchar(50),
     tb_account varchar(100),
+    regdate datetime,
     PRIMARY KEY (idx),
     foreign key(gosu_idx) references tb_gosus(idx)
 );
@@ -85,6 +87,7 @@ CREATE TABLE tb_gosus_services(
     tb_account varchar(100),
     tb_number varchar (100),
     files varchar(200),
+    regdate datetime,
     PRIMARY KEY (idx),
     foreign key(gosu_idx) references tb_category3(idx)
 );
@@ -94,6 +97,7 @@ CREATE TABLE tb_gosus_pictures(
     idx bigint AUTO_INCREMENT,
     gosu_idx bigint,
     files varchar(200),
+    regdate datetime,
     PRIMARY KEY (idx),
     foreign key(gosu_idx) references tb_gosus(idx)
 );
@@ -134,6 +138,7 @@ CREATE TABLE tb_cate_question_title(
     cate_idx bigint,
     title varchar(100),
     max_choose int,
+    regdate datetime,
     PRIMARY KEY (idx)
 );
 
@@ -144,6 +149,7 @@ CREATE TABLE tb_cate_question_answer(
     des_sub varchar(500),
     text_flag boolean,
     text_sample varchar(500),
+    regdate datetime,
     PRIMARY KEY (idx),
     foreign key(title_idx) references tb_cate_question_title(idx)
 );

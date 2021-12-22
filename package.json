@@ -22,6 +22,7 @@
     "install": "^0.13.0",
     "mongoose": "^6.1.2",
     "mysql": "^2.18.1",
+    "nodemon": "^2.0.15",
     "react-redux": "^7.2.6"
   }
 }

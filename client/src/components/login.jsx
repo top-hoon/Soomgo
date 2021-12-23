@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import '../components/css/common';
+import '../components/css/login';
 
 
 function login(){

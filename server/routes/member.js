@@ -4,9 +4,26 @@ const mysql = require("mysql");
 const config = require("../config/config.json");
 const pool = mysql.createPool(config);
 const router = express.Router();
-router.use(bodyParser.urlencoded({ extended: false }))
-// 비밀 번호 암호화
 const crypto = require('crypto');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
+const dbOptions = config;
+const conn = mysql.createConnection(dbOptions);
+
+router.use(bodyParser.urlencoded({ extended: false }))
+router.use
+
+router.route(session({
+    key:"key",
+    secret: '!@#$%^&*',
+    store: new MySQLStore(dbOptions),
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+    }
+}));
 
 
 // 회원가입 
@@ -19,7 +36,7 @@ const crypto = require('crypto');
     const sms_flag = req.body.sms_flag;
     const gosu_idx = req.body.gosu_idx;
     const mem_site = req.body.mem_site;
-    const Salt = crypto.randomBytes(64).toString('base64');    // 매번 같길래 여기다가
+    const Salt = crypto.randomBytes(64).toString('base64'); 
     
     //확인
     console.log(
@@ -43,7 +60,7 @@ const crypto = require('crypto');
 
 
     
-//     // 로그인 
+//     // 로그인
 // router.route('/member/login').post((req, res) => {
 //     const email = req.body.email;
 //     const mem_password = req.body.mem_password;
@@ -62,7 +79,7 @@ const crypto = require('crypto');
 //                             member = result[0];
 //                         } else {
 //                             crypto.pbkdf2Sync(mem_password, member.salt, 100000, 32, 'sha512'), function (err, der) {
-//                                 if (err) 
+//                                 if (err)
 //                                     console.log(err);
 //                                 if (der.toString('base64') === member.mem_password) {
 //                                     console.log("성공;;")
@@ -76,36 +93,36 @@ const crypto = require('crypto');
 //     }
 // });
 
+
     // 로그인 
 router.route('/member/login').post((req, res) => {
     const email = req.body.email;
-    const mem_password = req.body.email;
+    const mem_password = req.body.mem_password;
     if (pool) {
         emailCheck(email, (err, result) => {
             if (err) {
                 console.log(err);
+                console.log("아이디를 확인해주세요")
             } else {
-                console.log("ID는 있음");
+                console.log("ID 존재 ");
                 res.end();
             }
             if (result.length != 0) {
-                login(email, mem_password, (err, result1) => {
+                login(email, mem_password, (err, result) => {
                     if (err) {
                         console.log(err);
                     } else {
-                        console.log(result1[0]);  
-                        const member = result1[0];  
-                        crypto.pbkdf2Sync(mem_password, member.salt, 100000, 32, 'sha512', function (err, pass) {   
-                            console.log('?');
-                            if (err)
-                                console.log(err);
-                            if (pass.toString('base64') === member.mem_password) {
-                                console.log(pass.toString('base64'));
-                                console.log('됬다');
-                            } else {
-                                console.log("틀렸다.");
-                            }
-                        })
+                        const member = result[0];  
+                        const pass = crypto.createHash("sha512").update(mem_password + member.salt).digest('base64');
+                        console.log('방금password:'+pass);
+                        console.log('DBpassword:'+member.mem_password);
+                        if (pass == member.mem_password) {
+                            console.log("로그인 성공")
+
+                        } else {
+                            console.log("비밀번호를 확인해주세요");
+                        }
+
                     }
                 });
             }
@@ -198,7 +215,8 @@ router.route('/member/delete').delete((req, res) => {
             if (err) {
             console.log(err);
             } else {
-                const hashedPassword = crypto.pbkdf2Sync(mem_password, Salt, 100000, 32, 'sha512').toString('base64');
+                // const hashedPassword = crypto.pbkdf2Sync(mem_password, Salt, 100000, 32, 'sha512').toString('base64');
+                const hashedPassword = crypto.createHash("sha512").update(mem_password + Salt).digest('base64');
                 const sql = conn.query(
                 'insert into tb_members( mem_name, email, mem_password, hp, gender, sms_flag, gosu_idx, mem_site, salt)values(?,?,?,?,?,?,?,?,?);',
                 [mem_name, email, hashedPassword, hp, gender, sms_flag, gosu_idx, mem_site, Salt],
@@ -229,7 +247,7 @@ const emailCheck = function (email, callback) {
                     callback(err, null);
                     return;
                 } else {
-                    console.log("비밀번호랑 salt");
+                    console.log("비밀번호랑 salt 넘깁니다.");
                     callback(null, result);
                 }
             });

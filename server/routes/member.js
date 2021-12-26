@@ -41,23 +41,33 @@ router.route(session({
     //확인
     console.log(
         `mem_name:${mem_name}, email:${email}, hp:${hp}
-        gender:${gender}, sms_flag:${sms_flag}, gosu_idx:${gosu_idx}, mem_site:${mem_site}, ${Salt}`
+        gender:${gender}, sms_flag:${sms_flag}, gosu_idx:${gosu_idx}, mem_site:${mem_site}`
         );
-        
-    if (pool) {
-        createMember(mem_name, email, mem_password, hp, gender, sms_flag, gosu_idx, mem_site, Salt,(err, result) => {
-            if (err) {
-                console.log("회원가입 실패!");
-            } else {
-                console.log("회원가입 성공!");  
-                res.end();
-            }
-        });
+
+        if (pool) {
+            emailCheck(email, (err, result) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    if (result[0] == undefined) {  // 입력한 아이디가 없을경우
+                    createMember(mem_name, email, mem_password, hp, gender, sms_flag, gosu_idx, mem_site, Salt, (err, result) => {
+                        if (err) {
+                            console.log("회원가입 실패!");
+                        } else {
+                            console.log("회원가입 성공!");
+                            res.end();
+                        }
+                    });
+                    } else {   
+                        console.log("이미 사용자가 사용하고 있는 ID입니다.");
+                        res.end();
+                }
+        }
+    });
     } else {
         console.log("데이터베이스 연결 실패!");
     }
     });
-
 
     
 //     // 로그인
@@ -102,9 +112,9 @@ router.route('/member/login').post((req, res) => {
         emailCheck(email, (err, result) => {
             if (err) {
                 console.log(err);
-                console.log("아이디를 확인해주세요")
             } else {
-                console.log("ID 존재 ");
+                if(result.length==0)
+                console.log("ID 를확인해주세요. ");
                 res.end();
             }
             if (result.length != 0) {

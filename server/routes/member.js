@@ -8,20 +8,20 @@ const crypto = require('crypto');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
-const dbOptions = config;
-const conn = mysql.createConnection(dbOptions);
+const conn = mysql.createConnection(config);
 
-router.use(bodyParser.urlencoded({ extended: false }))
-router.use
+router.use(bodyParser.urlencoded({ extended: false }));
+router.use(cookieParser());
 
-router.route(session({
-    key:"key",
+router.use(session({
+    key:"loginData",
     secret: '!@#$%^&*',
-    store: new MySQLStore(dbOptions),
+    store: new MySQLStore(config),
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true, //false?
     cookie: {
         httpOnly: true,
+        maxAge: 60 * 60 * 1000
     }
 }));
 
@@ -109,36 +109,36 @@ router.route('/member/login').post((req, res) => {
     const email = req.body.email;
     const mem_password = req.body.mem_password;
     if (pool) {
-        emailCheck(email, (err, result) => {
-            if (err) {
-                console.log(err);
-            } else {
-                if(result.length==0)
-                console.log("ID 를확인해주세요. ");
-                res.end();
-            }
-            if (result.length != 0) {
                 login(email, mem_password, (err, result) => {
                     if (err) {
                         console.log(err);
+                    } if(result[0]==null) {
+                        console.log("아이디가 존재하지 않음");
+                        res.end();
                     } else {
                         const member = result[0];  
                         const pass = crypto.createHash("sha512").update(mem_password + member.salt).digest('base64');
-                        console.log('방금password:'+pass);
-                        console.log('DBpassword:'+member.mem_password);
+                        // console.log('방금password:'+pass);
+                        // console.log('DBpassword:' + member.mem_password);
                         if (pass == member.mem_password) {
-                            console.log("로그인 성공")
-
+                            console.log("로그인 성공");
+                            req.session.user={
+                                    idx: member.idx,
+                                    email: member.email,
+                                    name: member.mem_name
+                            };
+                            console.log(req.session.user);
+                            res.cookie('hey', member.idx);
+                            res.end();
                         } else {
                             console.log("비밀번호를 확인해주세요");
-                        }
-
-                    }
-                });
+                }
             }
         });
     }
 });
+
+
 
 
     //회원 목록
@@ -272,7 +272,7 @@ const login = function (
         if (err) {
             console.login(err);
         } else {
-            const sql = conn.query('select salt, mem_password from tb_members where email = ?;', [email], (err, result) => {
+            const sql = conn.query('select * from tb_members where email = ?;', [email], (err, result) => {
                 conn.release();
                 if (err) {
                     console.log(err);

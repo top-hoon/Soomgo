@@ -18,8 +18,7 @@ const verifyToken = (req, res, next) => {
     }
     try {
         const data = jwt.verify(token, SECRET_Key);
-        console.log(data);
-        data.idx = data.idx;
+        req.idx = data.idx;
         return next();
     } catch {
         return res.sendStatus(403);

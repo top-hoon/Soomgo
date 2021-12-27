@@ -3,14 +3,14 @@ const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const config = require("../config/config.json");
 const pool = mysql.createPool(config);
-
-const router = express.Router();
-router.use(bodyParser.urlencoded({ extended: false }));
-
-const { verifyToken } = require('./jwtcheck');
 const cookieParser = require('cookie-parser');
+const router = express.Router();
+const { verifyToken } = require('./jwtcheck');
 
+router.use(bodyParser.urlencoded({ extended: false }));
 router.use(cookieParser());
+
+
 
 
 // NOTICE 등록 

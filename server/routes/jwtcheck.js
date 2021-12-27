@@ -10,21 +10,36 @@ app.use(cookieParser());
 const SECRET_Key = config['Secret-key'];
 
 const verifyToken = (req, res, next) => {
+    console.log(`token:${req.cookies.JWT}`);
+    const token = req.cookies.JWT;
+    if (!token) {
+        console.log('토큰이 없습니다.');
+        return res.sendStatus(403);
+    }
     try {
-        console.log(`token:${req.cookies.JWT}`);
-        const clientToken = req.cookies.JWT;
-        const decoded = jwt.verify(clientToken, SECRET_Key);
+        const data = jwt.verify(token, SECRET_Key);
+        console.log(data);
+        data.idx = data.idx;
+        return next();
+    } catch {
+        return res.sendStatus(403);
+    }
 
-        if (decoded) {
-            res.locals.userId = decoded.user_id;
-            next();
-        } else {
-            res.status(401).json({ error: '쒯' });
-        }
-        } catch (err) {
-        res.status(401).json({ error: 'token 없어' });
-        console.log(err);
-        }
+    // try {
+    //     console.log(`token:${req.cookies.JWT}`);
+    //     const clientToken = req.cookies.JWT;
+    //     const decoded = jwt.verify(clientToken, SECRET_Key);
+
+    //     if (decoded) {
+    //         res.locals.userId = decoded.idx;
+    //         next();
+    //     } else {
+    //         res.status(401).json({ error: '쒯' });
+    //     }
+    //     } catch (err) {
+    //     res.status(401).json({ error: 'token 없어' });
+    //     console.log(err);
+    //     }
 };
 
 

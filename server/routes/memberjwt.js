@@ -7,7 +7,8 @@ const router = express.Router();
 const crypto = require('crypto');
 const conn = mysql.createConnection(config);
 const jwt = require('jsonwebtoken');
-const SECRET_KEY = 1;
+const SECRET_Key = config['Secret-key'];    // dotenv 나중에해보기ㅜ
+
 
 router.use(bodyParser.urlencoded({ extended: false }));
 
@@ -107,19 +108,24 @@ router.route('/member/login').post((req, res) => {
                         const pass = crypto.createHash("sha512").update(mem_password + member.salt).digest('base64');
                         if (pass == member.mem_password) {
                             console.log("로그인 성공");
+                            // 토큰 생성
                             token = jwt.sign({
                                 type: 'JWT',
-                                email: member.email,
-                                name: member.mem_name
-                            }, '!@#$%^&*', {
+                                // email: member.email,
+                                // name: member.mem_name       
+                                idx: member.idx
+                            }, SECRET_Key, {
                                 expiresIn: '30m',
                                 issuer: '관리자',
                             });
-                            return res.status(200).json({
+                            // 쿠키에 보내기
+                            return res.cookie('token', jwt)
+                                .status(200).json({
                                 code: 200,
                                 message: '토큰이 발급되었습니다.',
-                                token: token
-                            })
+                                token: token,
+                                idx: member.idx
+                            });
                         } else {
                             console.log("비밀번호를 확인해주세요");
                             res.end();

@@ -4,7 +4,8 @@ const mysql = require("mysql");
 const config = require("../config/config.json");
 const pool = mysql.createPool(config);
 const router = express.Router();
-router.use(bodyParser.urlencoded({ extended: false }))
+router.use(bodyParser.urlencoded({ extended: false }));
+
 
 
 // FAQ 등록 

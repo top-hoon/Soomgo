@@ -9,13 +9,14 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const conn = mysql.createConnection(config);
+const SECRET_Key = config['Secret-key'];
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(cookieParser());
 
 router.use(session({
     key:"loginData",
-    secret: '!@#$%^&*',     //나중에 설정..
+    secret: SECRET_Key,     //나중에 설정..
     store: new MySQLStore(config),
     resave: false,
     saveUninitialized: true, //false?
@@ -129,7 +130,8 @@ router.route('/member/login').post((req, res) => {
                             };
                             console.log(req.session.user);
                             res.cookie('hey', member.idx);
-                            res.end();
+                            // res.end();
+                            res.json(req.session.user);
                         } else {
                             console.log("비밀번호를 확인해주세요");
                             res.end();
@@ -139,6 +141,16 @@ router.route('/member/login').post((req, res) => {
     }
 });
 
+// 로그아웃
+router.route('/member/logout').get((req, res) => {
+        res.clearCookie('hey');
+        req.session.destroy(function (err) {
+            if (err) console.log(err);
+            console.log("로그아웃완료");
+            // res.redirect('/');  // 나중에..
+            res.end();
+        });
+    });
 
 
 

@@ -109,22 +109,23 @@ router.route('/member/login').post((req, res) => {
                         if (pass == member.mem_password) {
                             console.log("로그인 성공");
                             // 토큰 생성
-                            token = jwt.sign({
+                            const token = jwt.sign({
                                 type: 'JWT',
-                                // email: member.email,
-                                // name: member.mem_name       
+                                email: member.email,
                                 idx: member.idx
                             }, SECRET_Key, {
                                 expiresIn: '30m',
                                 issuer: '관리자',
                             });
-                            // 쿠키에 보내기
-                            return res.cookie('token', jwt)
+                            // 쿠키로 보내기
+                            return res.cookie('JWT', token, {
+                                maxAge: 1000 * 60 * 60 * 24 * 7,
+                                httpOnly:true,  
+                            })
                                 .status(200).json({
                                 code: 200,
                                 message: '토큰이 발급되었습니다.',
                                 token: token,
-                                idx: member.idx
                             });
                         } else {
                             console.log("비밀번호를 확인해주세요");
@@ -135,7 +136,12 @@ router.route('/member/login').post((req, res) => {
     }
 });
 
-
+// 로그아웃         // 아직 인증이안되서 못함
+router.route('/member/logout').get((req, res) => {
+            res.clearCookie('JWT');
+            // res.redirect('/');  // 나중에..
+            res.end();
+        });
 
 
     //회원 목록

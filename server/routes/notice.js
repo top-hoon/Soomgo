@@ -3,10 +3,12 @@ const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const config = require("../config/config.json");
 const pool = mysql.createPool(config);
+const cookieParser = require('cookie-parser');
 const router = express.Router();
-router.use(bodyParser.urlencoded({ extended: false }));
-
 const { verifyToken } = require('./jwtcheck');
+
+router.use(bodyParser.urlencoded({ extended: false }));
+router.use(cookieParser());
 
 
 
@@ -51,7 +53,7 @@ const { verifyToken } = require('./jwtcheck');
 
 
     //NOTICE 목록
-router.route('/notice/list').get((req, res) => {
+router.route('/notice/list').get(verifyToken,(req, res) => {
     if (pool) {
         noticeList((err, result) => {
             if (err) {

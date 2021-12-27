@@ -4,14 +4,14 @@ const mysql = require("mysql");
 const config = require("../config/config.json");
 const pool = mysql.createPool(config);
 const router = express.Router();
+const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
 const conn = mysql.createConnection(config);
 const jwt = require('jsonwebtoken');
 const SECRET_Key = config['Secret-key'];    // dotenv 나중에해보기ㅜ
 
-
 router.use(bodyParser.urlencoded({ extended: false }));
-
+router.use(cookieParser());
 
 
 // 회원가입 
@@ -120,7 +120,7 @@ router.route('/member/login').post((req, res) => {
                             // 쿠키로 보내기
                             return res.cookie('JWT', token, {
                                 maxAge: 1000 * 60 * 60 * 24 * 7,
-                                httpOnly:true,  
+                                httpOnly: true,
                             })
                                 .status(200).json({
                                 code: 200,

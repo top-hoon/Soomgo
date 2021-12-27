@@ -4,7 +4,8 @@ const mysql = require("mysql");
 const config = require("../config/config.json");
 const pool = mysql.createPool(config);
 const router = express.Router();
-router.use(bodyParser.urlencoded({ extended: false }))
+router.use(bodyParser.urlencoded({ extended: false }));
+
 
 
 // FAQ 등록 
@@ -19,31 +20,19 @@ router.use(bodyParser.urlencoded({ extended: false }))
         `faq_type:${faq_type}, tb_subject:${tb_subject}, title:${title}, content:${content}`
     );
 
-    if (pool) {
-        createFaq(faq_type, tb_subject, title, content, (err, result) => {
-            if (err) {
-            res.writeHead("200", {
-                "content-type": "text/html;charset=utf8"
-            });
-            res.write("<h2>FAQ 등록 실패!</h2>");
-            res.write("<p>FAQ 등록중 오류가 발생했습니다</p>");
-            res.end();
-            } else {
-            res.writeHead("200", {"content-type": "text/html;charset=utf8"});
-            res.write("<h2>FAQ 등록 성공!</h2>");
-            res.write("<p>FAQ 등록이 성공적으로 완료되었습니다</p>");
-            res.end();
+        if (pool) {
+            createFaq(faq_type, tb_subject, title, content, (err, result) => {
+                if (err) {
+                    console.log("FAQ 등록 실패")
+                } else {
+                    console.log("FAQ 등록 성공!");
+                    res.end();
+                }
             }
+            );
+        } else {
+            console.log("DB연결 실패")
         }
-        );
-    } else {
-        res.writeHead("200", {
-        "content-type": "text/html;charset=utf8"
-        });
-        res.write("<h2>데이터베이스 연결 실패!</h2>");
-        res.write("<p> 데이터베이스에 연결하지 못했습니다</p>");
-        res.end();
-    }
     });
 
     //FAQ 목록
@@ -51,12 +40,10 @@ router.route('/faq/list').get((req, res) => {
     if (pool) {
         faqList((err, result) => {
             if (err) {
-                res.writeHead('200', { 'content-type': 'text/html; charset=utf8' });
-                res.write('<h2>FAQ 목록 출력 실패 </h2>');
-                res.write('<p>FAQ 목록 안나옵니다.</p>')
-                res.end();
+                console.log("FAQ목록 출력 실패")
             } else {
-                res.send(result);
+                console.log("FAQ 목록 출력 성공")
+                res.end();
             }
         });
     }
@@ -68,12 +55,10 @@ router.route('/faq/detail').get((req, res) => {
     if (pool) {
         faqDetail(idx, (err, result) => {
             if (err) {
-                res.writeHead('200', { 'content-type': 'text/html; charset=utf8' });
-                res.write('<h2>FAQ 목록 출력 실패 </h2>');
-                res.write('<p>FAQ 목록 안나옵니다.</p>')
-                res.end();
+                console.log("FAQ 목록 출력 실패");
             } else {
-                res.send(result);
+                console.log("FAQ 목록 출력 성공");
+                res.end();
             }
         });
     }
@@ -93,10 +78,10 @@ router.route('/faq/update').put((req, res) => {
     if (pool) {
         updateFaq(idx, faq_type, tb_subject, title, content, (err, result) => {  
             if (err) {
-                res.writeHead("200", { "content-type": "text/html;charset=utf-8" });
-                res.write("<h2>FAQ 수정 실패!</h2>");
+                console.log("FAQ 수정 실패!");
             } else {
-                res.send(result);       // 쫌 보려고
+                console.log("FAQ 수정 성공!");
+                res.end();
             }
         });
     }
@@ -108,12 +93,10 @@ router.route('/faq/delete').delete((req, res) => {
     if (pool) {
         faqDelete(idx, (err, result) => {
             if (err) {
-                    res.writeHead('200', { 'content-type': 'text/html; charset=utf8' });
-                    res.write('<h2>FAQ 목록 출력 실패 </h2>');
-                    res.write('<p>FAQ 목록 안나옵니다.</p>')
-                    res.end();
+                console.log('FAQ 목록 출력 실패')
             } else {
-                res.send(result);
+                console.log('FAQ 목록 출력 성공')
+                res.end();
             }
         });
     }

@@ -1,11 +1,18 @@
 const jwt = require('jsonwebtoken');
+const express = require('express');
 const config = require("../config/config.json");
+const cookieParser = require('cookie-parser');
+const app = express();
+
+app.use(cookieParser());
+
 
 const SECRET_Key = config['Secret-key'];
 
 const verifyToken = (req, res, next) => {
     try {
-        const clientToken = req.cookie.JWT;
+        console.log(`token:${req.cookies.JWT}`);
+        const clientToken = req.cookies.JWT;
         const decoded = jwt.verify(clientToken, SECRET_Key);
 
         if (decoded) {

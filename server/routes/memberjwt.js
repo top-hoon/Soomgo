@@ -117,10 +117,11 @@ router.route('/member/login').post((req, res) => {
                                 expiresIn: '30m',
                                 issuer: '관리자',
                             });
+                            console.log(res.header.jwt);
                             // 쿠키로 보내기
                             return res.cookie('JWT', token, {
                                 maxAge: 1000 * 60 * 60 * 24 * 7,
-                                httpOnly:true,  
+                                httpOnly: true,
                             })
                                 .status(200).json({
                                 code: 200,

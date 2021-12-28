@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
 const conn = mysql.createConnection(config);
 const jwt = require('jsonwebtoken');
+const { info } = require('console');
 const SECRET_Key = config['Secret-key'];    // dotenv 나중에해보기ㅜ
 
 router.use(bodyParser.urlencoded({ extended: false }));
@@ -106,6 +107,7 @@ router.route('/member/login').post((req, res) => {
                     } else {
                         const member = result[0];  
                         const pass = crypto.createHash("sha512").update(mem_password + member.salt).digest('base64');
+
                         if (pass == member.mem_password) {
                             console.log("로그인 성공");
                             // 토큰 생성
@@ -143,7 +145,168 @@ router.route('/member/logout').get((req, res) => {
             console.log("로그아웃완료");
             res.end();
             // res.redirect('/');  // 나중에..
+});
+        
+
+// 마이페이지 /mypage/account-info
+router.route('/mypage/account-info').get((req, res) => {
+    const idx = req.query.idx;
+
+    if (pool) {
+        infomation(idx, (err, result) => {
+            if (err) {
+                console.log(err);
+                res.end();
+            } else {
+                console.log("개인 정보 출력 성공");
+                res.send(result);
+            }
         });
+    }
+});
+//---------------------------------
+// 마이페이지 /mypage/account-info/settings/name
+router.route('/mypage/account-info/settings/name').get((req, res) => {
+    const idx = req.query.idx;
+        if (pool) {
+        settingsName(idx, (err, result) => {
+            if (err) {
+                console.log(err);
+                res.end();
+            } else {
+                console.log("이름 출력 성공");
+                res.send(result);
+            }
+        });
+    }
+})
+
+// 마이페이지 이름수정
+router.route('/mypage/account-info/settings/editName').put((req, res) => {
+    const idx = req.body.idx;
+    const mem_name = req.body.mem_name;
+    if (pool) {
+        editName(idx, mem_name, (err, result) => {
+            if (pool) {
+                console.log(err);
+            } else {
+                console.log("이름 수정성공");
+                res.end();
+            }
+        });
+    }
+});
+//---------------------------------
+
+//---------------------------------
+// 마이페이지 /mypage/account-info/settings/email
+router.route('/mypage/account-info/settings/email').get((req, res) => {
+    const idx = req.query.idx;
+        if (pool) {
+        settingsEmail(idx, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("이메일 출력 성공");
+                res.end();
+            }
+        });
+    }
+})
+
+// 마이페이지 이메일수정
+router.route('/mypage/account-info/settings/editEmail').put((req, res) => {
+    const idx = req.body.idx;
+    const email = req.body.email;
+    if (pool) {
+        editEmail(idx, email, (err, result) => {
+            if (pool) {
+                console.log(err);
+            } else {
+                console.log("이메일 수정성공");
+                res.end();
+            }
+        });
+    }
+});
+//-------------------------------------------------------------------------------------------
+
+// 마이페이지 비밀번호 수정
+router.route('/mypage/account-info/settings/editPassword').put((req, res) => {
+    const idx = req.body.idx;
+    const nowPassword = req.body.nowPassword;
+    const cPassword = req.body.cPassword;
+    const Salt = crypto.randomBytes(64).toString('base64'); 
+
+    if (pool) {
+        checkPassword(idx, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                const member = result[0];
+                const now = crypto.createHash("sha512").update(nowPassword + member.salt).digest('base64');
+                if (now == member.mem_password) {
+                    console.log("비밀번호맞음.")
+                    changePassword(idx, cPassword, Salt,(err, result) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log("비밀번호 수정성공!");
+                            res.end();
+                        }
+                    });
+                } else {
+                    console.log('비밀번호틀림...')
+                    res.end();
+                }
+            }
+        });
+    }
+});
+// 현재 비밀번호 확인
+const checkPassword = function (idx, callback) {
+    pool.getConnection((err, conn) => {
+        if (err) {
+            console.log(err);
+        }else{
+            const sql = conn.query('select salt, mem_password from tb_members where idx = ?;', [idx], (err, result) => {
+                conn.release();
+                console.log(result[0]);
+                if (err) {
+                    console.log(err);
+                } else {
+                    if (result == ' ') {
+                        callback(null, false);
+                    } else {
+                        callback(null, result);
+                    }
+                }
+            });
+        }
+    });
+}
+
+// 비밀번호 수정
+const changePassword = function (idx, cPassword, Salt, callback) {
+    pool.getConnection((err, conn) => {
+        if (err) {
+            console.log(err);
+        } else {
+            const newPassword = crypto.createHash("sha512").update(cPassword + Salt).digest('base64');
+            const sql = conn.query('update tb_members set mem_password=?, salt=? where idx=?', [newPassword, Salt, idx], (err, result) => {
+                conn.release();
+                if (err) {
+                    callback(err, null);
+                    return;
+                } else {
+                    callback(null, result);
+                }
+            });
+        }
+    });
+}
+
+//-----------------------------------------------------------------------------------------
 
 
     //회원 목록
@@ -155,7 +318,6 @@ router.route('/member/list').get((req, res) => {
             } else {
                 console.log("회원목록 출력 성공")
                 res.send(result);
-                res.end();
             }
         });
     }
@@ -292,6 +454,106 @@ const login = function (
         }
     });
 }
+// 회원 개인정보 member/account-info
+const infomation = function (idx, callback) {
+    pool.getConnection((err, conn) => {
+        if (err) {
+            console.log(err);
+        } else {
+            const sql = conn.query('select mem_name, email , mem_password, hp from tb_members where idx=?', [idx], (err, result) => {
+                conn.release();
+                if (err) {
+                    callback(err, null);
+                    return;
+                } else {
+                    console.log("목록");
+                    callback(null, result);
+                }
+            })
+        }
+    });
+}
+// 회원 개인정보 이름 /mypage/account-info/settings/name
+const settingsName = function (idx, callback) {
+    pool.getConnection((err, conn) => {
+        if (err) {
+            console.log(err);
+        } else {
+            const sql = conn.query('select mem_name from tb_members where idx=?', [idx], (err, result) => {
+                conn.release();
+                if (err) {
+                    callback(err, null);
+                    return;
+                } else {
+                    console.log("이름");
+                    callback(null, result);
+                }
+            })
+        }
+    });
+}
+
+//회원 개인정보 이름수정
+const editName = function (idx, mem_name, callback) {
+    pool.getConnection((err, conn) => {
+        if (err) {
+            console.log(err);
+        } else {
+            const sql = conn.query('update tb_members set mem_name=? where idx=?', [mem_name, idx], (err, result) => {
+                conn.release();
+                if (err) {
+                    callback(err, null);
+                    return;
+                } else {
+                    callback(null, result);
+                }
+            })
+        }
+    })
+}
+
+
+
+// 회원 개인정보 이메일 /mypage/account-info/settings/email
+const settingsEmail = function (idx, callback) {
+    pool.getConnection((err, conn) => {
+        if (err) {
+            console.log(err);
+        } else {
+            const sql = conn.query('select email from tb_members where idx=?', [idx], (err, result) => {
+                conn.release();
+                if (err) {
+                    callback(err, null);
+                    return;
+                } else {
+                    console.log("이메일");
+                    callback(null, result);
+                }
+            })
+        }
+    });
+}
+
+
+//회원 개인정보 이메일수정
+const editEmail = function (idx, email, callback) {
+    pool.getConnection((err, conn) => {
+        if (err) {
+            console.log(err);
+        } else {
+            const sql = conn.query('update tb_members set email=? where idx=?', [email, idx], (err, result) => {
+                conn.release();
+                if (err) {
+                    callback(err, null);
+                    return;
+                } else {
+                    callback(null, result);
+                }
+            })
+        }
+    })
+}
+
         
 
     // 회원 목록

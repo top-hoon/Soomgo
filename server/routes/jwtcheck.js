@@ -20,7 +20,7 @@ const verifyToken = (req, res, next) => {
         const data = jwt.verify(token, SECRET_Key);
         req.idx = data.idx;
         return next();
-    } catch {
+    } catch {   // 만료?
         return res.sendStatus(403);
     }
 

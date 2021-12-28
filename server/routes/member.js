@@ -4,30 +4,17 @@ const mysql = require("mysql");
 const config = require("../config/config.json");
 const pool = mysql.createPool(config);
 const router = express.Router();
-const crypto = require('crypto');
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
-const MySQLStore = require('express-mysql-session')(session);
+const crypto = require('crypto');
 const conn = mysql.createConnection(config);
-const SECRET_Key = config['Secret-key'];
+const jwt = require('jsonwebtoken');
+const SECRET_Key = config['Secret-key'];    // dotenv 나중에해보기ㅜ
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(cookieParser());
 
-router.use(session({
-    key:"loginData",
-    secret: SECRET_Key,     //나중에 설정..
-    store: new MySQLStore(config),
-    resave: false,
-    saveUninitialized: true, //false?
-    cookie: {
-        httpOnly: true,
-        maxAge: 60 * 60 * 1000
-    }
-}));
 
-
-// 회원가입
+// 회원가입 
     router.route("/member/regist").post((req, res) => {
     const mem_name = req.body.mem_name;
     const email = req.body.email;
@@ -37,7 +24,7 @@ router.use(session({
     const sms_flag = req.body.sms_flag;
     const gosu_idx = req.body.gosu_idx;
     const mem_site = req.body.mem_site;
-    const Salt = crypto.randomBytes(64).toString('base64');
+    const Salt = crypto.randomBytes(64).toString('base64'); 
     
     //확인
     console.log(
@@ -59,8 +46,8 @@ router.use(session({
                             res.end();
                         }
                     });
-                    } else {
-                        console.log("이미 사용자가 사용하고 있는 ID입니다.");
+                    } else {   
+                        console.log("이미 가입된 이메일입니다..");
                         res.end();
                 }
         }
@@ -105,7 +92,7 @@ router.use(session({
 // });
 
 
-    // 로그인
+    // 로그인 
 router.route('/member/login').post((req, res) => {
     const email = req.body.email;
     const mem_password = req.body.mem_password;
@@ -113,25 +100,34 @@ router.route('/member/login').post((req, res) => {
                 login(email, mem_password, (err, result) => {
                     if (err) {
                         console.log(err);
-                    } if(result[0]==null) {
+                    } if(result[0]== undefined) {
                         console.log("아이디가 존재하지 않음");
                         res.end();
                     } else {
-                        const member = result[0];
+                        const member = result[0];  
                         const pass = crypto.createHash("sha512").update(mem_password + member.salt).digest('base64');
-                        // console.log('방금password:'+pass);
-                        // console.log('DBpassword:' + member.mem_password);
                         if (pass == member.mem_password) {
                             console.log("로그인 성공");
-                            req.session.user={
-                                    idx: member.idx,
-                                    email: member.email,
-                                    name: member.mem_name
-                            };
-                            console.log(req.session.user);
-                            res.cookie('hey', member.idx);
-                            // res.end();
-                            res.json(req.session.user);
+                            // 토큰 생성
+                            const token = jwt.sign({
+                                type: 'JWT',
+                                email: member.email,
+                                name: member.name,
+                                idx: member.idx
+                            }, SECRET_Key, {
+                                expiresIn: '30m',
+                                issuer: '관리자',
+                            });
+                            // 쿠키로 보내기
+                            return res.cookie('JWT', token, {
+                                maxAge: 1000 * 60 * 60 * 24 * 7,
+                                httpOnly: true,
+                            })
+                                .status(200).json({
+                                code: 200,
+                                message: '토큰이 발급되었습니다.',
+                                token: token,
+                            });
                         } else {
                             console.log("비밀번호를 확인해주세요");
                             res.end();
@@ -141,17 +137,13 @@ router.route('/member/login').post((req, res) => {
     }
 });
 
-// 로그아웃
+// 로그아웃         // 아직 인증이안되서 못함
 router.route('/member/logout').get((req, res) => {
-        res.clearCookie('hey');
-        req.session.destroy(function (err) {
-            if (err) console.log(err);
+            res.clearCookie('JWT');
             console.log("로그아웃완료");
-            // res.redirect('/');  // 나중에..
             res.end();
+            // res.redirect('/');  // 나중에..
         });
-    });
-
 
 
     //회원 목록

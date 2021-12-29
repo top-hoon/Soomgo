@@ -8,9 +8,13 @@ const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
 const conn = mysql.createConnection(config);
 const jwt = require('jsonwebtoken');
-const { info } = require('console');
-const SECRET_Key = config['Secret-key'];    // dotenv 나중에해보기ㅜ
+const SECRET_Key = config['Secret-key'];
+const { verifyToken } = require('./jwtcheck');
+const multer = require('multer');
+const path = require('path');
 
+
+router.use(express.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(cookieParser());
 
@@ -103,6 +107,7 @@ router.route('/member/login').post((req, res) => {
                         console.log(err);
                     } if(result[0]== undefined) {
                         console.log("아이디가 존재하지 않음");
+                        console.log(req.body.email);
                         res.end();
                     } else {
                         const member = result[0];  
@@ -121,13 +126,14 @@ router.route('/member/login').post((req, res) => {
                                 issuer: '관리자',
                             });
                             // 쿠키로 보내기
-                            return res.cookie('JWT', token, {
+                                res.cookie('JWT', token, {
                                 maxAge: 1000 * 60 * 60 * 24 * 7,
                                 httpOnly: true,
                             })
                                 .status(200).json({
                                 code: 200,
                                 message: '토큰이 발급되었습니다.',
+                                idx : member.idx,
                                 token: token,
                             });
                         } else {
@@ -139,7 +145,7 @@ router.route('/member/login').post((req, res) => {
     }
 });
 
-// 로그아웃         // 아직 인증이안되서 못함
+// 로그아웃        
 router.route('/member/logout').get((req, res) => {
             res.clearCookie('JWT');
             console.log("로그아웃완료");
@@ -149,9 +155,9 @@ router.route('/member/logout').get((req, res) => {
         
 
 // 마이페이지 /mypage/account-info
-router.route('/mypage/account-info').get((req, res) => {
-    const idx = req.query.idx;
-
+router.route('/mypage/account-info').get(verifyToken,(req, res) => {
+    const idx = req.idx;
+    console.log(idx);
     if (pool) {
         infomation(idx, (err, result) => {
             if (err) {
@@ -166,8 +172,8 @@ router.route('/mypage/account-info').get((req, res) => {
 });
 //---------------------------------
 // 마이페이지 /mypage/account-info/settings/name
-router.route('/mypage/account-info/settings/name').get((req, res) => {
-    const idx = req.query.idx;
+router.route('/mypage/account-info/settings/name').get(verifyToken,(req, res) => {
+        const idx = req.idx;
         if (pool) {
         settingsName(idx, (err, result) => {
             if (err) {
@@ -182,12 +188,12 @@ router.route('/mypage/account-info/settings/name').get((req, res) => {
 })
 
 // 마이페이지 이름수정
-router.route('/mypage/account-info/settings/editName').put((req, res) => {
-    const idx = req.body.idx;
+router.route('/mypage/account-info/settings/editName').put(verifyToken,(req, res) => {
+    const idx = req.idx;
     const mem_name = req.body.mem_name;
     if (pool) {
         editName(idx, mem_name, (err, result) => {
-            if (pool) {
+            if (err) {
                 console.log(err);
             } else {
                 console.log("이름 수정성공");
@@ -200,8 +206,8 @@ router.route('/mypage/account-info/settings/editName').put((req, res) => {
 
 //---------------------------------
 // 마이페이지 /mypage/account-info/settings/email
-router.route('/mypage/account-info/settings/email').get((req, res) => {
-    const idx = req.query.idx;
+router.route('/mypage/account-info/settings/email').get(verifyToken,(req, res) => {
+    const idx = req.idx;
         if (pool) {
         settingsEmail(idx, (err, result) => {
             if (err) {
@@ -215,12 +221,12 @@ router.route('/mypage/account-info/settings/email').get((req, res) => {
 })
 
 // 마이페이지 이메일수정
-router.route('/mypage/account-info/settings/editEmail').put((req, res) => {
-    const idx = req.body.idx;
+router.route('/mypage/account-info/settings/editEmail').put(verifyToken,(req, res) => {
+    const idx = req.idx;
     const email = req.body.email;
     if (pool) {
         editEmail(idx, email, (err, result) => {
-            if (pool) {
+            if (err) {
                 console.log(err);
             } else {
                 console.log("이메일 수정성공");
@@ -232,8 +238,8 @@ router.route('/mypage/account-info/settings/editEmail').put((req, res) => {
 //-------------------------------------------------------------------------------------------  
 
 // 마이페이지 비밀번호 수정
-router.route('/mypage/account-info/settings/editPassword').put((req, res) => {
-    const idx = req.body.idx;
+router.route('/mypage/account-info/settings/editPassword').put(verifyToken,(req, res) => {
+    const idx = req.idx;
     const nowPassword = req.body.nowPassword;
     const cPassword = req.body.cPassword;
     const Salt = crypto.randomBytes(64).toString('base64'); 
@@ -305,12 +311,66 @@ const changePassword = function (idx, cPassword, Salt, callback) {
         }
     });
 }
-
 //-----------------------------------------------------------------------------------------
+const storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+    callback(null, './upload');  
+    }, 
+    filename: (req, file, callback) => {
+        const ext = path.extname(file.originalname);
+        callback(null, file.fieldname+'_'+Date.now()+ext);
+    }
+});
+const fileFilter = (req, file, callback) => {
+    if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png') {    // 파일허용범위 
+        callback(null, true);
+    } else {
+        console.log('no');
+        callback(null, false);
+    }
+}
 
+upload = multer({ storage: storage, fileFilter: fileFilter });
+// 마이페이지  프로필사진 등록
+router.route('/mypage/img').post(verifyToken,upload.single('image'), (req, res) => {  // 다중파일은 조금만 수정해주면됨
+    const image = req.file.path;
+    const idx = req.idx;
+    console.log(req.file)
+    console.log(req.file.path)
+    console.log(upload) // multer 안에 내가 지정한 내용
+    console.log(upload.storage.getFilename) // 파일이름!
+    if (pool) {
+        mypageImg(idx, image, (err, result) => {
+            if (err) {
+                console.log(err);
+                res.end();
+            } else {
+                console.log('성공');
+                res.send(result);
+                res.end();
+            }
+        });
+    }
+});
+const mypageImg = function (idx, image, callback){
+    pool.getConnection((err, conn) => {
+        if (err) {
+            console.log(err);
+        } else {
+            conn.query('update tb_members set image=? where idx=?', [image, idx], (err, result) => {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, result);
+                }
+            })
+        }
+    });
+}
+//-------------------------------------------------------------------------
 
     //회원 목록
-router.route('/member/list').get((req, res) => {
+router.route('/member/list').get(multer,(req, res) => {
     if (pool) {
         memberList((err, result) => {
             if (err) {
@@ -460,7 +520,7 @@ const infomation = function (idx, callback) {
         if (err) {
             console.log(err);
         } else {
-            const sql = conn.query('select mem_name, email , mem_password, hp from tb_members where idx=?', [idx], (err, result) => {
+            const sql = conn.query('select mem_name, email , mem_password, hp, image from tb_members where idx=?', [idx], (err, result) => {
                 conn.release();
                 if (err) {
                     callback(err, null);

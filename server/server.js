@@ -4,11 +4,17 @@ const app = express();
 const faq = require('./routes/faq');
 const notice = require('./routes/notice');
 const member = require('./routes/member');
+const category = require('./routes/category');
+const cateTilte = require('./routes/category_question_titile');
+// const request = require('./routes/request');
 // const membersession = require('./routes/membersession(test)');
 
 app.use(faq);
 app.use(notice);
 app.use(member);
+app.use(category);
+app.use(cateTilte);
+// app.use(request);
 // app.use(membersession);
 
 app.listen(3000, () => {

@@ -1,17 +1,25 @@
 create database Soomgo;
 use Soomgo;
 
+
+select * from tb_members;
+select * from sessions;
+drop table tb_members;
+ALTER TABLE tb_members ADD image VARCHAR(200);
+
 CREATE TABLE tb_members (
     idx bigint AUTO_INCREMENT,
-    mem_name varchar(20),
+    mem_name varchar(100),
     email varchar(20),
-    mem_password  varchar(20),
+    mem_password  varchar(200),
     hp varchar(13),
     gender boolean,
     sms_flag boolean,
     gosu_idx bigint,
     mem_site bigint,
-    regdate datetime,
+    salt varchar(100),
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (idx)
 );
 
@@ -51,7 +59,8 @@ CREATE TABLE tb_gosus (
     insta_url varchar(500),
     blog_url varchar(500),
     kakao_url varchar(500),
-    regdate datetime,
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     cash int,
     cash_bonus int,
     PRIMARY KEY (idx),
@@ -62,10 +71,11 @@ CREATE TABLE tb_gosus_services(
     idx bigint AUTO_INCREMENT,
     gosu_idx bigint,
     cate3_idx bigint,
-    regdate datetime,
-    PRIMARY KEY (idx),
-    foreign key(gosu_idx) references tb_gosus(idx),
-    foreign key(cate3_idx) references tb_members(idx)
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (idx)
+--     foreign key(gosu_idx) references tb_gosus(idx),
+--     foreign key(cate3_idx) references tb_members(idx)
 );
 
 CREATE TABLE tb_gosus_personal(
@@ -74,7 +84,8 @@ CREATE TABLE tb_gosus_personal(
     email varchar(100),
     bank varchar(50),
     tb_account varchar(100),
-    regdate datetime,
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (idx),
     foreign key(gosu_idx) references tb_gosus(idx)
 );
@@ -87,7 +98,8 @@ CREATE TABLE tb_gosus_services(
     tb_account varchar(100),
     tb_number varchar (100),
     files varchar(200),
-    regdate datetime,
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (idx),
     foreign key(gosu_idx) references tb_category3(idx)
 );
@@ -97,34 +109,40 @@ CREATE TABLE tb_gosus_pictures(
     idx bigint AUTO_INCREMENT,
     gosu_idx bigint,
     files varchar(200),
-    regdate datetime,
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (idx),
     foreign key(gosu_idx) references tb_gosus(idx)
 );
 
-
+select * from tb_category1;
 CREATE TABLE tb_category1(
     idx bigint AUTO_INCREMENT,
     cate_name varchar(100),
-    regdate DATETIME,
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (idx)
 );
 
+select * from tb_category2;
 CREATE TABLE tb_category2(
     idx bigint AUTO_INCREMENT,
     cate1_idx bigint,
     cate_name varchar(100),
-    regdate DATETIME,
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (idx),
     foreign key(cate1_idx) references tb_category1(idx)
 );
-
+drop table tb_category1;
+select * from tb_category3;
 CREATE TABLE tb_category3(
     idx bigint AUTO_INCREMENT,
     cate1_idx bigint,
     cate2_idx bigint,
     cate_name varchar(100),
-    regdate DATETIME,
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     des_title varchar(100),
     des_text varchar(100),
     PRIMARY KEY (idx),
@@ -132,15 +150,21 @@ CREATE TABLE tb_category3(
     foreign key(cate2_idx) references tb_category2(idx)
 );
 
+select * from tb_cate_question_title;
+drop table tb_cate_question_title;
 CREATE TABLE tb_cate_question_title(
     idx bigint AUTO_INCREMENT,
     cate_level int,
     cate_idx bigint,
     title varchar(100),
     max_choose int,
-    regdate datetime,
-    PRIMARY KEY (idx)
-);
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (idx),
+    constraint cate_idx1 foreign key(cate_idx) references tb_category1(idx),
+	constraint cate_idx2 foreign key(cate_idx) references tb_category2(idx),
+    constraint cate_idx3 foreign key(cate_idx) references tb_category3(idx)
+)ENGINE=innoDB;
 
 CREATE TABLE tb_cate_question_answer(
     idx bigint AUTO_INCREMENT,
@@ -149,7 +173,8 @@ CREATE TABLE tb_cate_question_answer(
     des_sub varchar(500),
     text_flag boolean,
     text_sample varchar(500),
-    regdate datetime,
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (idx),
     foreign key(title_idx) references tb_cate_question_title(idx)
 );
@@ -160,20 +185,24 @@ CREATE TABLE tb_cate_question(
     cate_idx bigint,
     cate_question_title_idx bigint,
     cate_question_answer_idx bigint,
-    regdate datetime,
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (idx)
 );
-
+select * from tb_requests;
 create table tb_requests(
 	idx bigint primary key,
-    regdate datetime default now(),
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     mem_idx bigint,
-    cate3_idx bigint
+    cate3_idx bigint,
+    foreign key(cate3_idx) references tb_category3(idx)
 );
 
 create table tb_request_answer(
 	idx bigint primary key,
-    regdate datetime default now(),
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     request_idx bigint,
     question_title_idx bigint,
     question_answer_idx bigint,
@@ -182,7 +211,8 @@ create table tb_request_answer(
 
 create table tb_estimates(
 	idx bigint primary key,
-    regdate datetime default now(),
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     salary int,
     price int,
     content varchar(1000),
@@ -193,7 +223,8 @@ create table tb_estimates(
 
 create table tb_estimate_often(
 	idx bigint primary key,
-    regdate datetime default now(),
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     title varchar(100),
     salary int,
     price int,
@@ -204,7 +235,8 @@ create table tb_estimate_often(
 
 create table tb_baro(
 	idx bigint primary key,
-    regdate datetime default now(),
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	gosu_idx bigint,
     cate3_idx bigint,
     map_type int,
@@ -218,7 +250,8 @@ create table tb_baro(
 
 create table tb_deal(
 	idx bigint primary key,
-    regdate datetime default now(),
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     mem_idx bigint,
     gosu_idx bigint,
     esti_idx bigint,
@@ -228,7 +261,8 @@ create table tb_deal(
 
 create table tb_map(
 	idx bigint primary key,
-    regdate datetime default now(),
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	gosu_idx bigint,
     cate3_idx bigint,
     service_place varchar(1000),
@@ -237,9 +271,14 @@ create table tb_map(
     title varchar(100)
 );
 
+select * from tb_notices;
+desc tb_notices;
+drop table tb_faqs;
+
 create table tb_faqs(
-	idx bigint primary key,
-    regdate datetime default now(),
+	idx bigint primary key auto_increment,
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     faq_type int,
     tb_subject varchar(100),
 	title varchar(100),
@@ -248,7 +287,8 @@ create table tb_faqs(
 
 create table tb_questions(
 	idx bigint primary key,
-    regdate datetime default now(),
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     mem_idx bigint,
     ans_flag boolean,
     ans_date date,
@@ -259,9 +299,13 @@ create table tb_questions(
     email varchar(100)
 );
 
+select * from tb_notices;
+drop table tb_notices;
+
 create table tb_notices(
-	idx bigint primary key,
-    regdate datetime default now(),
+	idx bigint primary key auto_increment,
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	tb_subject varchar(100),
     title varchar(100),
     content varchar(1000),
@@ -271,7 +315,8 @@ create table tb_notices(
 
 create table tb_payments(
 	idx bigint primary key,
-    regdate datetime default now(),
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     service_price int,
     service_date date,
     total_price int,
@@ -280,7 +325,8 @@ create table tb_payments(
 
 create table tb_soomgocash(
 	idx bigint primary key,
-    regdate datetime default now(),
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	cash int,
     sm_type int,
     gosu_idx bigint,
@@ -291,7 +337,8 @@ create table tb_soomgocash(
 
 create table tb_cash_bonus(
 	idx bigint primary key,
-    regdate datetime default now(),
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	cash int,
     gosu_idx bigint,
     details varchar(100)
@@ -299,7 +346,8 @@ create table tb_cash_bonus(
 
 create table tb_chats(
 	idx bigint primary key,
-    regdate datetime default now(),
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     chat_text text,
     estimate_idx bigint,
 	chat_type int,
@@ -312,13 +360,15 @@ create table tb_chats(
 
 create table tb_chatroom(
 	idx bigint primary key,
-    regdate datetime default now(),
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	like_flag boolean
 );
 
 create table tb_report(
 	idx bigint primary key,
-    regdate datetime default now(),
+    regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	mem_idx bigint,
     chat_text text,
     request_idx bigint,
@@ -330,7 +380,8 @@ create table tb_report(
 
 create table tb_magazine(
 	idx bigint primary key,
-	regdate datetime default now(),
+	regdate DATETIME DEFAULT now(),
+    last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     title varchar(100),
     img varchar(100),
     url varchar(100)

@@ -62,7 +62,6 @@ router.use(cookieParser());
     }
     });
 
-    
 //     // 로그인
 // router.route('/member/login').post((req, res) => {
 //     const email = req.body.email;
@@ -95,7 +94,6 @@ router.use(cookieParser());
 //         }
 //     }
 // });
-
 
     // 로그인 
 router.route('/member/login').post((req, res) => {
@@ -269,6 +267,7 @@ router.route('/mypage/account-info/settings/editPassword').put(verifyToken,(req,
         });
     }
 });
+
 // 현재 비밀번호 확인
 const checkPassword = function (idx, callback) {
     pool.getConnection((err, conn) => {
@@ -330,7 +329,7 @@ const fileFilter = (req, file, callback) => {
     }
 }
 
-upload = multer({ storage: storage, fileFilter: fileFilter });
+upload = multer({ storage: storage, fileFilter: fileFilter });      // limit사이즈는 나중에
 // 마이페이지  프로필사진 등록
 router.route('/mypage/img').post(verifyToken,upload.single('image'), (req, res) => {  // 다중파일은 조금만 수정해주면됨
     const image = req.file.path;
@@ -339,6 +338,7 @@ router.route('/mypage/img').post(verifyToken,upload.single('image'), (req, res) 
     console.log(req.file.path)
     console.log(upload) // multer 안에 내가 지정한 내용
     console.log(upload.storage.getFilename) // 파일이름!
+
     if (pool) {
         mypageImg(idx, image, (err, result) => {
             if (err) {
@@ -368,7 +368,6 @@ const mypageImg = function (idx, image, callback){
     });
 }
 //-------------------------------------------------------------------------
-
     //회원 목록
 router.route('/member/list').get(multer,(req, res) => {
     if (pool) {
@@ -444,7 +443,7 @@ router.route('/member/delete').delete((req, res) => {
 });
 
     // 함수
-// 
+
     //  회원가입
     const createMember = function (
     mem_name, email, mem_password, hp, gender, sms_flag, gosu_idx, mem_site, Salt, callback) {

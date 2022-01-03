@@ -106,7 +106,7 @@ CREATE TABLE tb_gosus_pictures(
 CREATE TABLE tb_category1(
     idx bigint AUTO_INCREMENT,
     cate_name varchar(100),
-    regdate DATETIME,
+    regdate DATETIME default now(),
     PRIMARY KEY (idx)
 );
 
@@ -114,7 +114,7 @@ CREATE TABLE tb_category2(
     idx bigint AUTO_INCREMENT,
     cate1_idx bigint,
     cate_name varchar(100),
-    regdate DATETIME,
+    regdate DATETIME default now(),
     PRIMARY KEY (idx),
     foreign key(cate1_idx) references tb_category1(idx)
 );

@@ -23,6 +23,7 @@ const { verifyToken } = require('./jwtcheck');
     console.log(
         `tb_subject:${tb_subject}, content:${content}, title:${title},show_flag:${show_flag}, star:${star}`
     );
+    console.log(req.body);
 
     if (pool) {
         createNOTICE(tb_subject, title, content, show_flag, star, (err, result) => {
@@ -228,7 +229,4 @@ const noticeDelete = function (idx, callback) {
     });
 }
 
-
-
-    module.exports = router;
-
+module.exports = router;

@@ -1,0 +1,742 @@
+.account-info-container input::placeholder {
+  color: #b5b5b5;
+}
+
+
+.anchor-tag {
+  color: #323232;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.mypage-container {
+  max-width: 630px;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.mypage-container .mypage-title {
+  font-size: 2.125rem;
+  padding: 3.125rem 0;
+  font-weight: 500;
+  line-height: 1.41;
+  letter-spacing: -.0462rem;
+  color: #323232;
+  margin: 0;
+}
+
+.mypage-container .profile-container {
+  margin-bottom: 3.125rem;
+  font-size: 0;
+  padding: 1rem 0;
+}
+
+.mypage-container .profile-container > .anchor-tag {
+  display: flex;
+  align-items: center;
+}
+
+.mypage-container .thumb {
+  width: 4.375rem;
+  height: 4.375rem;
+  min-width: 4.375rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid #f2f2f2;
+}
+
+.mypage-container .user-profile-picture {
+  position: relative;
+}
+
+.mypage-container .h-100 {
+  height: 100%!important;
+}
+
+.mypage-container .user-profile-picture > .is-square {
+  border-radius: 0.75rem;
+  padding: 0;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: 0.0625rem solid #f2f2f2;
+  overflow: hidden;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-color: #e1e1e1;
+  background-image: url('../images/basic-profile.svg');
+}
+
+.mypage-container .user-info {
+  flex: auto;
+  text-align: left;
+  padding-left: 0.75rem;
+}
+
+.mypage-container .user-info > .user-name {
+  display: flex;
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #323232;
+}
+
+.mypage-container .user-info > .user-name > .name-length {
+  max-width: 27.125rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding-right: 0.3125rem;
+}
+
+.mypage-container .user-id {
+  display: flex;
+  font-size: .75rem;
+  color: #b5b5b5;
+}
+
+.mypage-container .user-id > .id-length {
+  max-width: 30.1875rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.mypage-container ul {
+  position: relative;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.mypage-container .main-menu {
+  display: flex;
+  align-items: center;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #323232;
+}
+
+.mypage-container .main-menu > img {
+  margin-left: 2px;
+  cursor: pointer;
+}
+
+.mypage-container .sub-menu-container {
+  padding: 1rem 0;
+  cursor: pointer;
+}
+
+.mypage-container .underline {
+  border-bottom: 0.0625rem solid;
+  border-color: #f2f2f2;
+}
+
+.mypage-container .sub-menu-list {
+  position: relative;
+  display: flex;
+  align-items: center
+}
+
+.mypage-container .icon-container {
+  align-self: baseline;
+}
+
+.mypage-container .sub-content {
+  flex: auto;
+    text-align: left;
+    padding-left: 0.5rem;
+}
+
+.mypage-container .sub-menu-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #737373;
+  padding: 0;
+}
+
+.mypage-container .coupon-event, 
+.mypage-container .pro-knowhow,
+.mypage-container .soomgo-guide {
+  margin-bottom: 3.125rem;
+}
+
+.mypage-container .teal-badge {
+  padding: 0.1875rem 0.625rem;
+  font-size: .875rem;
+  border-radius: 0.8125rem;
+  background-color: #00c7ae;
+  color: #fff;
+  font-weight: 500;
+  margin-right: 0.25rem;
+}
+
+
+
+
+
+
+
+
+/* --------------------- 계정설정 페이지 (AccountInfo.jsx) */
+
+.account-info-container {
+  max-width: 630px;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.account-info-container > h1 {
+  line-height: 50px;
+  font-size: 2.125rem;
+  font-weight: 500;
+  color: #323232;
+  margin: 3rem 0;
+  letter-spacing: -.04375rem;
+}
+
+.account-info-container > .profile-image {
+  position: relative;
+  width: 6.25rem;
+  height: 6.25rem;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.account-info-container > .profile-image > .user-profile-picture {
+  position: relative;
+  height: 100%!important;
+}
+
+.account-info-container > .profile-image > .user-profile-picture > .image {
+  height: 100%;
+  padding-bottom: 0;
+  position: relative;
+  width: 100%;
+  border-radius: 50%;
+  border: 0.0625rem solid #f2f2f2;
+  overflow: hidden;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-color: #e1e1e1;
+}
+
+.account-info-container > .profile-image > .user-profile-picture > .image > img {
+  width: 100%;
+  vertical-align: middle;
+}
+
+.account-info-container > .profile-image > .user-profile-picture > .camera-icon {
+  vertical-align: middle;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.account-info-container .account-info-section {
+  margin: 3rem 0 5.125rem;
+}
+
+.account-info-container .account-info {
+  font-size: 1rem;
+  margin: 3rem 0 5.125rem;
+  margin-bottom: 3rem;
+}
+
+.account-info-container .account-info > .item-container {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 1rem 0 1rem 0.5rem;
+  border-bottom: 1px solid #f2f2f2;
+  text-decoration: none;
+}
+
+.account-info-container .account-info > .item-container > .item {
+  flex: 1;
+  color: #323232;
+}
+
+.account-info-container .account-info > .item-container .item-title {
+  color: #b5b5b5;
+}
+
+.account-info-container .account-info > .item-container .item-info {
+  padding-top: 0.25rem;
+}
+
+.account-info-container .delete-account {
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+.account-info-container .delete-account > li {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0 1rem 0.5rem;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+
+
+
+
+
+
+/* 수정 (이름/이메일/핸드폰/비밀번호) */
+.account-info-container .form-group {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  margin-bottom: 1rem;
+}
+
+.account-info-container .form-group > .col-form-label {
+  padding-top: 0!important;
+  padding-bottom: calc(0.6875rem + 1px);
+  margin-bottom: 0;
+  font-size: inherit;
+  line-height: 1.5;
+  width: 100%;
+  max-width: 100%;
+  color: inherit;
+  white-space: normal;
+}
+
+.account-info-container .form-group .form-control {
+  border-color: #ccc;
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 1.375rem + 2px);
+  padding: 0.6875rem 1rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #323232;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #e1e1e1;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.account-info-container .form-group .form-control:focus {
+  border-color: #00c7ae;
+  box-shadow: 0 0 0 0.2rem rgb(0 199 174 / 25%);
+  outline: none!important;
+}
+
+/* 이메일 유효성 검사 ----------------- */
+.settings-email .form-control.is-valid {
+  border-color: #fa5963;
+}
+
+.settings-email .form-control.is-valid:focus {
+  border-color: #fa5963;
+  box-shadow: 0 0 0 0.2rem rgb(250 89 99 / 25%);
+}
+
+.settings-email .invalid-feedback {
+  display: none;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #fa5963;
+}
+/* 이메일 유효성 검사 끝 --------------- */
+
+.account-info-container .button-group {
+  display: flex;
+  justify-content: flex-end;
+  margin: 3rem 0 5rem;
+}
+
+.account-info-container .button-group > .btn-cancel {
+  display: inline-block;
+  color: #00c7ae;
+  background: #fff;
+  border: 0.0625rem solid #e1e1e1;
+  max-width: 8.875rem;
+  flex: 1;
+  font-weight: 500;
+  transition: opacity .2s ease-in-out;
+  padding: 0.6875rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.account-info-container .button-group > .btn-cancel:hover {
+  color: #00c7ae;
+  background: #fff;
+  border-color: #e1e1e1;
+}
+
+.account-info-container .button-group > .btn-primary {
+  display: flex;
+  justify-content: center;
+  margin-left: 0.75rem;
+  max-width: 8.875rem;
+  flex: 1;
+  cursor: pointer;
+  font-weight: 500;
+  transition: opacity .2s ease-in-out;
+  color: #fff;
+  background-color: #00c7ae;
+  border-color: #00c7ae;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  padding: 0.6875rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+}
+
+.account-info-container .button-group > .btn-primary:hover {
+  color: #fff;
+  background-color: #00a18d;
+  border-color: #009481;
+}
+
+
+
+
+
+
+.account-info-container .secondary {
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  background-color: #f2f2f2;
+  display: flex;
+  align-items: center;
+}
+
+.account-info-container .secondary .title {
+  display: flex;
+  align-items: flex-start;
+  font-size: .875rem;
+}
+
+.account-info-container .secondary .title > span {
+  padding-left: 0.5rem;
+}
+
+.name-section {
+  margin: 2rem 0 3rem;
+}
+
+/* 이름 유효성 검사 --------------- */
+.settings-name .form-control.is-valid {
+  border-color: #fa5963;
+}
+
+.settings-name .form-control.is-valid:focus {
+  border-color: #fa5963;
+  box-shadow: 0 0 0 0.2rem rgb(250 89 99 / 25%);
+}
+
+.settings-name .invalid-feedback {
+  display: none;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #fa5963;
+}
+/* 이름 유효성 검사 끝 --------------- */
+
+.account-info-container .current-password .btn-secondary {
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 3.125rem;
+  height: 100%;
+  font-size: .875rem;
+  color: #00c7ae;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: opacity .2s ease-in-out;
+}
+
+
+/* 비밀번호 유효성 검사 --------------- */
+.settings-password .current-password > input.is-invalid,
+.settings-password .new-password > input.is-invalid,
+.settings-password .new-password-confirm > input.is-invalid {
+  border-color: #fa5963;
+}
+
+.settings-password .current-password > input.is-invalid:focus,
+.settings-password .new-password > input.is-invalid:focus,
+.settings-password .new-password-confirm > input.is-invalid:focus {
+  border-color: #fa5963;
+  box-shadow: 0 0 0 0.2rem rgb(250 89 99 / 25%);
+}
+
+.account-info-container .invalid-feedback {
+  display: none;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #fa5963;
+}
+/* 비밀번호 유효성 검사 끝 --------------- */
+
+.account-info-container .margin-bottom-24 {
+  margin-bottom: 2.5rem;
+}
+
+.account-info-container .margin-bottm-8 {
+  margin-bottom: 0.5rem;
+}
+
+
+
+
+
+.settings-phone .phone-section {
+  margin: 2rem 0 3rem;
+}
+
+.settings-phone .phone-section .input-group {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+  top: 3px;
+}
+
+.settings-phone .phone-section .input-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #323232;
+  margin: 0;
+  padding-bottom: 0.375rem;
+}
+
+
+/* 휴대번호 입력 안하면 보더 변함 */
+.account-info-container .phone-section .input-group > input.error {
+  border-color: #fa5963;
+}
+
+.account-info-container .phone-section .input-group > input.error:focus {
+  border-color: #fa5963;
+  box-shadow: 0 0 0 0.2rem rgb(250 89 99 / 25%);
+}
+/* 끝 */
+
+
+.account-info-container .phone-section .input-group > .answer-input {
+  padding: 0.75rem 5.75rem 0.75rem 0.75rem;
+  border: 0.0625rem solid #e1e1e1;
+  border-radius: 0.25rem;
+  background: none;
+}
+
+.account-info-container .phone-section .input-group > .answer-input:focus {
+  border-color: #00c7ae;
+  box-shadow: 0 0 0 0.2rem rgb(0 199 174 / 25%);
+  outline: none!important;
+}
+
+.account-info-container .phone-section .input-group > .hidden {
+  display: none!important;
+}
+
+.account-info-container .phone-section .input-group > .button-wrapper {
+  position: absolute;
+  top: 0.625rem;
+  right: 0.625rem;
+  display: flex;
+  margin-left: -1px;
+}
+
+.account-info-container .phone-section .input-group > .button-wrapper > .send-button {
+  width: 4.5rem;
+  height: 1.75rem;
+  z-index: 3;
+  font-size: .875rem;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.1875rem 0.625rem;
+  color: #fff;
+  background-color: #00c7ae;
+  outline: none;
+  cursor: pointer;
+}
+
+/* 비번입력 안하고 넘어갈려할때 띄울것 */
+.account-info-container .phone-section .validation {
+  display: none;
+  font-size: .875rem;
+  font-weight: 400;
+  box-shadow: none;
+  margin: 0;
+  padding-top: 0.25rem;
+  color: #fa5963;
+}
+
+
+
+/* 계정탈퇴 팝업 */
+.account-info-wrap > .swal2-center {
+  overflow-y: auto;
+  display: none;
+  position: fixed;
+  z-index: 1060;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625em;
+  overflow-x: hidden;
+  transition: background-color .1s;
+  align-items: center;
+  -webkit-tap-highlight-color: transparent;
+  background-color: rgba(0,0,0,.4);
+}
+
+.account-info-wrap > .swal2-center > .swal2-popup {
+  width: 320px;
+  display: flex;
+  margin: auto;
+  max-width: 17.5rem;
+  padding: 2.25rem 1rem 1.25rem;
+  border-radius: 0;    
+  animation: swal2-show .3s;    
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: center;
+  border: none;
+  background: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.account-info-wrap > .swal2-center .swal2-header {
+  font-weight: 400;
+  line-height: 1.5;
+  color: #323232;
+  text-align: left;
+  font-family: inherit;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.account-info-wrap > .swal2-center .swal2-header > h2 {
+  margin-bottom: 1rem;
+  flex-direction: column;
+  font-size: 1.5rem;
+  color: #323232;
+  display: flex;
+  line-height: 2.0625rem;
+  font-weight: 500;
+  letter-spacing: -.02;
+  position: relative;
+  max-width: 100%;
+  margin: 0 0 0.4em;
+  padding: 0;
+  text-align: center;
+  text-transform: none;
+  word-wrap: break-word;
+}
+
+.account-info-wrap > .swal2-center .swal2-content {
+  color: #323232;
+  z-index: 1;
+  justify-content: center;
+  padding: 0;
+  font-size: 1.125em;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+.account-info-wrap > .swal2-center .swal2-content > div {
+  font-size: .875rem;
+  line-height: 1.3125rem;
+  font-weight: 400;
+  letter-spacing: -.0125rem;
+}
+
+.account-info-wrap > .swal2-center .swal2-actions {
+  width: 100%;
+  margin-top: 0;
+  display: flex;
+  z-index: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 1.25em auto 0;
+}
+
+.account-info-wrap > .swal2-center .swal2-actions > .swal2-confirm {
+  display: inline-block;
+  border-radius: 0.25rem;
+  height: 2.75rem;
+  background-color: #00c7ae;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: .875rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: opacity .2s ease-in-out;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  padding: 0.6875rem 0.75rem;
+  line-height: 1.5;
+}
+
+.account-info-wrap > .swal2-center .swal2-actions > .swal2-cancel {
+  display: inline-block;
+  font-weight: 500;
+  line-height: 1.5;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  text-align: center;
+  vertical-align: middle;
+  transition: opacity .2s ease-in-out;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 0.75rem;
+  padding: 0;
+  font-size: .75rem;
+  color: #b5b5b5;
+  height: 1.125rem;
+}

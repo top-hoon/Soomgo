@@ -30,7 +30,7 @@ function createCategory3(cate_name, cate1_idx, cate2_idx, des_title, des_text, c
     pool.getConnection((err, conn) => {
         if(err) console.log(err);
         else{
-            const sql = conn.query("insert into tb_category3(cate_name, cate1_idx, cate2_idx, des_title, des_text) values (?, ?)", [cate_name, cate1_idx, cate2_idx, des_title, des_text], (err, result) => {
+            const sql = conn.query("insert into tb_category3(cate_name, cate1_idx, cate2_idx, des_title, des_text) values (?,?,?,?,?)", [cate_name, cate1_idx, cate2_idx, des_title, des_text], (err, result) => {
                 conn.release();
                 callback(err, result)
             });
@@ -140,7 +140,7 @@ function listCategory3(cate1_idx, cate2_idx, callback){
                     callback(err, result);
                 })
             }
-            else if(const2_idx != undefined){
+            else if(cate2_idx != undefined){
                 const sql = conn.query("select * from tb_category3 where cate2_idx = ?", [cate2_idx], (err, result) => {
                     conn.release();
                     callback(err, result);

@@ -1,0 +1,17 @@
+
+.not-found-text {
+  width: 100%;
+  margin: 70px 0;
+  text-align: center;
+}
+
+.not-found-text h1 {
+  margin: 0;
+  font-size: 8rem;
+}
+
+.not-found-text h4 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: normal;
+}

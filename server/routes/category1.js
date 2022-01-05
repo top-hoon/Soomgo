@@ -56,6 +56,8 @@ function readCategory1(idx, callback){
     })
 }
 
+
+
 // 카테고리1 수정
 router.route("/category1/update").put((req, res) => {
     const idx = req.body.idx;

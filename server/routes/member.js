@@ -431,7 +431,7 @@ router.route('/member/update').put((req, res) => {
 router.route('/member/delete').delete((req, res) => {
     const idx = req.query.idx;
     if (pool) {
-        memberDelete(idx, (err, result) => {
+        Deletemember(idx, (err, result) => {
             if (err) {
                 console.log('회원 삭제 실패!')
             } else {
@@ -676,7 +676,7 @@ const updateMembers = function (idx, mem_name, email, mem_password, hp, gender, 
     
     
     // 회원 삭제
-const memberDelete = function (idx, callback) {
+const Deletemember = function (idx, callback) {
     pool.getConnection((err, conn) => {
         if (err) {
             console.log(err);

@@ -110,7 +110,6 @@ router.route('/member/login').post((req, res) => {
                     } else {
                         const member = result[0];  
                         const pass = crypto.createHash("sha512").update(mem_password + member.salt).digest('base64');
-
                         if (pass == member.mem_password) {
                             console.log("로그인 성공");
                             // 토큰 생성

@@ -10,7 +10,6 @@ const category3 = require('./routes/category3');
 const cateTilte = require('./routes/cate_question_titile');
 const cateAnswer = require('./routes/cate_question_answer');
 const cateQuestion = require('./routes/cate_question');
-const test = require('./routes/test');
 // const request = require('./routes/request');
 
 app.use(faq);
@@ -22,7 +21,6 @@ app.use(category3);
 app.use(cateTilte);
 app.use(cateAnswer);
 app.use(cateQuestion);
-app.use(test);
 // app.use(request);
 
 app.listen(3001, () => {

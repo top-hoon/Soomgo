@@ -24,6 +24,10 @@ router.route('/request/regist').post(verifyToken,(req, res) => {
     }
 })
 
+
+
+
+
 const registRequest = function (mem_idx, cate3_idx, callback) {
     pool.getConnection((err, conn) => {
         if (err) {

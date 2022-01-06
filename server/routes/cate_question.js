@@ -133,57 +133,18 @@ router.route('/category').get((req, res) => {
     }
 });
 
-// const memberQuestion = function (cate_level, cate_idx, callback) {
-//     pool.getConnection((err, conn) => {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             if (cate_level = 1) {
-//                 conn.query('select * from tb_cate_question where cate_idx=?;', [cate_idx], (err, result1) => {
-//                     if (err) {
-//                         console.log(err);
-//                         conn.release();
-//                     } else {
-//                         conn.query('select idx, title, max_choose from tb_cate_question_title where cate_idx=?;', [cate_idx], (err, result2) => {
-//                             if (err) {
-//                                 console.log(err);
-//                                 conn.release();
-//                             } else {// titile전부들
-//                                 for (let i of result2) {
-//                                     conn.query('select idx, title_idx, des, des_sub, text_flag, text_sample from tb_cate_question_answer where title_idx;', [i.idx], (err, result3) => {
-//                                         console.log(result2);
-//                                         console.log(result3);
-//                                         callback(err, result3);
-//                                     })
-//                                 }
-//                             }
-//                         });
-//                     }
-//                 });
-//             } else if (cate_level = 2) {
-//                 const sql = conn.query()
-//                 conn.release();
-//                 callback(err, result);
-//             } else {
-//                 const sql = conn.query()
-//                 conn.release();
-//                 callback(err, result);
-//             }
-//         }
-//     });
-// }
 const memberQuestion = function (cate_level, cate_idx, callback) {
     pool.getConnection((err, conn) => {
         if (err) {
             console.log(err);
         } else {
-            if (cate_level = 1) {
-                conn.query('select * from tb_cate_question where cate_idx=?;', [cate_idx], (err, result1) => {
+            if (cate_level = 3) {
+                conn.query('select * from tb_cate_question as c join tb_cate_question_title as ct on c.cate_question_title_idx = ct.idx join tb_cate_question_answer as a on c.cate_question_answer_idx = a.idx where c.cate_idx=?', [cate_idx], (err, result1) => {
                     if (err) {
                         console.log(err);
                         conn.release();
                     } else {
-                        console.log(result1);
+                        callback(null, result1);
                     }
                 });
             } else if (cate_level = 2) {
@@ -198,5 +159,31 @@ const memberQuestion = function (cate_level, cate_idx, callback) {
         }
     });
 }
+// const memberQuestion = function (cate_level, cate_idx, callback) {
+//     pool.getConnection((err, conn) => {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             if (cate_level = 1) {
+//                 conn.query('select * from  tb_cate_question as a  join tb_cate_question_title as b on a.cate_idx=b.cate_idx  where b.cate_idx=?;', [cate_idx], (err, result1) => {
+//                     if (err) {
+//                         console.log(err);
+//                         conn.release();
+//                     } else {
+//                         console.log(result1);
+//                     }
+//                 });
+//             } else if (cate_level = 2) {
+//                 const sql = conn.query()
+//                 conn.release();
+//                 callback(err, result);
+//             } else {
+//                 const sql = conn.query()
+//                 conn.release();
+//                 callback(err, result);
+//             }
+//         }
+//     });
+// }
 
 module.exports = router;

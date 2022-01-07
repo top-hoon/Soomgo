@@ -20,7 +20,7 @@ function Login(){
     }
   }
   const checkCurrPw = (e) => {
-    let regExp = /^[A-Za-z0-9]{8,16}$/;  
+    let regExp = /^[A-Za-z0-9]{7,16}$/;  
     let isPw = regExp.test(e.target.value);
     if(e.target.value === '') {
         e.target.classList.add('.textInput-pwd');
@@ -66,7 +66,9 @@ function Login(){
         console.log(res.data);
         const data = { id: res.data.id, name: res.data.name }
         localStorage.setItem('Soomgo', JSON.stringify(data))
-        // window.location.replace('/')
+        if (!res.data == '') {
+          window.location.replace('/')
+        }
       })
       .catch(err => {
         console.log(err)
@@ -82,36 +84,20 @@ function Login(){
           <div className="loginBox">
             <form className="loginForm">
               <p>이메일</p>
-              <input 
-                className="textInput-email" 
-                type="text" 
-                placeholder="example@soomgo.com" 
-                onBlur={checkEmail}
-                name="email"
-                onChange={handleChange('email')} 
-                value={email}
-              />
+              <input className="textInput-email" type="text" placeholder="example@soomgo.com" onBlur={checkEmail} name="email" onChange={handleChange('email')} value={email} />
               <div className="invalid-feedback-email">이메일 주소를 입력해주세요.</div>
               <p>비밀번호</p>
-              <input 
-                className="textInput-pwd" 
-                type="password" 
-                placeholder="비밀번호를 입력해주세요." 
-                onBlur={checkCurrPw}
-                name="mem_password"
-                onChange={handleChange('mem_password')} 
-                value={mem_password}
-              />
+              <input className="textInput-pwd" type="password"  placeholder="비밀번호를 입력해주세요." onBlur={checkCurrPw}  name="mem_password" onChange={handleChange('mem_password')} value={mem_password} />
               <div className="invalid-feedback-pwd">비밀번호를 입력해주세요</div>
               <div className="invalid-feedback-pwdCheck">영문+숫자 조합 8자리 이상 입력해주세요.</div>
               <a className="_findPwd" href="/FindPwd"><span className="findPwd-txt">비밀번호 찾기</span></a>
               <div className="selectBtn">
-                <button 
-                  className="select sel-email" 
-                  onClick={clickSubmit} 
-                >이메일 로그인</button></div>
-              <div className="selectBtn"><button className="select sel-kakao"><img src={icon_kakao} alt='icon_kakao' />Kakao로 시작하기</button></div>
-              <div className="selectBtn"><button className="select sel-Facebook"><img src={icon_facebook} alt='icon_facebook' />Facebook으로 시작하기</button></div>
+                <button  className="select sel-email" onClick={clickSubmit}>이메일 로그인</button>
+              </div>
+              <div className="selectBtn">
+                <button className="select sel-kakao"><img src={icon_kakao} alt='icon_kakao' />Kakao로 시작하기</button></div>
+              <div className="selectBtn"><button className="select sel-Facebook"><img src={icon_facebook} alt='icon_facebook' />Facebook으로 시작하기</button>
+              </div>
             </form>  
           
             <div className="gotoSignup">

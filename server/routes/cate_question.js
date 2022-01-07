@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const config = require("../config/config.json");
+const res = require('express/lib/response');
 const pool = mysql.createPool(config);
 const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: false }));
@@ -144,9 +145,52 @@ const memberQuestion = function (cate_level, cate_idx, callback) {
                         console.log(err);
                         conn.release();
                     } else {
-                        callback(null, result1);
-                    }
-                });
+
+                        var category = []
+                        var question = []
+                        //test
+                        // var answerList = []
+                        // category.push(answerList)
+
+                        category.push(question)
+                        Array.from(result1).forEach((e) => {   
+                            question_list = {
+                                answerList: [   ]
+                            }
+
+                            question_list.title = e.title
+                            question_list.titleidx = e.cate_question_title_idx
+
+                            a = {}
+                            a.answer_idx = e.cate_question_answer_idx
+                            a.answer = e.des;
+
+                            question_list.answerList.push(a);
+                            question.push(question_list)
+                            
+
+
+
+                            // var title = {
+                            //     anslist: {}
+                            // },
+                            // ansList = []
+                            
+                            // title.title_idx = e.cate_question_title_idx
+                            // title.title = e.title
+
+                            // title.anslist.idx = e.cate_question_answer_idx;
+                            // title.anslist.answ = e.des;
+
+                            // ansList.push(title)
+                            // answerList.push(ansList)
+
+                        }); 
+
+
+                            callback(null, result1);
+                        }
+                    });
             } else if (cate_level = 2) {
                 const sql = conn.query()
                 conn.release();
@@ -159,6 +203,7 @@ const memberQuestion = function (cate_level, cate_idx, callback) {
         }
     });
 }
+
 // const memberQuestion = function (cate_level, cate_idx, callback) {
 //     pool.getConnection((err, conn) => {
 //         if (err) {

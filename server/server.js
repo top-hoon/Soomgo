@@ -10,7 +10,7 @@ const category3 = require('./routes/category3');
 const cateTilte = require('./routes/cate_question_titile');
 const cateAnswer = require('./routes/cate_question_answer');
 const cateQuestion = require('./routes/cate_question');
-// const request = require('./routes/request');
+const requests = require('./routes/request');
 
 app.use(faq);
 app.use(notice);
@@ -21,7 +21,7 @@ app.use(category3);
 app.use(cateTilte);
 app.use(cateAnswer);
 app.use(cateQuestion);
-// app.use(request);
+app.use(requests);
 
 app.listen(3001, () => {
     console.log("3001번 포트로 서버 동작중 ...");

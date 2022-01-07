@@ -110,6 +110,7 @@ router.route('/member/login').post((req, res) => {
                     } else {
                         const member = result[0];  
                         const pass = crypto.createHash("sha512").update(mem_password + member.salt).digest('base64');
+
                         if (pass == member.mem_password) {
                             console.log("로그인 성공");
                             // 토큰 생성
@@ -132,7 +133,7 @@ router.route('/member/login').post((req, res) => {
                                 message: '토큰이 발급되었습니다.',
                                 idx : member.idx,
                                 token: token,
-                            });
+                                });
                         } else {
                             console.log("비밀번호를 확인해주세요");
                             res.end();
@@ -143,11 +144,10 @@ router.route('/member/login').post((req, res) => {
 });
 
 // 로그아웃        
-router.route('/member/logout').get((req, res) => {
+router.route('/member/logout').get(verifyToken,(req, res) => {
             res.clearCookie('JWT');
             console.log("로그아웃완료");
             res.end();
-            // res.redirect('/');  // 나중에..
 });
         
 

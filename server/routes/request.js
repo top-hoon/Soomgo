@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const config = require("../config/config.json");
-const { verifyToken } = require('jsonwebtoken');
+const { verifyToken } = require('./jwtcheck');
 const pool = mysql.createPool(config);
 const router = express.Router();
 const conn = mysql.createConnection(config);
@@ -17,19 +17,20 @@ router.route('/request/regist').post(verifyToken,(req, res) => {
             if (err) {
                 console.log(err);
             } else {
-                console.log('요청 등록완료');
+                console.log('요청서 등록완료');
                 res.end();
             }
         });
     }
 })
 
+
 const registRequest = function (mem_idx, cate3_idx, callback) {
     pool.getConnection((err, conn) => {
         if (err) {
             console.log(err)
         } else {
-            conn.query('insert into tb_request(mem_idx, cate3_idx)values(?,?);', [mem_idx, cate3_idx], (err, result) => {
+            const sql = conn.query('insert into tb_requests(mem_idx, cate3_idx)values(?,?);', [mem_idx, cate3_idx], (err, result) => {
                 conn.release();
                 if (err) {
                     callback(err, null);

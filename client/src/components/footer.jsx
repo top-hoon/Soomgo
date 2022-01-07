@@ -1,15 +1,35 @@
-import React, { Component } from 'react';
+import React from 'react';
+import '../assets/css/common.css';
+import '../assets/css/footer.css';
+
+import AppStore from '../assets/images/icon-download-appstore.svg';
+import PlayStore from '../assets/images/icon-download-palystore.svg';
+import Facebook from '../assets/images/icon-footer-sns-facebook.svg';
+import Instagram from '../assets/images/icon-footer-sns-instagram.svg';
+import NaverBlog from '../assets/images/icon-footer-sns-naverblog.svg';
+import NaverPost from '../assets/images/icon-footer-sns-naverpost.svg';
+import Tistory from '../assets/images/icon-footer-sns-tistory.svg';
 
 function Footer() {
   return (
-    <nav class="footer">
-      <div class="footer-container">
+    <nav className="footer">
+      <div className="footer-container">
         <div>
-          <p class="contect">1599-5319</p>
-          <p class="middle">
-            평일 10:00 - 18:00
-            <br>(점심시간 13:00 - 14:00 제외 · 주말/공휴일 제외)</br>
+          <p className="contect">1599-5319</p>
+          <p className="middle">
+            평일 10:00 - 18:00<br />
+            (점심시간 13:00 - 14:00 제외 · 주말/공휴일 제외)
           </p>
+          <span className="app-download">
+            <button>
+              <img src={AppStore} />APP STORE
+            </button>
+          </span>
+          <span className="app-download">
+            <button>
+              <img src={PlayStore} />PLAY STORE
+            </button>
+          </span>
         </div>
         <div>
           <ul>
@@ -43,7 +63,7 @@ function Footer() {
           </ul>
         </div>
       </div>
-      <div class="footer-outtro">
+      <div className="footer-outtro">
         <div>
           <p>
             <span>이용약관</span>
@@ -54,18 +74,18 @@ function Footer() {
             주)브레이브모바일은 통신판매중개자로서 통신판매의 당사자가 아니며 개별 판매자가 제공하는 서비스에 대한 이행, 계약사항 등과 관련한 의무와 책임은 거래당사자에게 있습니다.
           </p>
           <p>
-            상호명:(주)브레이브모바일 · 대표이사:KIM ROBIN H · 개인정보책임관리자:김태우 · 주소:서울특별시 강남구 테헤란로 415, L7 강남타워 5층
-            <br>사업자등록번호:120-88-22325 · 통신판매업신고증:제 2015-서울강남-00567 호 · 직업정보제공사업 신고번호:서울청 제 2019-21호</br>
-            <br>고객센터:1599-5319 · 이메일:support@soomgo.com</br>
-            <br>Copyright ©Brave Mobile Inc. All Rights Reserved.</br>
+            상호명:(주)브레이브모바일 · 대표이사:KIM ROBIN H · 개인정보책임관리자:김태우 · 주소:서울특별시 강남구 테헤란로 415, L7 강남타워 5층<br />
+            사업자등록번호:120-88-22325 · 통신판매업신고증:제 2015-서울강남-00567 호 · 직업정보제공사업 신고번호:서울청 제 2019-21호
+            <br />고객센터:1599-5319 · 이메일:support@soomgo.com
+            <br />Copyright ©Brave Mobile Inc. All Rights Reserved.
           </p>
         </div>
-        <div class="link">
-          <a href=""><img src=""></img></a>
-          <a href=""><img src=""></img></a>
-          <a href=""><img src=""></img></a>
-          <a href=""><img src=""></img></a>
-          <a href=""><img src=""></img></a>
+        <div className="link">
+          <a href=""><img src={Facebook} /></a>
+          <a href=""><img src={Instagram} /></a>
+          <a href=""><img src={NaverBlog} /></a>
+          <a href=""><img src={NaverPost} /></a>
+          <a href=""><img src={Tistory} /></a>
         </div>
       </div>
     </nav>

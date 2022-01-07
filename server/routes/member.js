@@ -133,7 +133,7 @@ router.route('/member/login').post((req, res) => {
                                 message: '토큰이 발급되었습니다.',
                                 idx : member.idx,
                                 token: token,
-                            });
+                                });
                         } else {
                             console.log("비밀번호를 확인해주세요");
                             res.end();
@@ -144,11 +144,10 @@ router.route('/member/login').post((req, res) => {
 });
 
 // 로그아웃        
-router.route('/member/logout').get((req, res) => {
+router.route('/member/logout').get(verifyToken,(req, res) => {
             res.clearCookie('JWT');
             console.log("로그아웃완료");
             res.end();
-            // res.redirect('/');  // 나중에..
 });
         
 
@@ -431,7 +430,7 @@ router.route('/member/update').put((req, res) => {
 router.route('/member/delete').delete((req, res) => {
     const idx = req.query.idx;
     if (pool) {
-        memberDelete(idx, (err, result) => {
+        Deletemember(idx, (err, result) => {
             if (err) {
                 console.log('회원 삭제 실패!')
             } else {
@@ -676,7 +675,7 @@ const updateMembers = function (idx, mem_name, email, mem_password, hp, gender, 
     
     
     // 회원 삭제
-const memberDelete = function (idx, callback) {
+const Deletemember = function (idx, callback) {
     pool.getConnection((err, conn) => {
         if (err) {
             console.log(err);

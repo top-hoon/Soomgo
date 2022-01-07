@@ -9,11 +9,9 @@ app.use(cookieParser());
 const SECRET_Key = config['Secret-key'];
 
 const verifyToken = (req, res, next) => {
-    // console.log(`token:${req.cookies.JWT}`);
     const token = req.cookies.JWT;
     if (!token) {
-        console.log('토큰이 없습니다.');
-        return res.sendStatus(403);
+        return res.json({"err":"토큰이없어요"})
     }
     try {
         const data = jwt.verify(token, SECRET_Key);

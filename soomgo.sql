@@ -134,7 +134,7 @@ CREATE TABLE tb_category2(
     PRIMARY KEY (idx),
     foreign key(cate1_idx) references tb_category1(idx)
 );
-drop table tb_category1;
+
 select * from tb_category3;
 CREATE TABLE tb_category3(
     idx bigint AUTO_INCREMENT,
@@ -150,8 +150,6 @@ CREATE TABLE tb_category3(
     foreign key(cate2_idx) references tb_category2(idx)
 );
 
-select * from tb_cate_question_title;
-drop table tb_cate_question_title;
 CREATE TABLE tb_cate_question_title(
     idx bigint AUTO_INCREMENT,
     cate_level int,
@@ -189,7 +187,7 @@ CREATE TABLE tb_cate_question(
     last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (idx)
 );
-select * from tb_requests;
+
 create table tb_requests(
 	idx bigint primary key,
     regdate DATETIME DEFAULT now(),

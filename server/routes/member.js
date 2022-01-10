@@ -62,39 +62,6 @@ router.use(cookieParser());
     }
     });
 
-//     // 로그인
-// router.route('/member/login').post((req, res) => {
-//     const email = req.body.email;
-//     const mem_password = req.body.mem_password;
-//     var sql1 = 'SELECT salt, mem_password FROM tb_members WHERE email = ?';
-//     if (pool) {
-//         login  (email, mem_password, callback) {
-//             pool.getConnection((err, conn) => {
-//                 if (err) {
-//                     console.log(err);
-//                 } else {
-//                     conn.query(sql1, [email], function (err, result) {
-//                         if (err)
-//                             console.log(err);
-//                         if (!result[0]) {
-//                             console.log(result);
-//                             member = result[0];
-//                         } else {
-//                             crypto.pbkdf2Sync(mem_password, member.salt, 100000, 32, 'sha512'), function (err, der) {
-//                                 if (err)
-//                                     console.log(err);
-//                                 if (der.toString('base64') === member.mem_password) {
-//                                     console.log("성공;;")
-//                                 }
-//                             }
-//                         }
-//                     });
-//                 }
-//             });
-//         }
-//     }
-// });
-
     // 로그인 
 router.route('/member/login').post((req, res) => {
     const email = req.body.email;
@@ -120,7 +87,7 @@ router.route('/member/login').post((req, res) => {
                                 name: member.mem_name,
                                 idx: member.idx
                             }, SECRET_Key, {
-                                expiresIn: '30s',
+                                expiresIn: '25m',
                                 issuer: '관리자',
                             });
                             const refreshToken = jwt.sign({
@@ -129,12 +96,12 @@ router.route('/member/login').post((req, res) => {
                                 name: member.mem_name,
                                 idx: member.idx
                             }, SECRET_Key, {
-                                expiresIn: '1m',
+                                expiresIn: '1d',
                                 issuer: '관리자',
                             });
                             // 쿠키로 보내기
                                 res.cookie('JWT', token, {maxAge: 1800000,httpOnly: true})
-                                res.cookie('refreshJWT', refreshToken, {maxAge: 3600000,httpOnly: true})
+                                res.cookie('refreshJWT', refreshToken, {maxAge: 80000000, httpOnly: true})
                                 .status(200).json({
                                 code: 200,
                                 message: '토큰이 발급되었습니다.',
@@ -879,7 +846,5 @@ const Deletemember = function (idx, callback) {
     });
 }
 
-
-
-    module.exports = router;
+module.exports = router;
 

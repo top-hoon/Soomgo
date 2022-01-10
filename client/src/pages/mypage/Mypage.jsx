@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import '../../assets/css/common.css';
 import '../../assets/css/mypage.css';
-
+import axios from 'axios';
 import Right from '../../assets/images/icon-mypage-list-arrow.svg';
 import SoomgoPay from '../../assets/images/soomgopay-info.svg';
 import EscrowList from '../../assets/images/icon-mypage-escrow-list.svg';
@@ -14,6 +14,15 @@ import Notice from '../../assets/images/icon-mypage-soomgo-notice.svg';
 
 
 function Mypage() {
+  const [user, setUser] = useState([]);
+  const [members, setMembers] = useState([]);
+  
+  useEffect(() => {
+    axios.get("/member/detail?idx=1")
+    .then(res => setMembers(res.data))
+    .catch(err => console.log(err))
+  },[]);
+
   return(
     <section className="mypage">
       <div className="mypage-container">
@@ -27,10 +36,10 @@ function Mypage() {
             </div>
             <div className="user-info">
               <div className="user-name">
-                <span className="name-length">정상훈</span>고객님
+                <span className="name-length">{members[0]?.mem_name}</span>고객님
               </div>
               <div className="user-id">
-                <span className="id-length">top-hoon@naver.com</span>
+                <span className="id-length">{members[0]?.email}</span>
               </div>
             </div>
             <div className="arrow">

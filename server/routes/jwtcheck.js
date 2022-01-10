@@ -52,6 +52,7 @@ const verifyToken = (req, res, next) => {
             const data = jwt.verify(newRefreshToken, SECRET_Key);
             req.idx = data.idx;
             return next();
+            
 
         } else {
             const data = jwt.verify(token, SECRET_Key);

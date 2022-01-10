@@ -119,11 +119,12 @@ const DeleteCategoryQuestion = function (idx, callback) {
 
 // 카테고리 질문 불러오기! question (회원)
 router.route('/category').get((req, res) => {
-    const cate_level = req.query.cate_level;
-    const cate_idx = req.query.cate_idx;
+    const cate1_idx = req.query.cate1_idx;
+    const cate2_idx = req.query.cate2_idx;
+    const cate3_idx = req.query.cate3_idx;
 
     if (pool) {
-        memberQuestion(cate_level, cate_idx, (err, result) => {
+        memberQuestion(cate1_idx, cate2_idx, cate3_idx, (err, result) => {
             if (err) {
                 console.log("카테고리 질문 불러오기 실패");
             } else {
@@ -134,56 +135,45 @@ router.route('/category').get((req, res) => {
     }
 });
 
-const memberQuestion = function (cate_level, cate_idx, callback) {
+const memberQuestion = function (cate1_idx, cate2_idx, cate3_idx, callback) {
     pool.getConnection((err, conn) => {
         if (err) {
             console.log(err);
         } else {
-            if (cate_level = 3) {
-                conn.query('select * from tb_cate_question as c join tb_cate_question_title as ct on c.cate_question_title_idx = ct.idx join tb_cate_question_answer as a on c.cate_question_answer_idx = a.idx where c.cate_level=3 and c.cate_idx=?', [cate_idx], (err, result1) => {
-                    if (err) {
-                        console.log(err);
-                        conn.release();
-                    } else {
-                        var cate_level3 = {};
-                        var question_list = [];
-                        var question = {};
-                        var temp_question_idx = null;
-                        var answer = {}
+            conn.query('select * from tb_cate_question as c join tb_cate_question_title as ct on c.cate_question_title_idx = ct.idx join tb_cate_question_answer as a on c.cate_question_answer_idx = a.idx where (c.cate_idx=? and c.cate_level = 1) or (c.cate_level = 2 and c.cate_idx = ?) or (c.cate_level = 3 and c.cate_idx = ?) order by c.cate_level, c.cate_question_title_idx, c.cate_question_answer_idx', [cate1_idx, cate2_idx, cate3_idx], (err, result1) => {
+                if (err) {
+                    console.log(err);
+                    conn.release();
+                } else {
+                    var question_list = [];
+                    var question = {};
+                    var temp_question_idx = null;
+                    var answer = {}
 
-                        Array.from(result1).forEach((e) => {
-                            if(temp_question_idx != e.cate_question_title_idx){
-                                if(temp_question_idx != null){
-                                    question_list.push(question)
-                                    console.log(question_list)
-                                }
-                                question = {
-                                    title_idx : e.title_idx,
-                                    title : e.title,
-                                    answerList : []
-                                };
-                                temp_question_idx = e.cate_question_title_idx;
+                    Array.from(result1).forEach((e) => {
+                        if(temp_question_idx != e.cate_question_title_idx){
+                            if(temp_question_idx != null){
+                                question_list.push(question)
+                                console.log(question_list)
                             }
-                            answer = {
-                                idx : e.idx,
-                                des : e.des
-                            }
-                            question.answerList.push(answer)
-                            console.log(question)
-                        })
-                        question_list.push(question)
-                        callback(null, question_list);
+                            question = {
+                                title_idx : e.title_idx,
+                                title : e.title,
+                                answerList : []
+                            };
+                            temp_question_idx = e.cate_question_title_idx;
                         }
-                    });
-            } else if (cate_level = 2) {
-                const sql = conn.query()
-                conn.release();
-                callback(err, result);
-            } else {
-                const sql = conn.query()
-                conn.release();
-                callback(err, result);
-            }
+                        answer = {
+                            idx : e.idx,
+                            des : e.des
+                        }
+                        question.answerList.push(answer)
+                        console.log(question)
+                    })
+                    question_list.push(question)
+                    callback(null, question_list);
+                    }
+                });
         }
     });
 }

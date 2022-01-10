@@ -86,7 +86,7 @@ const updateCategoryQuestion = function (idx, cate_level, cate_idx, cate_questio
 
     // 카테고리  질문 삭제
 router.route('/categoryQuestion/delete').delete((req, res) => {
-    const idx = req.body.idx;
+    const idx = req.query.idx;
     if (pool) {
         DeleteCategoryQuestion(idx, (err, result) => {
             if (err) {
@@ -119,8 +119,8 @@ const DeleteCategoryQuestion = function (idx, callback) {
 
 // 카테고리 질문 불러오기! question (회원)
 router.route('/category').get((req, res) => {
-    const cate_level = req.body.cate_level;
-    const cate_idx = req.body.cate_idx;
+    const cate_level = req.query.cate_level;
+    const cate_idx = req.query.cate_idx;
 
     if (pool) {
         memberQuestion(cate_level, cate_idx, (err, result) => {
@@ -140,55 +140,40 @@ const memberQuestion = function (cate_level, cate_idx, callback) {
             console.log(err);
         } else {
             if (cate_level = 3) {
-                conn.query('select * from tb_cate_question as c join tb_cate_question_title as ct on c.cate_question_title_idx = ct.idx join tb_cate_question_answer as a on c.cate_question_answer_idx = a.idx where c.cate_idx=?', [cate_idx], (err, result1) => {
+                conn.query('select * from tb_cate_question as c join tb_cate_question_title as ct on c.cate_question_title_idx = ct.idx join tb_cate_question_answer as a on c.cate_question_answer_idx = a.idx where c.cate_level=3 and c.cate_idx=?', [cate_idx], (err, result1) => {
                     if (err) {
                         console.log(err);
                         conn.release();
                     } else {
+                        var cate_level3 = {};
+                        var question_list = [];
+                        var question = {};
+                        var temp_question_idx = null;
+                        var answer = {}
 
-                        var category = []
-                        var question = []
-                        //test
-                        // var answerList = []
-                        // category.push(answerList)
-
-                        category.push(question)
-                        Array.from(result1).forEach((e) => {   
-                            question_list = {
-                                answerList: [   ]
+                        Array.from(result1).forEach((e) => {
+                            if(temp_question_idx != e.cate_question_title_idx){
+                                if(temp_question_idx != null){
+                                    question_list.push(question)
+                                    console.log(question_list)
+                                }
+                                question = {
+                                    title_idx : e.title_idx,
+                                    title : e.title,
+                                    answerList : []
+                                };
+                                temp_question_idx = e.cate_question_title_idx;
                             }
-
-                            question_list.title = e.title
-                            question_list.titleidx = e.cate_question_title_idx
-
-                            a = {}
-                            a.answer_idx = e.cate_question_answer_idx
-                            a.answer = e.des;
-
-                            question_list.answerList.push(a);
-                            question.push(question_list)
-                            
-
-
-
-                            // var title = {
-                            //     anslist: {}
-                            // },
-                            // ansList = []
-                            
-                            // title.title_idx = e.cate_question_title_idx
-                            // title.title = e.title
-
-                            // title.anslist.idx = e.cate_question_answer_idx;
-                            // title.anslist.answ = e.des;
-
-                            // ansList.push(title)
-                            // answerList.push(ansList)
-
-                        }); 
-
-
-                            callback(null, result1);
+                            answer = {
+                                idx : e.idx,
+                                des : e.des
+                            }
+                            question.answerList.push(answer)
+                            console.log(question)
+                        })
+                        
+                        question_list.push(question)
+                        callback(null, question_list);
                         }
                     });
             } else if (cate_level = 2) {

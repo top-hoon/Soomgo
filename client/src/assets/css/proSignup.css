@@ -1,0 +1,726 @@
+.hero-image-container {
+    height: 24.375rem;
+    position: relative;
+    color: #fff;
+    text-align: center;
+    background: linear-gradient(180deg,rgba(0,0,0,.3),rgba(50,50,50,.6) 65%),url(https://assets.cdn.soomgo.com/images/hero-signup-pro.jpg);
+    background-size: cover;
+    background-position: center 36%;
+}
+.hero-image-container .container{
+    padding-top: 5rem;
+}
+.container {
+    width: 100%;
+    padding-right: 0.9375rem;
+    padding-left: 0.9375rem;
+    margin-right: auto;
+    margin-left: auto;
+}
+.hero-image-container .container h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1.28;
+    letter-spacing: normal;
+    margin-bottom: 1.25rem;
+    text-align: left;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+.h3, h3 {
+    font-size: 1.75rem;
+    line-height: 2.625rem;
+    font-weight: 400;
+    letter-spacing: -.03125rem;
+}
+.h1, .h2, h1, h2 {
+    font-weight: 400;
+}
+.h1, h1 {
+    font-size: 2.5rem;
+    line-height: 3.75rem;
+    letter-spacing: -.04375rem;
+}
+.h2, h2 {
+    font-size: 2rem;
+    line-height: 3rem;
+    letter-spacing: -.0375rem;
+}
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+.hero-image-container .container p {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+}
+/* 카테고리 */
+.category-container{
+    height: 9.5rem;
+    background-color: #f9f9f9;
+}
+.category-container .category1-box {
+    padding: 1.75rem 2.8125rem;
+    border-radius: 0.625rem;
+    box-shadow: 0 0 1.25rem 0 rgb(0 0 0 / 10%);
+    background-color: #fff;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 21.25rem;
+}
+.category-container .category1-box h3 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: normal;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.category1-buttons.flex{
+    display: flex;
+}
+.category1-buttons {
+    margin-bottom: 0;
+}
+.list-inline, .list-unstyled {
+    padding-left: 0;
+    list-style: none;
+}
+.category1-buttons.flex>.category {
+    flex: 1;
+    width: auto;
+}
+.category{
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+.category{
+    width: 25%;
+    padding-left: 0.46875rem;
+    padding-right: 0.46875rem;
+    display: inline-block;
+    text-align: center;
+}
+ul {
+    padding: 0;
+}
+ul li {
+    list-style: none;
+}
+a {
+    color: #323232;
+    text-decoration: none;
+    background-color: transparent;
+}
+/* 많은 사람들이 당신의 서비스를 기다립니다 */
+#people {
+    background-color: #f9f9f9;
+    padding: 3.125rem 0;
+    text-align: center;
+}
+.container, .container-lg, .container-md, .container-sm, .container-xl {
+    max-width: 62.5rem;
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -0.9375rem;
+    margin-left: -0.9375rem;
+}
+.col-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+.col, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col-auto, .col-lg, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-auto, .col-md, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md-auto, .col-sm, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-auto, .modal .modal-footer .btn {
+    position: relative;
+    width: 100%;
+    padding-right: 0.9375rem;
+    padding-left: 0.9375rem;
+}
+#people h2 {
+    font-size: 1.875rem;
+    letter-spacing: -.05625rem;
+    text-align: center;
+    margin: 1.25rem 0 1.875rem;
+    color: #000;
+    line-height: 1.5;
+}
+#people .headline, #people h2, #people h3 {
+    word-break: keep-all;
+}
+#people .headline {
+    color: #909090;
+    font-size: 1rem;
+}
+.col-4 {
+    flex: 0 0 33.33333%;
+    max-width: 33.33333%;
+}
+#people h3 {
+    font-size: 3.125rem;
+    text-align: center;
+    color: #00c7ae;
+    margin: 1.25rem 0;
+}
+#people .label-count {
+    font-size: 1rem;
+    text-align: center;
+    color: #000;
+    margin-bottom: 1.875rem;
+}
+#operation {
+    padding: 3.125rem 0;
+    text-align: center;
+}
+#operation h2{
+    font-size: 1.875rem;
+    font-weight: 500;
+    letter-spacing: -.05625rem;
+    text-align: center;
+    color: #000;
+    margin-bottom: 3.125rem;
+    line-height: 1.5;
+}
+#operation h2, #operation h3 {
+    word-break: keep-all;
+}
+
+figure {
+    margin: 0 0 1rem;
+}
+article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+    display: block;
+}
+img, svg {
+    vertical-align: middle;
+}
+img {
+    border-style: none;
+}
+#operation h3 {
+    font-size: 1.25rem;
+    margin: 1.25rem 0;
+}
+#operation figcaption{
+    margin-bottom: 3.125rem;
+    font-size: .875rem;
+    color: #5a5a5a;
+    word-break: keep-all;
+}
+#operation .btn-lg {
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.9375rem 1.875rem;
+}
+.btn {
+    font-weight: 500;
+    transition: opacity .2s ease-in-out;
+}
+.btn-group-lg>.btn, .btn-lg {
+    padding: 0.65625rem 1rem;
+    font-size: 1.375rem;
+    line-height: 1.5;
+    border-radius: 0.3rem;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #00c7ae;
+    border-color: #00c7ae;
+}
+
+/* 숨은 고수들의 생생한 후기 */
+#testimonial[data-v-2cebe516] {
+    padding: 3.125rem 0 5rem;
+}
+#testimonial h2[data-v-2cebe516] {
+    font-size: 1.875rem;
+    font-weight: 500;
+    letter-spacing: -.05625rem;
+    text-align: center;
+    color: #000;
+    margin-bottom: 3.125rem;
+    line-height: 1.5;
+}
+#testimonial .testimonial-summary-list-comp[data-v-2cebe516] {
+    position: relative;
+    text-align: center;
+}
+.testimonial-summary-list-comp[data-v-0efc47ab] {
+    position: relative;
+}
+.testimonial-summary-list-comp .summary-list[data-v-0efc47ab] {
+    margin-bottom: 0;
+}
+.slick-dotted.slick-slider {
+    margin-bottom: 30px;
+}
+.slick-list, .slick-slider {
+    position: relative;
+    display: block;
+}
+.slick-list {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+.slick-slider .slick-list, .slick-slider .slick-track {
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+}
+.slick-track {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.slick-track:after, .slick-track:before {
+    display: table;
+    content: "";
+}
+[data-v-22f5ed86] .slick-slide {
+    cursor: pointer;
+}
+.slick-slide {
+    cursor: pointer;
+}
+.slick-initialized .slick-slide {
+    display: block;
+}
+.col-sm-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+.col-sm-12{
+    width: 100%; 
+    display: inline-block;
+}
+.testimonial-summary[data-v-01f026ba] {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+}
+.s-card[data-v-01f026ba] {
+    border: 0.0625rem solid #e1e1e1;
+    border-radius: 5px;
+    padding: 1.5rem;
+    background-color: #fff;
+}
+.testimonial-summary .row[data-v-01f026ba] {
+    margin: 0;
+}
+.testimonial-summary div[data-name=provider][data-v-01f026ba] {
+    width: 16.66%;
+    margin-top: -1.5rem;
+    margin-bottom: -1.5rem;
+    margin-left: -1.5rem;
+    padding: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+.testimonial-summary div[data-name=provider] div[data-name=provider-info][data-v-01f026ba] {
+    background-color: rgba(0,0,0,.35);
+    padding: 7.5rem 1.5rem 1.5rem;
+    text-align: left;
+}
+.testimonial-summary div[data-name=provider] div[data-name=provider-info] [data-v-01f026ba] {
+    color: #fff;
+}
+.testimonial-summary div[data-name=provider-info] h2[data-v-01f026ba] {
+    font-size: 1rem;
+    margin-bottom: 0.375rem;
+}
+.testimonial-summary div[data-name=provider-info] [data-v-01f026ba] {
+    color: #323232;
+    margin: 0;
+    line-height: 1.1;
+}
+.testimonial-summary div[data-name=provider-info] h3[data-v-01f026ba] {
+    font-size: .875rem;
+    font-weight: 400;
+}
+.testimonial-summary div[data-name=provider-info].visible-xs[data-v-01f026ba] {
+    display: none;
+}
+.testimonial-summary div[data-name=provider-info][data-v-01f026ba] {
+    text-align: center;
+}
+.testimonial-summary div[data-name=content][data-v-01f026ba] {
+    overflow: hidden;
+}
+
+.testimonial-summary div[data-name=content] p[data-v-01f026ba] {
+    display: -webkit-box;
+    max-height: 6em;
+    line-height: 1.5;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: #323232;
+    text-align: left;
+    margin: 0;
+}
+.testimonial-summary a.view-more[data-v-01f026ba] {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    color: #323232;
+}
+.testimonial-summary a[data-v-01f026ba] {
+    cursor: pointer;
+    outline: 0;
+}
+
+div[data-v-0efc47ab] {
+    width: 100%;
+    display: inline-block;
+}
+
+.slick-slide .slick-current .slick-active {
+    width: 970px;
+}
+
+.testimonial-summary .row{
+    margin: 0;
+}
+.testimonial-summary div[data-name=provider] {
+    width: 16.66%;
+    margin-top: -1.5rem;
+    margin-bottom: -1.5rem;
+    margin-left: -1.5rem;
+    padding: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+.testimonial-summary div[data-name=provider] div[data-name=provider-info] {
+    background-color: rgba(0,0,0,.35);
+    padding: 7.5rem 1.5rem 1.5rem;
+    text-align: left;
+}
+.testimonial-summary div[data-name=provider] div[data-name=provider-info] [data-v-01f026ba] {
+    color: #fff;
+}
+.testimonial-summary div[data-name=provider] div[data-name=provider-info] {
+    color: #fff;
+}
+.testimonial-summary div[data-name=provider-info] h2[data-v-01f026ba] {
+    font-size: 1rem;
+    margin-bottom: 0.375rem;
+}
+.testimonial-summary div[data-name=provider-info] h2 {
+    font-size: 1rem;
+    margin-bottom: 0.375rem;
+}
+.testimonial-summary div[data-name=provider-info] {
+    color: #323232;
+    margin: 0;
+    line-height: 1.1;
+}
+.testimonial-summary div[data-name=provider-info] h3 {
+    font-size: .875rem;
+    font-weight: 400;
+}
+.testimonial-summary div[data-name=provider-info].visible-xs {
+    display: none;
+}
+.testimonial-summary div[data-name=provider-info] {
+    text-align: center;
+}
+.testimonial-summary div[data-name=content] {
+    overflow: hidden;
+}
+.col-sm-10 {
+    flex: 0 0 83.33333%;
+    max-width: 83.33333%;
+}
+.testimonial-summary div[data-name=content] p {
+    max-height: 6em;
+    line-height: 1.5;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: #323232;
+    text-align: left;
+    margin: 0;
+}
+.testimonial-summary a.view-more {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    color: #323232;
+}
+.testimonial-summary a {
+    cursor: pointer;
+    outline: 0;
+}
+a:not([href]) {
+    color: inherit;
+    text-decoration: none;
+}
+.slick-slide {
+    display: none;
+    float: left;
+    height: 100%;
+    min-height: 1px;
+}
+.slick-initialized .slick-slide {
+    display: block;
+}
+.testimonial-summary{
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+}
+.s-card {
+    border: 0.0625rem solid #e1e1e1;
+    border-radius: 5px;
+    padding: 1.5rem;
+    background-color: #fff;
+}
+.testimonial-summary div[data-name=provider]{
+    width: 16.66%;
+    margin-top: -1.5rem;
+    margin-bottom: -1.5rem;
+    margin-left: -1.5rem;
+    padding: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+.testimonial-summary div[data-name=provider] div[data-name=provider-info] {
+    background-color: rgba(0,0,0,.35);
+    padding: 7.5rem 1.5rem 1.5rem;
+    text-align: left;
+}
+
+element.style {
+    width: 100%;
+    display: inline-block;
+}
+
+/* slick */
+.testimonial-summary-list-comp .slick-navigation {
+    display: flex;
+    position: absolute;
+    right: 0;
+    bottom: 1.5625rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    text-align: right;
+}
+.testimonial-summary-list-comp .slick-navigation .angle-icon.prev{
+    margin-right: 1.25rem;
+}
+.testimonial-summary-list-comp .slick-navigation .angle-icon {
+    padding-bottom: 0.375rem;
+    cursor: pointer;
+}
+.testimonial-summary-list-comp .btn.btn-view-more {
+    visibility: hidden;
+}
+.testimonial-summary-list-comp .slick-navigation .slick-dots-wrap .slick-dots {
+    position: relative;
+    bottom: 0;
+    width: auto;
+}
+.slick-dots {
+    position: absolute;
+    bottom: -25px;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+}
+.slick-dots-wrap .slick-dots li {
+    width: 1.25rem!important;
+    height: 1.25rem!important;
+    margin: 0!important;
+    transform: scale(1)!important;
+    list-style: none;
+    vertical-align: top;
+}
+.slick-dots li button {
+    font-size: 0;
+    line-height: 0;
+    display: block;
+    padding: 5px;
+    color: transparent;
+    border: 0;
+    outline: none;
+    background: transparent;
+}
+.slick-dots li, .slick-dots li button {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+.slick-dots li {
+    position: relative;
+    display: inline-block;
+    margin: 0 5px;
+    padding: 0;
+}
+[type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
+    cursor: pointer;
+}
+.slick-dots-wrap .slick-dots .slick-active button:before {
+    color: #4e80f5;
+}
+.slick-dots-wrap .slick-dots li button:before {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.slick-dots li.slick-active button:before {
+    opacity: .75;
+    color: #000;
+}
+.slick-dots li button:before {
+    font-family: slick;
+    font-size: 33px;
+    line-height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    content: "•";
+    text-align: center;
+    opacity: .25;
+    color: #000;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.testimonial-summary-list-comp .slick-navigation .angle-icon.next {
+    margin-left: 1.25rem;
+}
+.testimonial-summary-list-comp .slick-navigation .angle-icon {
+    padding-bottom: 0.375rem;
+    cursor: pointer;
+}
+
+/* clip */
+#clip {
+    padding: 6.25rem 0;
+}
+#clip {
+    background-color: #f9f9f9;
+    padding: 3.125rem 0;
+    text-align: center;
+}
+#clip .clip-title{
+    width: 100%;
+}
+#clip .col-12 {
+    padding: 0 0.5625rem;
+}
+#clip h2 {
+    font-size: 2.25rem;
+    margin-bottom: 1.875rem;
+    color: #000;
+}
+#clip p.headline {
+    margin-bottom: 3.125rem;
+}
+#clip .headline {
+    font-size: 1rem;
+    text-align: center;
+    color: #909090;
+    margin-bottom: 6.25rem;
+}
+.clip-row{
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: (33.33%);
+    grid-template-columns: repeat(3,33.33%);
+    -ms-grid-rows: (20.125rem);
+    grid-template-rows: repeat(3,20.125rem);
+}
+.clip-wrap.lg {
+    -ms-grid-column-span: 2;
+    grid-column: span 2;
+    -ms-grid-row-span: 2;
+    grid-row: span 2;
+}
+.clip-wrap {
+    position: relative;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+.clip-bg-04 {
+    background-image: url(https://assets.cdn.soomgo.com/images/pro-signup/clip_img_04.png);
+}
+.clip-bg {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: 50%;
+    padding: 1.25rem;
+}
+.clip-wrap h3 {
+    font-size: 1.25rem;
+    color: #fff;
+    font-weight: 100;
+    margin-bottom: 0;
+    position: absolute;
+    bottom: 1.75rem;
+    line-height: 1.1;
+}
+.clip-wrap small{
+    font-size: .875rem;
+    color: #fff;
+    display: block;
+    margin-top: 0.3125rem;
+    line-height: 1;
+}
+.small, small {
+    font-size: 80%;
+    font-weight: 400;
+}
+small {
+    font-size: 80%;
+}
+.clip-bg-05{
+    background-image: url(https://assets.cdn.soomgo.com/images/pro-signup/clip_img_05.png);
+}
+.clip-wrap img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-top: -1.25rem;
+    margin-left: -1.25rem;
+}
+.clip-bg-06 {
+    background-image: url(https://assets.cdn.soomgo.com/images/pro-signup/clip_img_06.png);
+}
+.clip-bg-07 {
+    background-image: url(https://assets.cdn.soomgo.com/images/pro-signup/clip_img_07.png);
+}
+.clip-bg-09{
+    background-image: url(https://assets.cdn.soomgo.com/images/pro-signup/clip_img_09.png);
+}
+.clip-wrap.double-width{
+    -ms-grid-column-span: 2;
+    grid-column: span 2;
+    -ms-grid-row-span: 1;
+    grid-row: span 1;
+}

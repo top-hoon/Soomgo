@@ -14,7 +14,7 @@ import ChatDetail from './pages/ChatDetail';
 import Mypage from './pages/mypage/Mypage';
 import AccountInfo from './pages/mypage/AccountInfo';
 import MypageSettings from './pages/mypage/MypageSettings';
-
+import ProSearch from './pages/ProSearch';
 
 
 export default function Routes() {
@@ -26,7 +26,7 @@ export default function Routes() {
         <Route exact path="/Signup" component={Signup} />
         <Route exact path="/FindPwd" component={FindPwd} />
         <Route exact path="/ProSignup" component={ProSignup} />
-        
+        <Route exact path="/ProSearch" component={ProSearch} />
         <Route exact path="/Categories" component={Categories} />
         <Route exact path="/SendRequest" component={SendRequest} />
         <Route exact path="/SentRequest" component={SentRequest} />
@@ -35,6 +35,7 @@ export default function Routes() {
         <Route exact path="/Mypage" component={Mypage} />
         <Route exact path="/Mypage/Account-info" component={AccountInfo} />
         <Route exact path="/Mypage/Account-info/Settings" component={MypageSettings} />
+       
       </Switch>
     </BrowserRouter>
   );

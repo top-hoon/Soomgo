@@ -119,8 +119,9 @@ router.route('/member/login').post((req, res) => {
                                 email: member.email,
                                 name: member.mem_name,
                                 idx: member.idx
+                                // exp = datetime.utcnow() + timedelta(hours = 9)
                             }, SECRET_Key, {
-                                expiresIn: '30s',
+                                expiresIn: '30m',
                                 issuer: '관리자',
                             });
                             const refreshToken = jwt.sign({
@@ -129,7 +130,7 @@ router.route('/member/login').post((req, res) => {
                                 name: member.mem_name,
                                 idx: member.idx
                             }, SECRET_Key, {
-                                expiresIn: '1m',
+                                expiresIn: '2d',
                                 issuer: '관리자',
                             });
                             // 쿠키로 보내기

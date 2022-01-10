@@ -14,7 +14,7 @@ function UserNav() {
   ])
 
   const flag = () => {
-    axios.get('/member/detail?idx=6')
+    axios.get('/member/detail?idx=1')
     .then(res => setUser(res.data))
     .catch(err => console.log(err))
     
@@ -36,7 +36,6 @@ function UserNav() {
     .catch(err => console.log(err))
   },[]);
 
-  console.log(members[0]?.email);
 
 
 

@@ -171,7 +171,6 @@ const memberQuestion = function (cate_level, cate_idx, callback) {
                             question.answerList.push(answer)
                             console.log(question)
                         })
-                        
                         question_list.push(question)
                         callback(null, question_list);
                         }
@@ -188,32 +187,5 @@ const memberQuestion = function (cate_level, cate_idx, callback) {
         }
     });
 }
-
-// const memberQuestion = function (cate_level, cate_idx, callback) {
-//     pool.getConnection((err, conn) => {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             if (cate_level = 1) {
-//                 conn.query('select * from  tb_cate_question as a  join tb_cate_question_title as b on a.cate_idx=b.cate_idx  where b.cate_idx=?;', [cate_idx], (err, result1) => {
-//                     if (err) {
-//                         console.log(err);
-//                         conn.release();
-//                     } else {
-//                         console.log(result1);
-//                     }
-//                 });
-//             } else if (cate_level = 2) {
-//                 const sql = conn.query()
-//                 conn.release();
-//                 callback(err, result);
-//             } else {
-//                 const sql = conn.query()
-//                 conn.release();
-//                 callback(err, result);
-//             }
-//         }
-//     });
-// }
 
 module.exports = router;

@@ -125,6 +125,11 @@ function listCategory1(callback){
         else{
             const sql = conn.query("select * from tb_category1", (err, result) => {
                 conn.release();
+                console.log(typeof result);
+                console.log(typeof Array.from(result))
+                Array.from(result).forEach((column) => {
+                    console.log(column)
+                })
                 callback(err, result);
             })
         }

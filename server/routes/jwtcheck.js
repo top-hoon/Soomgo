@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const app = express();
 app.use(cookieParser());
 
-
 const SECRET_Key = config['Secret-key'];
 
 const verifyToken = (req, res, next) => {

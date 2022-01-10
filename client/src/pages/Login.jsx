@@ -58,7 +58,7 @@ function Login(){
 
   // clickSubmit 에서 전달받은 데이터 서버로 전달.
   function signin(email, mem_password) {
-    axios.post('member/login',
+    axios.post('/member/login',
       { email, mem_password },
       { withCredentials: true, crossDomain: true },
       console.log('email: ' + email + ' / ' + 'password: ' + mem_password))
@@ -68,7 +68,9 @@ function Login(){
         localStorage.setItem('Soomgo', JSON.stringify(data))
         if (!res.data == '') {
           window.location.replace('/')
-        }
+          
+        }else
+          alert('아이디와 비밀번호를 확인해주세요.');
       })
       .catch(err => {
         console.log(err)
@@ -114,3 +116,7 @@ function Login(){
 
 
 export default Login;
+
+export const signin = () => {
+  
+}

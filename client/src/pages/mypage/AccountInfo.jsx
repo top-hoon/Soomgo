@@ -1,14 +1,28 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import '../../assets/css/common.css';
 import '../../assets/css/mypage.css';
-
+import axios from 'axios';
 import Profile from '../../assets/images/basic-profile.svg';
 import CameraIcon from '../../assets/images/camera-icon.svg';
 import Right from '../../assets/images/icon-mypage-list-arrow.svg';
 
+
 function AccountInfo() {
+  // const accessToken;
+  // axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken.token}`;
+
+  // document.cookie = `Soomgo=${accessToken.token}`;
   
+  const [user, setUser] = useState([]);
+  const [members, setMembers] = useState([]);
+  
+  useEffect(() => {
+    axios.get("/mypage/account-info")
+    .then(res => setMembers(res.data))
+    .catch(err => console.log(err))
+  },[]);
+
   const popup = () => {
     document.querySelector('.swal2-center').style.display = 'block';
   }
@@ -34,7 +48,7 @@ function AccountInfo() {
             <Link className="item-container" to="/mypage/account-info/settings">
               <div className="item">
                 <div className="item-title">이름</div>
-                <div className="item-info">홍길동</div>
+                <div className="item-info">{members[0]?.mem_name}</div>
               </div>
               <div><img src={Right} /></div>
             </Link>
@@ -42,7 +56,7 @@ function AccountInfo() {
               <div className="item">
                 <div className="item-title">이메일</div>
                 <div className="item-info">
-                  <span>glidong@naver.com</span>
+                  <span>{members[0]?.email}</span>
                 </div>
               </div>
               <div><img src={Right} /></div>

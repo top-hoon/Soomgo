@@ -12,7 +12,7 @@ const SECRET_Key = config['Secret-key'];
 const { verifyToken } = require('./jwtcheck');
 const multer = require('multer');
 const path = require('path');
-
+const nodemailer = require('nodemailer');
 
 router.use(express.json());
 router.use(bodyParser.urlencoded({ extended: false }));
@@ -117,22 +117,31 @@ router.route('/member/login').post((req, res) => {
                             const token = jwt.sign({
                                 type: 'JWT',
                                 email: member.email,
-                                name: member.name,
+                                name: member.mem_name,
                                 idx: member.idx
+                                // exp = datetime.utcnow() + timedelta(hours = 9)
                             }, SECRET_Key, {
                                 expiresIn: '30m',
                                 issuer: '관리자',
                             });
+                            const refreshToken = jwt.sign({
+                                type: 'refreshJWT',
+                                email: member.email,
+                                name: member.mem_name,
+                                idx: member.idx
+                            }, SECRET_Key, {
+                                expiresIn: '2d',
+                                issuer: '관리자',
+                            });
                             // 쿠키로 보내기
-                                res.cookie('JWT', token, {
-                                maxAge: 1000 * 60 * 60 * 24 * 7,
-                                httpOnly: true,
-                            })
+                                res.cookie('JWT', token, {maxAge: 1800000,httpOnly: true})
+                                res.cookie('refreshJWT', refreshToken, {maxAge: 3600000,httpOnly: true})
                                 .status(200).json({
                                 code: 200,
                                 message: '토큰이 발급되었습니다.',
                                 idx : member.idx,
-                                token: token,
+                                Token: token,
+                                RefreshToken: refreshToken,
                                 });
                         } else {
                             console.log("비밀번호를 확인해주세요");
@@ -144,8 +153,9 @@ router.route('/member/login').post((req, res) => {
 });
 
 // 로그아웃        
-router.route('/member/logout').get(verifyToken,(req, res) => {
+router.route('/member/logout').get((req, res) => {
             res.clearCookie('JWT');
+            res.clearCookie('refreshJWT');
             console.log("로그아웃완료");
             res.end();
 });
@@ -162,11 +172,13 @@ router.route('/mypage/account-info').get(verifyToken,(req, res) => {
                 res.end();
             } else {
                 console.log("개인 정보 출력 성공");
-                res.send(result);
+                res.json(result);
             }
         });
     }
 });
+
+
 //---------------------------------
 // 마이페이지 /mypage/account-info/settings/name
 router.route('/mypage/account-info/settings/name').get(verifyToken,(req, res) => {
@@ -178,11 +190,12 @@ router.route('/mypage/account-info/settings/name').get(verifyToken,(req, res) =>
                 res.end();
             } else {
                 console.log("이름 출력 성공");
-                res.send(result);
+                res.json(result);
             }
         });
     }
 })
+
 
 // 마이페이지 이름수정
 router.route('/mypage/account-info/settings/editName').put(verifyToken,(req, res) => {
@@ -200,6 +213,7 @@ router.route('/mypage/account-info/settings/editName').put(verifyToken,(req, res
     }
 });
 //---------------------------------
+
 
 //---------------------------------
 // 마이페이지 /mypage/account-info/settings/email
@@ -328,6 +342,7 @@ const fileFilter = (req, file, callback) => {
     }
 }
 
+
 upload = multer({ storage: storage, fileFilter: fileFilter });      // limit사이즈는 나중에
 // 마이페이지  프로필사진 등록
 router.route('/mypage/img').post(verifyToken,upload.single('image'), (req, res) => {  // 다중파일은 조금만 수정해주면됨
@@ -345,7 +360,7 @@ router.route('/mypage/img').post(verifyToken,upload.single('image'), (req, res) 
                 res.end();
             } else {
                 console.log('성공');
-                res.send(result);
+                res.json(result);
                 res.end();
             }
         });
@@ -366,16 +381,48 @@ const mypageImg = function (idx, image, callback){
         }
     });
 }
+// 이미지 불러오기
+router.route('/mypage/getimg').get(verifyToken,(req, res) => {
+    const idx = req.idx;
+    if (pool) {
+        getImg(idx,(err, result) => {
+            if (err) {
+                console.log("회원목록 출력 실패")
+            } else {
+                console.log("회원목록 출력 성공")
+                res.json(result);
+            }
+        })
+    }
+});
+
+const getImg = function (idx, callback) {
+    pool.getConnection((err, conn) => {
+        if (err) {
+            console.log(err);
+        } else {
+            conn.query('select image from tb_members where idx=?'
+                , [idx], (err, result) => {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, result);
+                }
+            })
+        }
+    })
+}
+
 //-------------------------------------------------------------------------
     //회원 목록
-router.route('/member/list').get(multer,(req, res) => {
+router.route('/member/list').get((req, res) => {
     if (pool) {
         memberList((err, result) => {
             if (err) {
                 console.log("회원목록 출력 실패")
             } else {
                 console.log("회원목록 출력 성공")
-                res.send(result);
+                res.json(result);
             }
         });
     }
@@ -440,6 +487,144 @@ router.route('/member/delete').delete((req, res) => {
         });
     }
 });
+
+// 회원 조회
+router.route('/member/search').get((req, res) => {
+    const keyword = req.query.keyword;
+    if (pool) {
+        searchMem(keyword,(err, result)=> {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("검색 성공");
+                res.json(result);
+            }
+        });
+    }
+});
+const searchMem = function (keyword, callback) {
+    const query = "%" + keyword+ "%";
+    pool.getConnection((err, conn) => {
+        if (err) {
+            console.log(err);
+        } else {
+            conn.query("select * from tb_members where email like ? or mem_name like ? or hp like ?", [query,query,query], (err, result) => {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, result);
+                }
+            })
+        }
+    });
+}
+
+
+//-----------------------------------------------------------------------------------------------------------------------------
+// 비밀번호 찾기   (email)
+router.route('/member/password').post((req, res) => {
+    const email = req.body.email;
+    if (pool) {
+        findEmail(email, (err, result1) => {    
+            if (err) {
+                console.log(err);
+            } else {
+                if (result1[0] == undefined) {
+                    res.json({ message: "유효하지 않은 회원입니다." });
+                } else {
+                    var variable = "0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z".split(",");
+
+                    var randomPassword = createRandomPassword(variable, 8);
+
+                    function createRandomPassword(variable, passwordLength) {
+                        var randomString = "";
+                        for (var j = 0; j < passwordLength; j++)
+                            randomString += variable[Math.floor(Math.random() * variable.length)];
+                        
+                            return randomString
+                    }
+                    const transporter = nodemailer.createTransport({
+                        service: 'Gmail',
+                        port: 587,
+                        host: "smtp.mail.com",
+                        secure: true,
+                        auth: {
+                            user: 'glekwjd2@gmail.com',
+                            pass: '',
+                        },
+                    });
+
+                    const emailOptions = {
+                        from: 'top-hoon@naver.com',
+                        to: email,
+                        subject: 'Soomgo에서 임시 비밀번호를 보내드립니당',
+                        html:
+                            "<h1 >Soomgo에서 새로운 비밀번호를 알려드립니다.</h1> <h2> 비밀번호 : " + randomPassword + "</h2>"
+                            + '<h3 style="color: green;">임시 비밀번호로 로그인 하신 후, 반드시 비밀번호를 수정해 주세요.</h3>'
+                    };
+                    transporter.sendMail(emailOptions, function (err, info) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log('Email sent success!:' + info.response);
+                            if (pool) {
+                                newPassword(randomPassword, email, (err, result) => {
+                                    if (err) {
+                                        console.log(err);
+                                    } else {
+                                        res.json({message:email+"으로비밀번호 재설정 링크가 발송되었어요"})
+                                    }
+                                })
+                            }
+                        }
+                    });
+                }
+            }
+        })
+    } else {
+        console.log(DB);
+    }
+})
+
+const findEmail = function (email, callback) {
+    pool.getConnection((err, conn) => {
+        if (err) {
+            console.log(err);
+        } else {
+            const sql = conn.query('select * from tb_members where email = ?;', [email], (err, result )=> {
+                conn.release();
+                if (err) {
+                    callback(err, null);
+                    return;
+                } else {
+                    callback(null, result);
+                }
+            });
+        }
+    })
+}
+
+const newPassword = function (randomPassword, email, callback) {
+    pool.getConnection((err, conn) => {
+        if (err) {
+            console.log(err);
+        } else {
+            const Salt = crypto.randomBytes(64).toString('base64'); 
+            const newP = crypto.createHash("sha512").update(randomPassword + Salt).digest('base64');
+            conn.query('update tb_members set mem_password=?, salt=? where email=? ', [newP, Salt,email], (err, result) => {
+                conn.release();
+                if (err) {
+                    console.log(err);
+                    return;
+                } else {
+                    callback(null, result);
+                }
+            })
+        }
+    })
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
 
     // 함수
 
@@ -512,6 +697,7 @@ const login = function (
         }
     });
 }
+
 // 회원 개인정보 member/account-info
 const infomation = function (idx, callback) {
     pool.getConnection((err, conn) => {
@@ -531,6 +717,7 @@ const infomation = function (idx, callback) {
         }
     });
 }
+
 // 회원 개인정보 이름 /mypage/account-info/settings/name
 const settingsName = function (idx, callback) {
     pool.getConnection((err, conn) => {

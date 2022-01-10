@@ -86,7 +86,7 @@ const updateCategoryQuestion = function (idx, cate_level, cate_idx, cate_questio
 
     // 카테고리  질문 삭제
 router.route('/categoryQuestion/delete').delete((req, res) => {
-    const idx = req.body.idx;
+    const idx = req.query.idx;
     if (pool) {
         DeleteCategoryQuestion(idx, (err, result) => {
             if (err) {
@@ -177,32 +177,5 @@ const memberQuestion = function (cate1_idx, cate2_idx, cate3_idx, callback) {
         }
     });
 }
-
-// const memberQuestion = function (cate_level, cate_idx, callback) {
-//     pool.getConnection((err, conn) => {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             if (cate_level = 1) {
-//                 conn.query('select * from  tb_cate_question as a  join tb_cate_question_title as b on a.cate_idx=b.cate_idx  where b.cate_idx=?;', [cate_idx], (err, result1) => {
-//                     if (err) {
-//                         console.log(err);
-//                         conn.release();
-//                     } else {
-//                         console.log(result1);
-//                     }
-//                 });
-//             } else if (cate_level = 2) {
-//                 const sql = conn.query()
-//                 conn.release();
-//                 callback(err, result);
-//             } else {
-//                 const sql = conn.query()
-//                 conn.release();
-//                 callback(err, result);
-//             }
-//         }
-//     });
-// }
 
 module.exports = router;

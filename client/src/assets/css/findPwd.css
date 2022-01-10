@@ -41,6 +41,11 @@
     border-radius: 4px;
     margin-bottom: 20px;
 }
+.findPwdForm input:focus {
+    border-color: #00c7ae;
+    box-shadow: 0 0 0 0.2rem rgb(0 199 174 / 25%);
+    outline: none!important;
+}
 
 .Infomsg{
     margin-top: 1.5rem;

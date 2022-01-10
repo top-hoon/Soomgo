@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import '../assets/css/common.css';
 import '../assets/css/main.css';
-
 
 import MainBanner from '../assets/images/banner-bizlink-web-main@3x.png';
 import Lesson from '../assets/images/lesson.svg';
@@ -27,6 +28,16 @@ import ReceiveRequest from '../assets/images/receive-request.png';
 
 
 function Main() {
+  const [items, setItems] = useState([])
+
+  // 렌더링 되면 가장 먼저 호출되는 함수
+  useEffect(()=> {
+    axios.get("https://jsonplaceholder.typicode.com/users")
+    .then(res => setItems(res.data))
+    .catch(err => console.log(err))
+  },[]); // 최초 한번만 호출되도록 [] 추가
+
+
   return (
     <>
       <section className="main-banner">

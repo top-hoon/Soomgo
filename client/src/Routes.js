@@ -5,6 +5,7 @@ import Main from './pages/Main';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import FindPwd from './pages/FindPwd';
+import ProSignup from "./pages/ProSignup";
 import Categories from './pages/Categories';
 import SendRequest from './pages/SendRequest';
 import SentRequest from './pages/SentRequest';
@@ -14,6 +15,8 @@ import Mypage from './pages/mypage/Mypage';
 import AccountInfo from './pages/mypage/AccountInfo';
 import MypageSettings from './pages/mypage/MypageSettings';
 
+
+
 export default function Routes() {
   return (
     <BrowserRouter>
@@ -22,6 +25,7 @@ export default function Routes() {
         <Route exact path="/Login" component={Login} />
         <Route exact path="/Signup" component={Signup} />
         <Route exact path="/FindPwd" component={FindPwd} />
+        <Route exact path="/ProSignup" component={ProSignup} />
         
         <Route exact path="/Categories" component={Categories} />
         <Route exact path="/SendRequest" component={SendRequest} />

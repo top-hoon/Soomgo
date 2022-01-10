@@ -68,7 +68,9 @@ function Login(){
         localStorage.setItem('Soomgo', JSON.stringify(data))
         if (!res.data == '') {
           window.location.replace('/')
-        }
+          
+        }else
+          alert('아이디와 비밀번호를 확인해주세요.');
       })
       .catch(err => {
         console.log(err)
@@ -114,3 +116,7 @@ function Login(){
 
 
 export default Login;
+
+export const signin = () => {
+  
+}

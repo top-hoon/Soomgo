@@ -17,9 +17,10 @@ function GuestNav() {
           <a className="pro-search" href="/ProSearch">고수찾기</a>
           <a className="login" href="/Login">로그인</a>
           <a className="signup" href="/Signup">회원가입</a>
-          <a className="pro-signup" href="pro-signup">고수가입</a>
+          <a className="pro-signup" href="/ProSignup">고수가입</a>
         </div>
       </div>
+      
     </nav>
   )
 }

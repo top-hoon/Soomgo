@@ -51,7 +51,7 @@ function Signup(){
     
 
       const [values, setValues] = useState({
-        name: '',
+        mem_name: '',
         email: '',
         mem_password: ''
     })
@@ -59,16 +59,16 @@ function Signup(){
     const [success, setSuccess] = useState(false)
     const [message, setMessage] = useState('')
     
-    const { name, email, mem_password } = values
+    const { mem_name, email, mem_password } = values
 
 
-    function signup(name, email, mem_password) {
+    function signup(mem_name, email, mem_password) {
         axios.post(`/member/regist`, {
-            name, email, mem_password
+            mem_name, email, mem_password
         })
           .then(response => {
-            console.log(response.data)
-            setMessage('회원가입이 완료되었습니다.')
+            console.log(response.data)     
+            window.location.replace('/Login')
             setSuccess(true)
           })
           .catch(err => {
@@ -76,18 +76,20 @@ function Signup(){
             setMessage(err.response.data.err)
             setSuccess(false)
           })
+          console.log(123);
+          
     }
 
-    const handleChange = name => event => {
+    const handleChange = mem_name => event => {
     setValues({
         ...values, 
-        [name]: event.target.value
+        [mem_name]: event.target.value
         })
     }
 
     const clickSubmit = event => {
     event.preventDefault()
-    signup( name, email, mem_password )
+    signup( mem_name, email, mem_password )
     }
     
 
@@ -111,7 +113,7 @@ function Signup(){
             <div class="signupBox">
                 <div class="signupForm">
                     <p>이름</p>
-                    <input class="textInput" type="text"  placeholder="이름(실명)을 입력해주세요"  value={name} onChange={handleChange('name')} onBlur={checkName}></input>
+                    <input class="textInput" type="text"  placeholder="이름(실명)을 입력해주세요"  value={mem_name} onChange={handleChange('mem_name')} onBlur={checkName}></input>
                     <div className="invalid-feedback-name">이름을 입력해주세요.</div>
                     <p>이메일</p>
                     <input  class="textInput"  type="text" placeholder="example@soomgo.com" value={email} onChange={handleChange('email')} onBlur={checkEmail}></input>
@@ -121,8 +123,9 @@ function Signup(){
                     <div className="invalid-feedback-pwd">비밀번호를 입력해주세요</div>
                     <div className="invalid-feedback-pwdCheck">영문+숫자 조합 8자리 이상 입력해주세요.</div>
 
-                    <div class="checkbox"><input type="checkbox"></input><label for="checkbox"></label><span class="txtAll"><span class="txt1">이용약관</span><span class="txt2">, </span><span class="txt1">개인정보 수집 및 이용</span><span class="txt2"> 동의 (필수)</span></span></div>
-                    <div class="checkbox"><input type="checkbox"></input><label for="checkbox"></label><span class="txtAll"> <span class="txt2"> 만 14세 이상 (필수)</span></span></div>
+                    <div data-v-5e9c268b="" class="col-12"><div data-v-c80e6146="" data-v-5e9c268b="" class="agree-to-terms-checkbox"><input data-v-c80e6146="" type="checkbox" id="agree-terms-checkbox-1641496916432" name="agreeToTerms" class="agree-to-terms" aria-required="true" aria-invalid="false"/><label data-v-c80e6146="" for="agree-terms-checkbox-1641496916432"><p data-v-c80e6146="" class="terms-wrapper"><span data-v-c80e6146="" class="terms">이용약관</span>, <span data-v-c80e6146="" class="terms">개인정보 수집 및 이용</span> 동의 (필수) </p></label></div></div>
+                    <div data-v-5e9c268b="" class="col-12"><div data-v-56e4e8a6="" data-v-5e9c268b="" class="more-than-14-checkbox"><input data-v-56e4e8a6="" type="checkbox" id="more-than-14-checkbox-1641496916433" name="moreThan14" class="more-than-14" aria-required="true" aria-invalid="false"/><label data-v-56e4e8a6="" for="more-than-14-checkbox-1641496916433"><p data-v-56e4e8a6="" class="terms-wrapper">만 14세 이상 (필수)</p></label></div></div>
+
                     <div class="selectBtn"><button class="select signupBtn" onClick={clickSubmit}>회원가입</button></div>
                     <div class="selectBtn"><button class="select signupFB"><img src="https://assets.cdn.soomgo.com/icons/icon-login-facebook-btn.svg" />Facebook으로 가입하기</button></div>
           

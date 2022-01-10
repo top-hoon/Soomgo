@@ -62,44 +62,6 @@ router.use(cookieParser());
     }
     });
 
-<<<<<<< HEAD
-    // 로그인 
-=======
-//     // 로그인
-// router.route('/member/login').post((req, res) => {
-//     const email = req.body.email;
-//     const mem_password = req.body.mem_password;
-//     var sql1 = 'SELECT salt, mem_password FROM tb_members WHERE email = ?';
-//     if (pool) {
-//         login  (email, mem_password, callback) {
-//             pool.getConnection((err, conn) => {
-//                 if (err) {
-//                     console.log(err);
-//                 } else {
-//                     conn.query(sql1, [email], function (err, result) {
-//                         if (err)
-//                             console.log(err);
-//                         if (!result[0]) {
-//                             console.log(result);
-//                             member = result[0];
-//                         } else {
-//                             crypto.pbkdf2Sync(mem_password, member.salt, 100000, 32, 'sha512'), function (err, der) {
-//                                 if (err)
-//                                     console.log(err);
-//                                 if (der.toString('base64') === member.mem_password) {
-//                                     console.log("성공;;")
-//                                 }
-//                             }
-//                         }
-//                     });
-//                 }
-//             });
-//         }
-//     }
-// });
-
-// 로그인 
->>>>>>> dcbc0f5590750143993a9aedd7b5df040933cfc4
 router.route('/member/login').post((req, res) => {
     const email = req.body.email;
     const mem_password = req.body.mem_password;
@@ -125,11 +87,7 @@ router.route('/member/login').post((req, res) => {
                                 idx: member.idx
                                 // exp = datetime.utcnow() + timedelta(hours = 9)
                             }, SECRET_Key, {
-<<<<<<< HEAD
                                 expiresIn: '25m',
-=======
-                                expiresIn: '30m',
->>>>>>> dcbc0f5590750143993a9aedd7b5df040933cfc4
                                 issuer: '관리자',
                             });
                             const refreshToken = jwt.sign({
@@ -138,11 +96,7 @@ router.route('/member/login').post((req, res) => {
                                 name: member.mem_name,
                                 idx: member.idx
                             }, SECRET_Key, {
-<<<<<<< HEAD
                                 expiresIn: '1d',
-=======
-                                expiresIn: '2d',
->>>>>>> dcbc0f5590750143993a9aedd7b5df040933cfc4
                                 issuer: '관리자',
                             });
                             // 쿠키로 보내기

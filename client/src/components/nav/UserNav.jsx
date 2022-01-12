@@ -6,39 +6,37 @@ import Profile from '../../assets/images/0215f0ab-61fe-4273-8a1b-6d73d71ad38c.pn
 import Secondary from '../../assets/images/secondary.svg';
 
 
-function UserNav() {
-  const [user, setUser] = useState([]);
-  const [desc, setDesc] = useState([
-    {id:0, desc: '고수로 가입하기'},
-    {id:1, desc: '고수로 전환'}
-  ])
-
-  const flag = () => {
-    axios.get('/member/detail?idx=6')
-    .then(res => setUser(res.data))
-    .catch(err => console.log(err))
-    
-    let desc;
-    if (user[0].gosu_flag == 0) {
-      desc = desc[0].desc
-    } else {
-      desc = desc[1].desc
-    }
-
-    return desc
-  }
+function UserNav({data, getData}) {
 
   const [members, setMembers] = useState([]);
+  const [gosuFlag, setGosuFlag] = useState(false);
 
   useEffect(() => {
-    axios.get("/member/detail?idx=1")
+    axios.get("/member/detail?idx=4")
     .then(res => setMembers(res.data))
     .catch(err => console.log(err))
   },[]);
 
-  console.log(members[0]?.email);
+  const changePro = () => {
+    getData(gosuFlag);
+  }
 
 
+  // menu open & shut
+  const [hideProfile, setHideProfile] = useState('none')
+  const [hideAlram, setHideAlram] = useState('none')
+
+  const alram = (e) => {
+    e.preventDefault()
+    setHideAlram('block')
+    setHideProfile('none')
+  }
+
+  const profile = (e) => {
+    e.preventDefault()
+    setHideAlram('none')
+    setHideProfile('block')
+  }
 
   const logout = (next) => {
     axios.get(`/member/logout`, { withCredentials: true, crossDomain: true })
@@ -53,27 +51,8 @@ function UserNav() {
       })
   }
 
-  function profile(e) {
-    if (document.querySelector('.profile-open').style.display == "none") {
-      document.querySelector('.profile-open').style.display = "block";
-      document.querySelector('.alram-open').style.display = "none";
-    } else {
-      document.querySelector('.profile-open').style.display = "none";
-    }
-  }
-
-  function alram(e) {
-    if (document.querySelector('.alram-open').style.display == "none") {
-      document.querySelector('.alram-open').style.display = "block";
-      document.querySelector('.profile-open').style.display = "none";
-    } else {
-      document.querySelector('.alram-open').style.display = "none";
-    }
-  }
-
   return (
     <nav className="nav">
-          
       <div className="left-section">
         <a href="/" className="logo"></a>
         <div className="service-searcher">
@@ -82,7 +61,7 @@ function UserNav() {
         </div>
       </div>
       <div className="right-section">
-        <div className="user-navi">
+        <div className="user-navi">  
           <a className="pro-search" href="/ProSearch">고수찾기</a>
           <a className="received" href="/SentRequest">받은견적</a>
           <a className="chat" href="/Chat">
@@ -90,8 +69,12 @@ function UserNav() {
             <span className="chat-count">17</span>
           </a>
           <span className="alram-btn" onClick={alram}></span>
+
           {/* alram toggle */}
-          <div className="alram-open">
+          <div 
+            className="alram-open" 
+            style={{display: hideAlram}}
+          >
             <div className="alram-title">알림</div>
             <div className="alram-box">
               <ul className="alram-list">
@@ -150,24 +133,29 @@ function UserNav() {
           </div>
           {/* alram toggle */}
 
-
-          <div className="profile" onClick={profile}>
-            <img className="image" src={Profile} />
+          <div className="profile">
+            <img className="image" src={Profile} onClick={profile}/>
             <span className="downarrow"></span>
           </div>
+
           {/* profile toggle */}
-          <div className="profile-open">
-            <p className="name">
-              {members[0]?.mem_name} 
-              고객님</p>
+          <div 
+            className="profile-open" 
+            style={{display: hideProfile}}
+          >
+            <p className="name">{members[0]?.mem_name} 고객님</p>
             <ul className="control">
               <li><a className="sent-request" href="/SentRequest">받은 견적</a></li>
               <li><a className="mypage" href="/Mypage">마이페이지</a></li>
             </ul>
-            <p className="secondary-btn"><img src={Secondary} />고수로 전환</p>
+            <p className="secondary-btn" onClick={changePro}>
+              <img src={Secondary} />
+              고수로 가입하기
+            </p>
             <button className="logout-btn" onClick={logout}>로그아웃</button>
           </div>
           {/* profile toggle */}
+
         </div>
       </div>
     </nav>

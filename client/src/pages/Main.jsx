@@ -28,15 +28,21 @@ import ReceiveRequest from '../assets/images/receive-request.png';
 
 
 function Main() {
-  const [items, setItems] = useState([])
+  // const [recoItems, setRecoItems] = useState([
+  //   {idx:0, image:'', title:'영어 과외', desc:'95,314명 고수 활동중'},
+  //   {idx:1, title:'퍼스널트레이닝(PT)', desc:'20,267명 고수 활동중'},
+  //   {idx:2, title:'보컬 레슨', desc:'18.706명 고수 활동 중'}
+  // ])
 
-  // 렌더링 되면 가장 먼저 호출되는 함수
-  useEffect(()=> {
-    axios.get("https://jsonplaceholder.typicode.com/users")
-    .then(res => setItems(res.data))
-    .catch(err => console.log(err))
-  },[]); // 최초 한번만 호출되도록 [] 추가
+  // useEffect(()=> {
+  //   recommendService()
+  // },[]);
 
+  // const recommendService = () => {
+  //   axios.get('api주소')
+  //   .then(res => setRecoItems(res.data))
+  //   .catch(err => console.log(err))
+  // }
 
   return (
     <>
@@ -113,6 +119,17 @@ function Main() {
           </li>
         </ul>
       </section>
+
+      {/* <div>
+        {recoItems.map(item => 
+          <li className="item" idx={item.idx}>
+            <img src={item.image}/>
+            <h3>{item.title}</h3>
+            <p>{item.desc}</p>
+          </li>
+        )}
+      </div> */}
+
       <section className="recommend-service">
         <div className="title">
           <h2>숨고 인기 서비스</h2>
@@ -144,6 +161,9 @@ function Main() {
           <div className="right"><img src={Right} /></div>
         </div> */}
       </section>
+
+
+      
       <section className="recommend-pro">
         <div className="title">
           <h2>우리 지역의 숨은 고수</h2>

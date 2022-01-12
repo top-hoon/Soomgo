@@ -5,7 +5,6 @@ import axios from 'axios';
 import Profile from '../../assets/images/0215f0ab-61fe-4273-8a1b-6d73d71ad38c.png';
 import Secondary from '../../assets/images/secondary.svg';
 
-
 function UserNav({data, getData}) {
 
   const [members, setMembers] = useState([]);
@@ -17,12 +16,13 @@ function UserNav({data, getData}) {
     .catch(err => console.log(err))
   },[]);
 
+
   const changePro = () => {
     getData(gosuFlag);
   }
 
 
-  // menu open & shut
+ // 프로필/알람 메뉴 
   const [hideProfile, setHideProfile] = useState('none')
   const [hideAlram, setHideAlram] = useState('none')
 

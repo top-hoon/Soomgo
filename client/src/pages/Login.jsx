@@ -58,7 +58,7 @@ function Login(){
 
   // clickSubmit 에서 전달받은 데이터 서버로 전달.
   function signin(email, mem_password) {
-    axios.post('member/login',
+    axios.post('/member/login',
       { email, mem_password },
       { withCredentials: true, crossDomain: true },
       console.log('email: ' + email + ' / ' + 'password: ' + mem_password))

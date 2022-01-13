@@ -5,22 +5,9 @@ import Routes from './Routes';
 import Nav from './components/Nav';
 import Footer from './components/footer';
 import UserNav from './components/nav/UserNav';
-// import axios from 'axios';
 
 
 function App() {
-  
-
-  // const callApi = async () => {
-  //   axios.get("/").then((res) => 
-  //   console.log(res.data.test));
-  // };
-
-  // useEffect(() => {
-  //   callApi();
-  // }, []);
-
-  // return <div>test</div>;
 
   return (
     <div className="App">
@@ -29,7 +16,6 @@ function App() {
         <Routes />
         <Footer />         
         </BrowserRouter>
-
     </div>
   )
 }

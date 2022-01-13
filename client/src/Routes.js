@@ -35,7 +35,6 @@ export default function Routes() {
         <Route exact path="/Mypage" component={Mypage} />
         <Route exact path="/Mypage/Account-info" component={AccountInfo} />
         <Route exact path="/Mypage/Account-info/Settings" component={MypageSettings} />
-       
       </Switch>
     </BrowserRouter>
   );

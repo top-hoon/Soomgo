@@ -16,7 +16,6 @@ function UserNav({data, getData}) {
     .catch(err => console.log(err))
   },[]);
 
-
   const changePro = () => {
     getData(gosuFlag);
   }
@@ -30,12 +29,19 @@ function UserNav({data, getData}) {
     e.preventDefault()
     setHideAlram('block')
     setHideProfile('none')
+    if (hideAlram == 'block') {
+      setHideAlram('none')
+    }
   }
 
   const profile = (e) => {
     e.preventDefault()
     setHideAlram('none')
     setHideProfile('block')
+    setGosuFlag(true)
+    if (hideProfile == 'block') {
+      setHideProfile('none')
+    }
   }
 
   const logout = (next) => {
@@ -55,10 +61,10 @@ function UserNav({data, getData}) {
     <nav className="nav">
       <div className="left-section">
         <a href="/" className="logo"></a>
-        <div className="service-searcher">
+        {/* <div className="service-searcher">
           <div className="input-prepend"></div>
           <input className="input-search" type="text" placeholder="어떤 서비스가 필요하세요?" />
-        </div>
+        </div> */}
       </div>
       <div className="right-section">
         <div className="user-navi">  

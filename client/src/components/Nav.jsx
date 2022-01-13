@@ -30,8 +30,6 @@ function Nav() {
   const getData = (data) => {
     setIsNav(data)
   }
-  console.log(isNav)
-
 
   return (
     <div className="state-nav">

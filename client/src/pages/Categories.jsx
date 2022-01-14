@@ -38,7 +38,6 @@ function Categories() {
     )
   }
 
-
   return (
     <section className="categories-wrap">
       <div className="categories-title">

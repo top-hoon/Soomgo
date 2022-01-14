@@ -6,6 +6,7 @@ import '../../assets/css/mypage.css';
 
 import Icon from '../../assets/images/i-icon.svg';
 
+
 // 이메일 수정
 function email() {
 
@@ -48,6 +49,7 @@ function email() {
         </footer>
       </main>
     </div>
+   
   )
 }
 
@@ -269,8 +271,10 @@ function phone() {
 
 
 function MypageSettings() {
+
   return (
     password()
+ 
   )
 }
 

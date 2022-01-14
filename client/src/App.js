@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Switch } from 'react-router-dom';
 import Routes from './Routes';
 import Nav from './components/Nav';
-import Footer from './components/footer';
+import Footer from './components/Footer';
 import UserNav from './components/nav/UserNav';
 
 

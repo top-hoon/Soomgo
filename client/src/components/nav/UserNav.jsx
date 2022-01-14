@@ -11,7 +11,7 @@ function UserNav({data, getData}) {
   const [gosuFlag, setGosuFlag] = useState(false);
 
   useEffect(() => {
-    axios.get("/member/detail?idx=4")
+    axios.get("/member/detail?idx=1")
     .then(res => setMembers(res.data))
     .catch(err => console.log(err))
   },[]);

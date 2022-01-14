@@ -12,7 +12,7 @@ function ProNav({data, getData}) {
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
-    axios.get("/member/detail?idx=4")
+    axios.get("/member/detail?idx=1")
     .then(res => setMembers(res.data))
     .catch(err => console.log(err))
   }, [])

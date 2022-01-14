@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import '../../assets/css/common.css';
 import '../../assets/css/mypage.css';
 import axios from 'axios';
@@ -11,17 +11,19 @@ import Board from '../../assets/images/icon-mypage-board-tip.svg';
 import Alram from '../../assets/images/icon-mypage-alarm.svg';
 import SoomgoInfo from '../../assets/images/icon-mypage-soomgo-info.svg';
 import Notice from '../../assets/images/icon-mypage-soomgo-notice.svg';
+import { signin } from '../Login';
 
 
 function Mypage() {
-  const [user, setUser] = useState([]);
   const [members, setMembers] = useState([]);
   
   useEffect(() => {
-    axios.get("/member/detail?idx=1")
-    .then(res => setMembers(res.data))
-    .catch(err => console.log(err))
-  },[]);
+  axios.get("/mypage/account-info")
+  .then(res => setMembers(res.data))
+  .catch(err => console.log(err))
+},[]);
+
+
 
   return(
     <section className="mypage">
@@ -36,7 +38,7 @@ function Mypage() {
             </div>
             <div className="user-info">
               <div className="user-name">
-                <span className="name-length">{members[0]?.mem_name}</span>고객님
+                <span className="name-length">{members[0]?.mem_name} 고객님</span>
               </div>
               <div className="user-id">
                 <span className="id-length">{members[0]?.email}</span>

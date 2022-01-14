@@ -8,13 +8,14 @@ import CameraIcon from '../../assets/images/camera-icon.svg';
 import Right from '../../assets/images/icon-mypage-list-arrow.svg';
 
 
+
 function AccountInfo() {
   // const accessToken;
   // axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken.token}`;
 
   // document.cookie = `Soomgo=${accessToken.token}`;
   
-  const [user, setUser] = useState([]);
+
   const [members, setMembers] = useState([]);
   
   useEffect(() => {
@@ -31,6 +32,9 @@ function AccountInfo() {
     document.querySelector('.swal2-center').style.display = 'none';
   }
 
+member.idx
+
+ 
   return (
     <div className="account-info-wrap">
       <main className="account-info-container">
@@ -45,14 +49,14 @@ function AccountInfo() {
         </div>
         <section className="account-info-section">
           <div className="account-info">
-            <Link className="item-container" to="/mypage/account-info/settings">
+            <a className="item-container" href='/MypageSettingName'>
               <div className="item">
                 <div className="item-title">이름</div>
                 <div className="item-info">{members[0]?.mem_name}</div>
               </div>
               <div><img src={Right} /></div>
-            </Link>
-            <Link className="item-container" to="/mypage/account-info/settings">
+            </a>
+            <a className="item-container" href='/MypageSettingEmail'>
               <div className="item">
                 <div className="item-title">이메일</div>
                 <div className="item-info">
@@ -60,21 +64,21 @@ function AccountInfo() {
                 </div>
               </div>
               <div><img src={Right} /></div>
-            </Link>
-            <Link className="item-container" to="/mypage/account-info/settings">
+            </a>
+            <a className="item-container" href='/MypageSettingPwd'>
               <div className="item">
                 <div className="item-title">비밀번호</div>
                 <div className="item-info">•••••••</div>
               </div>
               <div><img src={Right} /></div>
-            </Link>
-            <Link className="item-container" to="/mypage/account-info/settings">
+            </a>
+            <a className="item-container" href='/MypageSettingPhone'>
               <div className="item">
                 <div className="item-title">휴대전화 번호</div>
                 <div className="item-info">미인증</div>
               </div>
               <div><img src={Right} /></div>
-            </Link>
+            </a>
           </div>
           <ul className="delete-account" onClick={popup}>
             <li className="item-container">

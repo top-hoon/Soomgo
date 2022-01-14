@@ -40,15 +40,17 @@ function createCategory3(cate_name, cate1_idx, cate2_idx, des_title, des_text, c
 
 // 카테고리3 읽기
 router.route("/category3/read").get((req, res) => {
-    const idx = req.query.idx;
-
-    if(pool) readCategory3(idx, (err, result) => {
-        if(err) console.log(err);
-        res.json(result);
-    });
-    else console.log("디비 연결 실패");
-
-    res.end();
+  const idx = req.query.idx;
+  if (pool) {
+      readCategory3(idx, (err, result) => {
+          if (err) {
+              console.log("카테고리3 불러오지못함");
+          } else {
+              console.log("카테고리3 불러오기 성공")
+              res.json(result);
+          }
+      });
+  }
 });
 
 function readCategory3(idx, callback){

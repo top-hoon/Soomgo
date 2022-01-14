@@ -16,11 +16,9 @@ function UserNav({data, getData}) {
     .catch(err => console.log(err))
   },[]);
 
-
   const changePro = () => {
     getData(gosuFlag);
   }
-
 
  // 프로필/알람 메뉴 
   const [hideProfile, setHideProfile] = useState('none')
@@ -30,12 +28,25 @@ function UserNav({data, getData}) {
     e.preventDefault()
     setHideAlram('block')
     setHideProfile('none')
+    if (hideAlram == 'block') {
+      setHideAlram('none')
+    }
   }
 
   const profile = (e) => {
     e.preventDefault()
     setHideAlram('none')
     setHideProfile('block')
+    if (hideProfile == 'block') {
+      setHideProfile('none')
+    }
+    if (members[0].gosu_flag == 1) {
+      setGosuFlag(true)
+      document.querySelector('.secondary-btn-title').innerHTML = '<a href="/">고수로 전환</a>'
+    } else {
+      setGosuFlag(false)
+      document.querySelector('.secondary-btn-title').innerHTML = '<a href="/">고수로 가입하기</a>'
+    }
   }
 
   const logout = (next) => {
@@ -55,10 +66,6 @@ function UserNav({data, getData}) {
     <nav className="nav">
       <div className="left-section">
         <a href="/" className="logo"></a>
-        <div className="service-searcher">
-          <div className="input-prepend"></div>
-          <input className="input-search" type="text" placeholder="어떤 서비스가 필요하세요?" />
-        </div>
       </div>
       <div className="right-section">
         <div className="user-navi">  
@@ -150,7 +157,7 @@ function UserNav({data, getData}) {
             </ul>
             <p className="secondary-btn" onClick={changePro}>
               <img src={Secondary} />
-              고수로 가입하기
+              <span className="secondary-btn-title"></span>
             </p>
             <button className="logout-btn" onClick={logout}>로그아웃</button>
           </div>

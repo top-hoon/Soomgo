@@ -327,7 +327,6 @@ router.route('/mypage/img').post(verifyToken,upload.single('image'), (req, res) 
             } else {
                 console.log('성공');
                 res.json(result);
-                res.end();
             }
         });
     }

@@ -147,7 +147,7 @@ router.route('/mypage/account-info').get(verifyToken,(req, res) => {
 
 //---------------------------------
 // 마이페이지 /mypage/account-info/settings/name
-router.route('/mypage/account-info/settings/name').get(verifyToken,(req, res) => {
+router.route('/mypage/account-info/settings/name').get((req, res) => {
         const idx = req.idx;
         if (pool) {
         settingsName(idx, (err, result) => {

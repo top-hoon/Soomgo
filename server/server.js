@@ -11,6 +11,8 @@ const cateTilte = require('./routes/cate_question_titile');
 const cateAnswer = require('./routes/cate_question_answer');
 const cateQuestion = require('./routes/cate_question');
 const requests = require('./routes/request');
+const payments = require('./routes/payments');
+const estimates = require('./routes/estimates');
 
 app.use(faq);
 app.use(notice);
@@ -22,6 +24,8 @@ app.use(cateTilte);
 app.use(cateAnswer);
 app.use(cateQuestion);
 app.use(requests);
+app.use(payments)
+app.use(estimates);
 
 app.listen(3001, () => {
     console.log("3001번 포트로 서버 동작중 ...");

@@ -21,7 +21,8 @@ const verifyToken = (req, res, next) => {
                 type: 'JWT',
                 email: member.email,
                 name: member.mem_name,
-                idx: member.idx
+                idx: member.idx,
+                gosu_idx: member.gosu_idx
             }, SECRET_Key, {
                 expiresIn: '25m',
                 issuer: '관리자',
@@ -31,6 +32,7 @@ const verifyToken = (req, res, next) => {
             console.log('새로운 토큰이 발급되었습니다.')
             const data = jwt.verify(newToken, SECRET_Key);
             req.idx = data.idx;
+            req.gosu_idx = data.gosu_idx;
             return next();
         }
 
@@ -41,7 +43,8 @@ const verifyToken = (req, res, next) => {
                 type: 'refreshJWT',
                 email: member.email,
                 name: member.mem_name,
-                idx: member.idx
+                idx: member.idx,
+                gosu_idx: member.gosu_idx
             }, SECRET_Key, {
                 expiresIn: '1d',
                 issuer: '관리자',
@@ -51,12 +54,14 @@ const verifyToken = (req, res, next) => {
             console.log('새로운 리프레쉬 토큰이 발급되었습니다.')
             const data = jwt.verify(newRefreshToken, SECRET_Key);
             req.idx = data.idx;
+            req.gosu_idx = data.gosu_idx;    
             return next();
             
 
         } else {
             const data = jwt.verify(token, SECRET_Key);
             req.idx = data.idx;
+            req.gosu_idx = data.gosu_idx;
             return next();
         }
     }

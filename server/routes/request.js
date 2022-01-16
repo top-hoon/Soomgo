@@ -77,10 +77,10 @@ const registRequestAns = function (request_idx, question_title_idx, question_ans
 }
 
 //  고수 개인 요청서 리스트     / / 수정해야함
-router.route("/request/list").get(verifyToken,(req, res)=> {
-    const idx = req.idx;
+router.route("/request/list").get(verifyToken, (req, res) => {
+    const gosu_idx = req.gosu_idx;
     if (pool) {
-        gerList(idx, (err, result) => {
+        gerList(gosu_idx, (err, result) => {
             if (err) {
                 console.log(err)
             } else {
@@ -89,29 +89,22 @@ router.route("/request/list").get(verifyToken,(req, res)=> {
             }
         });
     }
-})
-const gerList = function (idx, callback) {
+});
+const gerList = function (gosu_idx, callback) {
     pool.getConnection((err, conn) => {
         if (err) {
             console.log(err);
         } else {
-            conn.query("select gosu_idx from tb_members  where idx = ?", [idx], (err1, result1) => {
-                if (err1) {
-                    console.log(err1);
+            conn.query('select * from tb_requests where gosu_idx=?', [gosu_idx], (err2, result2) => {
+                conn.release();
+                if (err2) {
+                    callback(err2, null)
                 } else {
-                    if (result1 == undefined) console.log("gosu_idx가 없습니다.");
-                    const gosu_idx = result1[0].gosu_idx;  
-                    conn.query('select * from tb_requests where gosu_idx=?', [gosu_idx], (err2, result2) => {
-                        if (err2) {
-                            callback(err2, null)
-                        } else {
-                            callback(null,result2);
-                        }
-                    });
+                    callback(null, result2);
                 }
-            })
+            });
         }
-    })
+    });
 }
 
 //  고수 요청서 읽기(견적서 보내는 페이지)

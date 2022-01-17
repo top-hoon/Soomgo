@@ -154,7 +154,7 @@ const memberQuestion = function (cate1_idx, cate2_idx, cate3_idx, callback) {
                         if(temp_question_idx != e.cate_question_title_idx){
                             if(temp_question_idx != null){
                                 question_list.push(question)
-                                console.log(question_list)
+                                // console.log(question_list)
                             }
                             question = {
                                 title_idx : e.title_idx,
@@ -168,7 +168,7 @@ const memberQuestion = function (cate1_idx, cate2_idx, cate3_idx, callback) {
                             des : e.des
                         }
                         question.answerList.push(answer)
-                        console.log(question)
+                        // console.log(question)
                     })
                     question_list.push(question)
                     callback(null, question_list);

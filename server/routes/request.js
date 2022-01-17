@@ -5,8 +5,7 @@ const config = require("../config/config.json");
 const { verifyToken } = require('./jwtcheck');
 const pool = mysql.createPool(config);
 const router = express.Router();
-const conn = mysql.createConnection(config);
-
+const conn = mysql.createConnection(config,{multipleStatements: true});
 router.use(bodyParser.urlencoded({ extended: false }));
 
 
@@ -85,31 +84,85 @@ router.route("/request/list").get(verifyToken, (req, res) => {
                 console.log(err)
             } else {
                 console.log("리스트")
-                res.json(result);
+                res.send(result);
             }
         });
     }
 });
+
+// const gerList = function (gosu_idx, callback) {
+//     pool.getConnection((err, conn) => {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             const sql1 = 'select r.idx, r.regdate, m.mem_name, c.cate_name, g.my_place from tb_requests as r join tb_members as m on r.mem_idx=m.idx join tb_category3 as c on r.cate3_idx = c.idx join tb_gosus as g on r.gosu_idx = g.idx  where r.gosu_idx = ?;';
+//             const sql1s = mysql.format(sql1, gosu_idx);
+
+//             const sql2 = 'select r.idx, ca.des, a.answer_text from tb_requests as r join tb_request_answer as a on r.idx = a.request_idx join tb_cate_question_answer as ca on a.question_answer_idx= ca.idx where gosu_idx =?;';
+//             const sql2s = mysql.format(sql2, gosu_idx);
+
+//             conn.query(sql1s + sql2s, (err, result) => {
+//                 conn.release();
+//                 if (err) {
+//                     callback(err, null);
+//                 }
+//                 else {
+//                     callback(null, result);
+//                 };
+//             });
+//         }
+//     });
+// }
 const gerList = function (gosu_idx, callback) {
     pool.getConnection((err, conn) => {
         if (err) {
             console.log(err);
         } else {
-            conn.query('select * from tb_requests where gosu_idx=?', [gosu_idx], (err2, result2) => {
+            const sql = 'select r.idx, r.regdate,m.idx as mem_idx, m.mem_name, c.cate_name, g.my_place,ca.des, a.answer_text from tb_requests as r join tb_members as m on r.mem_idx=m.idx join tb_category3 as c on r.cate3_idx = c.idx join tb_gosus as g on r.gosu_idx = g.idx join tb_request_answer as a on r.idx = a.request_idx join tb_cate_question_answer as ca on a.question_answer_idx= ca.idx  where r.gosu_idx = ? ;';
+            const sqlp = mysql.format(sql, gosu_idx);
+
+            conn.query( sqlp, (err, result) => {
                 conn.release();
-                if (err2) {
-                    callback(err2, null)
-                } else {
-                    callback(null, result2);
+                if (err) {
+                    callback(err, null);
                 }
+                else {
+                    var request_list = [];
+                    var request = {};
+                    var temp_idx = null;
+                    var answer = {}
+                    Array.from(result).forEach((e) => {
+                        if (temp_idx != e.idx) {
+                            if (temp_idx != null) {
+                                request_list.push(request)
+                            }
+                            request = {
+                                req_idx: e.idx,
+                                mem_idx:e.mem_idx,
+                                name: e.mem_name,
+                                cate_name: e.cate_name,
+                                myplace: e.my_place,
+                                regdate: e.regdate,
+                                answerList:[]
+                            };
+                            temp_idx = e.idx;
+                        }
+                        answer = {
+                            des: e.des,
+                            ans_t:e.answer_text
+                        }
+                        request.answerList.push(answer)
+                    })
+                    request_list.push(request)
+                    callback(null, request_list);
+                };
             });
         }
     });
 }
-
 //  고수 요청서 읽기(견적서 보내는 페이지)
 router.route("/request/received").get((req, res) => {
-    const idx = req.body.idx;   // 요청서 idx
+    const idx = req.query.idx;   // 요청서 idx
     if (pool) {
         readRequest(idx, (err, result) => {
             if (err) {
@@ -127,7 +180,45 @@ const readRequest = function (idx, callback) {
         if (err) {
             console.log(err);
         } else {
-            const sql1 = 'select '
+            const sql = conn.query(' select r.idx, r.regdate, m.mem_name, m.image, c.cate_name, g.my_place,(select count(*)from tb_estimates where idx=m.idx)as estimate_count, (select count(*)from tb_requests where idx=m.idx)as request_count,  ct.idx as cate_title_idx ,ct.title, ca.des, a.answer_text from tb_requests as r join tb_members as m on r.mem_idx=m.idx join tb_category3 as c on r.cate3_idx = c.idx join tb_gosus as g on r.gosu_idx = g.idx join tb_request_answer as a on r.idx = a.request_idx join tb_cate_question_answer as ca on a.question_answer_idx= ca.idx join tb_cate_question_title as ct on ca.title_idx=ct.idx where r.idx = 1; ', [idx], (err, result) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(result);
+                    var request_list = [];
+                    var request = {};
+                    var temp_idx = null;
+                    var answer = {}
+                    Array.from(result).forEach((e) => {
+                        if (temp_idx != e.idx) {
+                            if (temp_idx != null) {
+                                request_list.push(request)
+                            }
+                            request = {
+                                idx: e.idx,
+                                image:e.image,
+                                name: e.mem_name,
+                                cate_name: e.cate_name,
+                                myplace: e.my_place,
+                                estimate_count:e.estimate_count,
+                                regdate: e.regdate,
+                                request_count:e.request_count,
+                                answerList:[]
+                            };
+                            temp_idx = e.idx;
+                        }
+                        answer = {
+                            title_idx : e.cate_title_idx,
+                            title:e.title,
+                            answer: e.des,
+                            ans_text:e.answer_text
+                        }
+                        request.answerList.push(answer)
+                    })
+                    request_list.push(request)
+                    callback(null, request_list);
+                }
+            })
         }
     })
 }

@@ -17,26 +17,23 @@ function Categories() {
 
   const [categories, setCategories] = useState([]);
   const [services, setServices] = useState([]);
-  const [service, setService] = useState([]);
 
   useEffect(() => {
     axios.get('/category2/list')
     .then(res => setCategories(res.data))
     .catch(err => console.log(err))
 
-    {categories.map(category => {
+    {categories.map((category) => {
       axios.get(`/category3/list?cate2_idx=${category.idx}`)
       .then(res => setServices(res.data))
       .catch(err => console.log(err))
     })}
   },[])
 
-  for (let i=0; i<services.length; i++) {
-    console.log(
-      '2차 카테고리 :'+services[i].cate2_idx+' / '+
-      '3차 카테고리 :'+services[i].cate_name
-    )
-  }
+  
+  {services.map((service, index) => 
+    console.log("key: "+(index+1)+" / service: "+service.cate_name)
+  )}
 
   return (
     <section className="categories-wrap">
@@ -226,8 +223,8 @@ function Categories() {
       <div className="all-service">
         <h2>모든 서비스</h2>
         <ul className="categories">
-          {categories.map(category => 
-            <li key={category.idx}>
+          {categories.map((category, index) =>
+            <li key={(index+1)}>
               <h3>{category.cate_name}</h3>
               <ul className="services">
               </ul>

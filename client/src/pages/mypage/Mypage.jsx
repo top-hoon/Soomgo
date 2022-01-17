@@ -14,14 +14,14 @@ import Notice from '../../assets/images/icon-mypage-soomgo-notice.svg';
 
 
 function Mypage() {
-  const [user, setUser] = useState([]);
   const [members, setMembers] = useState([]);
   
   useEffect(() => {
-    axios.get("/member/detail?idx=1")
-    .then(res => setMembers(res.data))
-    .catch(err => console.log(err))
-  },[]);
+  axios.get("/mypage/account-info")
+  .then(res => setMembers(res.data))
+  .catch(err => console.log(err))
+},[]);
+
 
   return(
     <section className="mypage">
@@ -36,7 +36,7 @@ function Mypage() {
             </div>
             <div className="user-info">
               <div className="user-name">
-                <span className="name-length">{members[0]?.mem_name}</span>고객님
+                <span className="name-length">{members[0]?.mem_name} 고객님</span>
               </div>
               <div className="user-id">
                 <span className="id-length">{members[0]?.email}</span>

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+import Categories from '../pages/Categories';
 
 import '../assets/css/common.css';
 import '../assets/css/main.css';
@@ -26,22 +26,12 @@ import PersonalTraining from '../assets/images/personal-training.png';
 import VocalLesson from '../assets/images/vocal-lesson.png';
 import ReceiveRequest from '../assets/images/receive-request.png';
 
-
 function Main() {
-  const [items, setItems] = useState([])
-
-  // 렌더링 되면 가장 먼저 호출되는 함수
-  useEffect(()=> {
-    axios.get("https://jsonplaceholder.typicode.com/users")
-    .then(res => setItems(res.data))
-    .catch(err => console.log(err))
-  },[]); // 최초 한번만 호출되도록 [] 추가
-
 
   return (
     <>
       <section className="main-banner">
-        <img src={MainBanner} />
+        <img src={MainBanner} alt="배너"/>
         {/* <div className="slide-control">
           <div className="left"><img src={Left} /></div>
           <div className="right"><img src={Right} /></div>
@@ -49,39 +39,53 @@ function Main() {
       </section>
       <section className="main-service">
         <ul className="service-list">
-          <li className="service-item">
+          <li className="service-item" data="1">
             <a className="inner-service-item" href="/Categories">
-              <img className="service-icon" src={Lesson} />
+              <img className="service-icon" src={Lesson} alt="레슨"/>
               <p className="service-name">레슨</p>
             </a>
           </li>
-          <li>        
-            <img className="service-icon" src={HomeLiving} />
-            <p className="service-name">홈/리빙</p>
+          <li data="2">
+            <a className="inner-service-item" href="/Categories">
+              <img className="service-icon" src={HomeLiving} alt="홈/리빙"/>
+              <p className="service-name">홈/리빙</p>
+            </a>
           </li>
-          <li>
-            <img className="service-icon" src={Event} />
-            <p className="service-name">이벤트</p>
+          <li data="3">
+            <a className="inner-service-item" href="/Categories">
+              <img className="service-icon" src={Event} alt="이벤트"/>
+              <p className="service-name">이벤트</p>
+            </a>
           </li>
-          <li>
-            <img className="service-icon" src={Business} />
-            <p className="service-name">비즈니스</p>
+          <li data="4">
+            <a className="inner-service-item" href="/Categories">
+              <img className="service-icon" src={Business} alt="비즈니스"/>
+              <p className="service-name">비즈니스</p>
+            </a>
           </li>
-          <li>
-            <img className="service-icon" src={DesignDevelopment} />
-            <p className="service-name">디자인/개발</p>
+          <li data="5">
+            <a className="inner-service-item" href="/Categories">
+              <img className="service-icon" src={DesignDevelopment} alt="디자인/개발"/>
+              <p className="service-name">디자인/개발</p>
+            </a>
           </li>
-          <li>
-            <img className="service-icon" src={HealthBeauty} />
-            <p className="service-name">건강/미용</p>
+          <li data="6">
+            <a className="inner-service-item" href="/Categories">
+              <img className="service-icon" src={HealthBeauty} alt="건강/미용"/>
+              <p className="service-name">건강/미용</p>
+            </a>
           </li>
-          <li>
-            <img className="service-icon" src={PartTimeJob} />
-            <p className="service-name">알바</p>
+          <li data="7">
+            <a className="inner-service-item" href="/Categories">
+              <img className="service-icon" src={PartTimeJob} alt="알바"/>
+              <p className="service-name">알바</p>
+            </a>
           </li>
-          <li>
-            <img className="service-icon" src={Etc} />
-            <p className="service-name">기타</p>
+          <li data="8">
+            <a className="inner-service-item" href="/Categories">
+              <img className="service-icon" src={Etc} alt="기타"/>
+              <p className="service-name">기타</p>
+            </a>
           </li>
         </ul>
       </section>
@@ -92,22 +96,22 @@ function Main() {
         </div>
         <ul className="list">
           <li className="item">
-            <img src={Knowhow1} />
+            <img src={Knowhow1} alt=""/>
             <h3>코로나19 백신맞기 전에 보험 대비하자</h3>
             <p>FM에셋 사과나무 팀장 조단기</p>
           </li>
           <li className="item">
-            <img src={Knowhow2} />
+            <img src={Knowhow2} alt=""/>
             <h3>청소업체 선정 방법에 대한 팁</h3>
             <p>하우앤업</p>
           </li>  
           <li className="item">
-            <img src={Knowhow3} />
+            <img src={Knowhow3} alt=""/>
             <h3>이제는 필수가 되어버린 입주방역</h3>
             <p>바로방역(바로 달려가는)</p>
           </li>
           <li className="item">
-            <img src={Knowhow4} />
+            <img src={Knowhow4} alt=""/>
             <h3>세탁기 에어컨 분해 청소 꼭 해야할까?</h3>
             <p>플래그닥터</p>
           </li>
@@ -119,22 +123,22 @@ function Main() {
         </div>
         <ul className="list">
           <li className="item">
-            <img src={EnglishLesson} />
+            <img src={EnglishLesson} alt=""/>
             <h3>영어 과외</h3>
             <p>95,314명 고수 활동 중</p>
           </li>
           <li className="item">
-            <img src={PersonalTraining} />
+            <img src={PersonalTraining} alt=""/>
             <h3>퍼스널트레이닝(PT)</h3>
             <p>20,267명 고수 활동 중</p>
           </li>  
           <li className="item">
-            <img src={VocalLesson} />
+            <img src={VocalLesson} alt=""/>
             <h3>보컬 레슨</h3>
             <p>18,706명 고수 활동 중</p>
           </li>
           <li className="item">
-            <img src={EnglishLesson} />
+            <img src={EnglishLesson} alt=""/>
             <h3>욕실/화장실 리모델링</h3>
             <p>17,536명 고수 활동 중</p>
           </li>
@@ -151,14 +155,14 @@ function Main() {
         </div>
         <ul className="list">
           <li className="item">
-            <img className="banner" src={RecommendPro1} />
-            <img className="profile" src={RecommendPro1} />
+            <img className="banner" src={RecommendPro1} alt=""/>
+            <img className="profile" src={RecommendPro1} alt=""/>
             <div className="info">
               <p className="intro">강병수 고수의 전기 배선 설치 및 수리</p>
               <p className="location">경기 화성시</p>
               <p className="review-hire">
                 <span className="review">
-                  <img className="star" src={Star} />5.0
+                  <img className="star" src={Star} alt=""/>5.0
                   <span className="count">(12개)</span>
                 </span>
                 <span className="hire">12회 고용</span>
@@ -166,14 +170,14 @@ function Main() {
             </div>
           </li>
           <li className="item">
-            <img className="banner" src={RecommendPro2} />
-            <img className="profile" src={RecommendPro2} />
+            <img className="banner" src={RecommendPro2} alt=""/>
+            <img className="profile" src={RecommendPro2} alt=""/>
             <div className="info">
               <p className="intro">최병철 고수의 샷시 설치 및 수리! 외풍차단 어쩌구 저쩌구</p>
               <p className="location">대전 서구</p>
               <p className="review-hire">
                 <span className="review">
-                  <img className="star" src={Star} />5.0
+                  <img className="star" src={Star} alt=""/>5.0
                   <span className="count">(4개)</span>
                 </span>
                 <span className="hire">10회 고용</span>
@@ -181,14 +185,14 @@ function Main() {
             </div>
           </li>
           <li className="item">
-            <img className="banner" src={RecommendPro3} />
-            <img className="profile" src={RecommendPro3} />
+            <img className="banner" src={RecommendPro3} alt=""/>
+            <img className="profile" src={RecommendPro3} alt=""/>
             <div className="info">
               <p className="intro">깨끗하게 청소 해드리겠습니다. 연락주세요. 어쩌고 저쩌고</p>
               <p className="location">경기도 부천시</p>
               <p className="review-hire">
                 <span className="review">
-                  <img className="star" src={Star} />5.0
+                  <img className="star" src={Star} alt=""/>5.0
                   <span className="count">(5개)</span>
                 </span>
                 <span className="hire">15회 고용</span>
@@ -196,14 +200,14 @@ function Main() {
             </div>
           </li>
           <li className="item">
-            <img className="banner" src={RecommendPro3} />
-            <img className="profile" src={RecommendPro3} />
+            <img className="banner" src={RecommendPro3} alt=""/>
+            <img className="profile" src={RecommendPro3} alt=""/>
             <div className="info">
               <p className="intro">깨끗하게 청소 해드리겠습니다. 연락주세요. 어쩌고 저쩌고</p>
               <p className="location">경기도 부천시</p>
               <p className="review-hire">
                 <span className="review">
-                  <img className="star" src={Star} />5.0
+                  <img className="star" src={Star} alt=""/>5.0
                   <span className="count">(5개)</span>
                 </span>
                 <span className="hire">15회 고용</span>
@@ -228,12 +232,12 @@ function Main() {
         </div>
         <div className="slick">
           <div className="slick-arrows">
-            <button className="prev"><img src="" /></button>
-            <button className="next"><img src="" /></button>
+            <button className="prev"><img src="" alt=""/></button>
+            <button className="next"><img src="" alt=""/></button>
           </div>
           <ul className="slick-list">
             <li>
-              <img src={ReceiveRequest} />
+              <img src={ReceiveRequest} alt="요청서"/>
               <h4>고객의 요청서가 도착해요</h4>
               <p>
                 전문 활동 분야를 등록하면

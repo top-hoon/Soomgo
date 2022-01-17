@@ -13,8 +13,11 @@ import QuoteList from './pages/QuoteList';
 import ChatDetail from './pages/ChatDetail';
 import Mypage from './pages/mypage/Mypage';
 import AccountInfo from './pages/mypage/AccountInfo';
-import MypageSettings from './pages/mypage/MypageSettings';
 import ProSearch from './pages/ProSearch';
+import MypageSettingName from "./pages/mypage/MypageSettingName";
+import MypageSettingPwd from "./pages/mypage/MypageSettingPwd";
+import MypageSettingEmail from "./pages/mypage/MypageSettingEmail";
+import MypageSettingPhone from "./pages/mypage/MypageSettingPhone";
 
 
 export default function Routes() {
@@ -30,12 +33,17 @@ export default function Routes() {
         <Route exact path="/Categories" component={Categories} />
         <Route exact path="/SendRequest" component={SendRequest} />
         <Route exact path="/SentRequest" component={SentRequest} />
+        
+        {/* 마이페이지 */}
+        <Route exact path="/MypageSettingName" component={MypageSettingName} />
+        <Route exact path="/MypageSettingEmail" component={MypageSettingEmail} />
+        <Route exact path="/MypageSettingPwd" component={MypageSettingPwd} />
+        <Route exact path="/MypageSettingPhone" component={MypageSettingPhone} />
+
         <Route exact path="/SentRequest/Quotes" component={QuoteList} />
         <Route exact path="/Chat" component={ChatDetail} />
         <Route exact path="/Mypage" component={Mypage} />
         <Route exact path="/Mypage/Account-info" component={AccountInfo} />
-        <Route exact path="/Mypage/Account-info/Settings" component={MypageSettings} />
-       
       </Switch>
     </BrowserRouter>
   );

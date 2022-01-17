@@ -1,31 +1,61 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import '../../assets/css/common.css';
 import '../../assets/css/nav.css';
+import '../../assets/js/script.js';
 
 import Profile from '../../assets/images/0215f0ab-61fe-4273-8a1b-6d73d71ad38c.png';
 import Secondary from '../../assets/images/secondary.svg';
 
-function ProNav() {
+function ProNav({data, getData}) {
 
-  const profile = (e) => {
-    if (document.querySelector('.profile-open').style.display == "none") {
-      document.querySelector('.profile-open').style.display = "block";
-      document.querySelector('.alram-open').style.display = "none";
-    } else {
-      document.querySelector('.profile-open').style.display = "none";
-    }
+  const [members, setMembers] = useState([]);
+
+  useEffect(() => {
+    axios.get("/member/detail?idx=1")
+    .then(res => setMembers(res.data))
+    .catch(err => console.log(err))
+  }, [])
+
+  // Nav.jsx로 데이터 넘길 함수
+  const changeUser = () => {
+    getData(false)
   }
+
+  // 프로필/알람 메뉴 
+  const [hideProfile, setHideProfile] = useState('none')
+  const [hideAlram, setHideAlram] = useState('none')
 
   const alram = (e) => {
-    if (document.querySelector('.alram-open').style.display == "none") {
-      document.querySelector('.alram-open').style.display = "block";
-      document.querySelector('.profile-open').style.display = "none";
-    } else {
-      document.querySelector('.alram-open').style.display = "none";
+    e.preventDefault()
+    setHideAlram('block')
+    setHideProfile('none')
+    if (hideAlram == 'block') {
+      setHideAlram('none')
     }
   }
 
+  const profile = (e) => {
+    e.preventDefault()
+    setHideAlram('none')
+    setHideProfile('block')
+    if (hideProfile == 'block') {
+      setHideProfile('none')
+    }
+  }
+
+  const logout = (next) => {
+    axios.get(`/member/logout`, { withCredentials: true, crossDomain: true })
+      .then(res => {
+        console.log(res)
+        console.log('logout success')
+        localStorage.removeItem('Soomgo')
+        window.location.replace('/')
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
 
   return(
     <nav className="nav">
@@ -34,14 +64,17 @@ function ProNav() {
       </div>
       <div className="right-section">
         <div className="pro-navi">
-          <Link className="pro-navi-1">받은요청</Link>
-          <Link className="pro-navi-2">바로견적</Link>
-          <Link className="chat" to="/chat">채팅</Link>
-          <Link className="pro-profile">프로필</Link>
+          <a className="pro-navi-1" href="#">받은요청</a>
+          <a className="pro-navi-2" href="#">바로견적</a>
+          <a className="chat" href="/chat">채팅</a>
+          <a className="pro-profile" href="#">프로필</a>
           <span className="alram-btn" onClick={alram}></span>
 
           {/* alram toggle */}
-          <div className="alram-open">
+          <div 
+            className="alram-open"
+            style={{display: hideAlram}}
+          >
             <div className="alram-title">알림</div>
             <div className="alram-box">
               <ul className="alram-list">
@@ -100,19 +133,23 @@ function ProNav() {
           </div>
           {/* alram toggle */}
 
-          <div className="profile" onClick={profile}>
-            <img className="image" src={Profile} />
+          <div className="profile">
+            <img className="image" src={Profile} onClick={profile}/>
             <span className="downarrow"></span>
           </div>
+
           {/* profile toggle */}
-          <div className="profile-open">
-            <p className="name">홍길동 고객님</p>
+          <div 
+            className="profile-open"
+            style={{display: hideProfile}}
+          >
+            <p className="name">{members[0]?.mem_name} 고수님</p>
             <ul className="control">
-              <li><Link className="profile-settings">프로필 관리</Link></li>
-              <li><Link className="mypage" to="/mypage">마이페이지</Link></li>
+              <li><a className="profile-settings">프로필 관리</a></li>
+              <li><a className="mypage" href="/mypage">마이페이지</a></li>
             </ul>
-            <p className="secondary-btn"><img src={Secondary} />고객으로 전환</p>
-            <button className="logout-btn">로그아웃</button>
+            <p className="secondary-btn" onClick={changeUser}><img src={Secondary} />고객으로 전환</p>
+            <button className="logout-btn" onClick={logout}>로그아웃</button>
           </div>
           {/* profile toggle */}
         </div>

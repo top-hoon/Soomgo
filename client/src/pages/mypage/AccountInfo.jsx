@@ -32,9 +32,8 @@ function AccountInfo() {
     document.querySelector('.swal2-center').style.display = 'none';
   }
 
-member.idx
 
- 
+
   return (
     <div className="account-info-wrap">
       <main className="account-info-container">

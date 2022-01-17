@@ -11,7 +11,7 @@ function UserNav({data, getData}) {
   const [gosuFlag, setGosuFlag] = useState(false);
 
   useEffect(() => {
-    axios.get("/member/detail?idx=1")
+    axios.get("/mypage/account-info")
     .then(res => setMembers(res.data))
     .catch(err => console.log(err))
   },[]);
@@ -39,13 +39,6 @@ function UserNav({data, getData}) {
     setHideProfile('block')
     if (hideProfile == 'block') {
       setHideProfile('none')
-    }
-    if (members[0].gosu_flag == 1) {
-      setGosuFlag(true)
-      document.querySelector('.secondary-btn-title').innerHTML = '<a href="/">고수로 전환</a>'
-    } else {
-      setGosuFlag(false)
-      document.querySelector('.secondary-btn-title').innerHTML = '<a href="/">고수로 가입하기</a>'
     }
   }
 

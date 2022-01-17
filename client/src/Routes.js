@@ -13,7 +13,6 @@ import QuoteList from './pages/QuoteList';
 import ChatDetail from './pages/ChatDetail';
 import Mypage from './pages/mypage/Mypage';
 import AccountInfo from './pages/mypage/AccountInfo';
-import MypageSettings from './pages/mypage/MypageSettings';
 import ProSearch from './pages/ProSearch';
 import MypageSettingName from "./pages/mypage/MypageSettingName";
 import MypageSettingPwd from "./pages/mypage/MypageSettingPwd";
@@ -45,7 +44,6 @@ export default function Routes() {
         <Route exact path="/Chat" component={ChatDetail} />
         <Route exact path="/Mypage" component={Mypage} />
         <Route exact path="/Mypage/Account-info" component={AccountInfo} />
-        <Route exact path="/Mypage/Account-info/Settings" component={MypageSettings} />
       </Switch>
     </BrowserRouter>
   );

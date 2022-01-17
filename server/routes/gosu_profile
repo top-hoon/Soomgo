@@ -1,0 +1,38 @@
+const express = require('express');
+const bodyParser = require("body-parser");
+const mysql = require("mysql");
+const config = require("../config/config.json");
+const pool = mysql.createPool(config);
+const router = express.Router();
+const cookieParser = require('cookie-parser');
+const crypto = require('crypto');
+const conn = mysql.createConnection(config);
+const jwt = require('jsonwebtoken');
+const SECRET_Key = config['Secret-key'];
+const { verifyToken } = require('./jwtcheck');
+const multer = require('multer');
+const path = require('path');
+
+// 프로필 불러오기
+router.route("/profile").get(varifyToken, (req, res) => {
+    const idx = req.idx;
+
+    if(pool){
+        profileGosu(idx, (err, result) => {
+            if(err){
+                console.log(err);
+                res.end();
+            }
+            else res.json(result)
+        })
+    }
+})
+
+function profileGosu(idx, callback){
+    pool.getConnection((err, conn) => {
+        if(err) console.log(err)
+        else{
+            const sql = conn.query("select * from tb_gosus as gosu")
+        }
+    })
+}

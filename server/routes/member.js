@@ -84,7 +84,8 @@ router.route('/member/login').post((req, res) => {
                                 type: 'JWT',
                                 email: member.email,
                                 name: member.mem_name,
-                                idx: member.idx
+                                idx: member.idx,
+                                gosu_idx: member.gosu_idx
                                 // exp = datetime.utcnow() + timedelta(hours = 9)
                             }, SECRET_Key, {
                                 expiresIn: '25m',
@@ -94,7 +95,8 @@ router.route('/member/login').post((req, res) => {
                                 type: 'refreshJWT',
                                 email: member.email,
                                 name: member.mem_name,
-                                idx: member.idx
+                                idx: member.idx,
+                                gosu_idx: member.gosu_idx
                             }, SECRET_Key, {
                                 expiresIn: '1d',
                                 issuer: '관리자',
@@ -105,7 +107,8 @@ router.route('/member/login').post((req, res) => {
                                 .status(200).json({
                                 code: 200,
                                 message: '토큰이 발급되었습니다.',
-                                idx : member.idx,
+                                idx: member.idx,
+                                gosu_idx:member.gosu_idx,
                                 Token: token,
                                 RefreshToken: refreshToken,
                                 });

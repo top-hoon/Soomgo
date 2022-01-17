@@ -134,13 +134,13 @@ function listCategory3(cate1_idx, cate2_idx, callback){
     pool.getConnection((err, conn) => {
         if(err) console.log(err);
         else{
-            if(cate1_idx != undefined){
+            if(cate2_idx == undefined){
                 const sql = conn.query("select * from tb_category3 where cate1_idx = ?", [cate1_idx], (err, result) => {
                     conn.release();
                     callback(err, result);
                 })
             }
-            else if(cate2_idx != undefined){
+            else if(cate1_idx == undefined){
                 const sql = conn.query("select * from tb_category3 where cate2_idx = ?", [cate2_idx], (err, result) => {
                     conn.release();
                     callback(err, result);

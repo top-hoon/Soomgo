@@ -56,8 +56,6 @@ function readCategory1(idx, callback){
     })
 }
 
-
-
 // 카테고리1 수정
 router.route("/category1/update").put((req, res) => {
     const idx = req.body.idx;
@@ -70,7 +68,6 @@ router.route("/category1/update").put((req, res) => {
 
     res.end();
 });
-
 
 function updateCategory1(idx, cate_name, callback){
     pool.getConnection((err, conn) => {

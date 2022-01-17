@@ -84,7 +84,7 @@ const updateCategoryQuestion = function (idx, cate_level, cate_idx, cate_questio
     })
 }
 
-    // 카테고리  질문 삭제
+// 카테고리  질문 삭제
 router.route('/categoryQuestion/delete').delete((req, res) => {
     const idx = req.query.idx;
     if (pool) {
@@ -118,7 +118,7 @@ const DeleteCategoryQuestion = function (idx, callback) {
 }
 
 // 카테고리 질문 불러오기! question (회원)
-router.route('/category').get((req, res) => {
+router.route('/category/questionList').get((req, res) => {
     const cate1_idx = req.query.cate1_idx;
     const cate2_idx = req.query.cate2_idx;
     const cate3_idx = req.query.cate3_idx;

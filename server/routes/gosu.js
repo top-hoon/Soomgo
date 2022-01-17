@@ -66,12 +66,30 @@ function createGosuService(gosu_idx, cate3_idx, callback){
     })
 }
 
-// 고수 회원 가입
-
 // 고수 읽기
-router.route("/gosu/read").post((req, res) => {
-    const cate1_idx = req.body.cate1_idx;
+router.route("/gosu/read").get((req, res) => {
+    const gosu_idx = req.query.gosu_idx;
+
+    if(pool) readGosu(idx, (err, result) => {
+        if(err) console.log(err);
+        res.json(result);
+    })
+    else console.log("디비 연결 실패");
+
+    res.end();
 });
+
+function readGosu(idx, callback){
+    pool.getConnection((err, conn) => {
+        if(err) console.log(err);
+        else{
+            const sql = conn.query("select * from tb_gosus where idx = ?", [idx], (err, result) => {
+                conn.release();
+                callback(err, result);
+            })
+        }
+    })
+}
 
 // 고수 수정
 

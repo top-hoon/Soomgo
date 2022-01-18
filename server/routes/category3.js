@@ -176,8 +176,8 @@ function categoryFullList(cate1_idx, cate2_idx, callback){
     pool.getConnection((err, conn) => {
         if(err) console.log(err);
         else{
-            const text = 'select *, (select cate_name from tb_category1 as cate1 where cate1.idx = cate3.cate1_idx) as cate1_name, (select cate_name from tb_category2 as cate2 where cate2.idx = cate3.cate2_idx) as cate2_name from tb_category3 as cate3';
-            const list = [];
+            let text = 'select *, (select cate_name from tb_category1 as cate1 where cate1.idx = cate3.cate1_idx) as cate1_name, (select cate_name from tb_category2 as cate2 where cate2.idx = cate3.cate2_idx) as cate2_name from tb_category3 as cate3';
+            let list = [];
             if(cate1_idx != undefined && cate2_idx != undefined){
                 text += ' where cate3.cate1_idx = ? and cate3.cate2_idx = ?'
                 list.push(cate1_idx).push(cate2_idx)
@@ -201,14 +201,14 @@ function categoryFullList(cate1_idx, cate2_idx, callback){
 
 function createCategoryList(result, callback){
     console.log(result)
-    var temp_result = {
+    let temp_result = {
         cate1_list : []
     }
-    var cate1 = {}
-    var cate2 = {}
-    var cate3 = {}
-    var temp_cate1_idx = null;
-    var temp_cate2_idx = null;
+    let cate1 = {}
+    let cate2 = {}
+    let cate3 = {}
+    let temp_cate1_idx = null;
+    let temp_cate2_idx = null;
 
     Array.from(result).forEach((e) => {
         if(temp_cate1_idx != e.cate1_idx){

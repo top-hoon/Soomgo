@@ -193,13 +193,13 @@ function categoryFullList(cate1_idx, cate2_idx, callback){
             const sql = conn.query(text + ' order by cate1_idx asc, cate2_idx asc', list, (err, result) => {
                 conn.release();
                 if(err) console.log(err);
-                else createCategoryLsit(result, callback);
+                else createCategoryList(result, callback);
             })
         }
     })
 }
 
-function createCategoryLsit(result, callback){
+function createCategoryList(result, callback){
     console.log(result)
     var temp_result = {
         cate1_list : []

@@ -16,33 +16,12 @@ import Etc from '../assets/images/etc.svg';
 function Categories() {
 
   const [categories, setCategories] = useState([])
-  const [services, setServices] = useState([])
 
   useEffect(() => {
-    axios.get('/category2/list')
-    .then(res => setCategories(res.data))
+    axios.get('/categoryFullList?cate1_idx=1')
+    .then(res => setCategories(res.data.cate1_list[0].cate2_list))
     .catch(err => console.log(err))
-
-    {categories.map(category =>
-      axios.get(`/category3/list?cate2_idx=${category.idx}`)
-      .then(res => setServices(res.data))
-      .catch(err => console.log(err))
-    )}
   },[])
-
-  const items = {
-    cate2_name: '',
-    cate3: []
-  }
-
-  for (let i=0; i<categories.length; i++) {
-    for (let j=0; j<services.length; j++) {
-      if (categories[i].idx == services[j].cate2_idx) {
-        items.cate2_name = categories[i]?.cate_name
-        items.cate3 = services
-      }
-    }
-  }
 
   return (
     <section className="categories-wrap">
@@ -232,10 +211,15 @@ function Categories() {
       <div className="all-service">
         <h2>모든 서비스</h2>
         <ul className="categories">
-          {categories.map((category, index) =>
-            <li key={(index+1)}>
+          {categories.map(category =>
+            <li key={category.idx}>
               <h3>{category.cate_name}</h3>
               <ul className="services">
+                {category.cate3_list.map(service => 
+                  <li key={service.idx}>
+                    <a href="/SendRequest">{service.cate_name}</a>
+                  </li>
+                )}
               </ul>
             </li>
           )}

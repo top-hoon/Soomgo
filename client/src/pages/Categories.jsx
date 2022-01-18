@@ -15,25 +15,34 @@ import Etc from '../assets/images/etc.svg';
 
 function Categories() {
 
-  const [categories, setCategories] = useState([]);
-  const [services, setServices] = useState([]);
+  const [categories, setCategories] = useState([])
+  const [services, setServices] = useState([])
 
   useEffect(() => {
     axios.get('/category2/list')
     .then(res => setCategories(res.data))
     .catch(err => console.log(err))
 
-    {categories.map((category) => {
+    {categories.map(category =>
       axios.get(`/category3/list?cate2_idx=${category.idx}`)
       .then(res => setServices(res.data))
       .catch(err => console.log(err))
-    })}
+    )}
   },[])
 
-  
-  {services.map((service, index) => 
-    console.log("key: "+(index+1)+" / service: "+service.cate_name)
-  )}
+  const items = {
+    cate2_name: '',
+    cate3: []
+  }
+
+  for (let i=0; i<categories.length; i++) {
+    for (let j=0; j<services.length; j++) {
+      if (categories[i].idx == services[j].cate2_idx) {
+        items.cate2_name = categories[i]?.cate_name
+        items.cate3 = services
+      }
+    }
+  }
 
   return (
     <section className="categories-wrap">

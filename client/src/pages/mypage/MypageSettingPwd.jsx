@@ -4,7 +4,6 @@ import '../../assets/css/common.css';
 import '../../assets/css/mypage.css';
 import axios from 'axios'
 
-import Icon from '../../assets/images/i-icon.svg';
 
 function MypageSettingPwd() {
 
@@ -55,8 +54,8 @@ function MypageSettingPwd() {
 
     const { mem_password } = values
 
-
-    function changeName(mem_password) {
+ 
+    function changePassword(mem_password) {
         axios.put(`/mypage/account-info/settings/editPassword`, {
             mem_password
         })
@@ -82,7 +81,7 @@ function MypageSettingPwd() {
 
     const clickSubmit = event => {
     event.preventDefault()
-    changeName(mem_password)
+    changePassword(mem_password)
     alert('비밀번호가 수정되었습니다.')
     window.location.replace('/mypage/account-info')
     }
@@ -118,7 +117,7 @@ function MypageSettingPwd() {
                     name="password" 
                     type="password" 
                     placeholder="영문+숫자 조합 8자리 이상 입력해주세요" className="form-control newPassword"
-                    onBlur={checkNewPw}
+                    onBlur={checkNewPw} 
                   />
                   <div className="invalid-feedback newPw-feedback"></div>
                 </div>
@@ -133,7 +132,7 @@ function MypageSettingPwd() {
                     type="password" 
                     placeholder="비밀번호를 한번 더 입력해주세요" 
                     className="form-control confirmPassword" 
-                    onBlur={checkConfirmPw}
+                    onBlur={checkConfirmPw} value={mem_password} onChange={handleChange('mem_password')}
                   />
                   <div className="invalid-feedback confirmPw-feedback"></div>
                 </div>

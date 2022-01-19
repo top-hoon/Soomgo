@@ -24,15 +24,15 @@ function MypageSettingPhone() {
 
 
     const [values, setValues] = useState({
-        email: ''
+        hp: ''
     })
 
-    const { email } = values
+    const { hp } = values
 
 
-    function changeName(email) {
-        axios.put(`/mypage/account-info/settings/editPhon`, {
-            email
+    function changeHp(hp) {
+        axios.put(`/mypage/account-info/settings/editPhone`, {
+            hp
         })
           .then(response => {
             console.log(response.data)     
@@ -47,10 +47,10 @@ function MypageSettingPhone() {
           
     }
 
-    const handleChange = email => event => {
+    const handleChange = hp => event => {
     setValues({
         ...values, 
-        [email]: event.target.value
+        [hp]: event.target.value
         })
     }
 

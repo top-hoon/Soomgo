@@ -10,7 +10,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 
 
 
-// 요청서 등록
+// 요청서 등록  (지정요청)
 router.route('/request/hire').post(verifyToken, (req, res) => {
     const mem_idx = req.idx;
     const cate3_idx = req.body.cate3_idx;
@@ -75,7 +75,7 @@ const registRequestAns = function (request_idx, question_title_idx, question_ans
     })
 }
 
-//  고수 개인 요청서 리스트     / / 수정해야함
+//  고수 개인 요청서 리스트    
 router.route("/request/list").get(verifyToken, (req, res) => {
     const gosu_idx = req.gosu_idx;
     if (pool) {
@@ -180,11 +180,10 @@ const readRequest = function (idx, callback) {
         if (err) {
             console.log(err);
         } else {
-            const sql = conn.query(' select r.idx, r.regdate, m.mem_name, m.image, c.cate_name, g.my_place,(select count(*)from tb_estimates where idx=m.idx)as estimate_count, (select count(*)from tb_requests where idx=m.idx)as request_count,  ct.idx as cate_title_idx ,ct.title, ca.des, a.answer_text from tb_requests as r join tb_members as m on r.mem_idx=m.idx join tb_category3 as c on r.cate3_idx = c.idx join tb_gosus as g on r.gosu_idx = g.idx join tb_request_answer as a on r.idx = a.request_idx join tb_cate_question_answer as ca on a.question_answer_idx= ca.idx join tb_cate_question_title as ct on ca.title_idx=ct.idx where r.idx = 1; ', [idx], (err, result) => {
+            const sql = conn.query(' select r.idx, r.regdate, m.mem_name, m.image, c.cate_name, g.my_place,(select count(*)from tb_estimates where idx=m.idx)as estimate_count, (select count(*)from tb_requests where idx=m.idx)as request_count,  ct.idx as cate_title_idx ,ct.title, ca.des, a.answer_text from tb_requests as r join tb_members as m on r.mem_idx=m.idx join tb_category3 as c on r.cate3_idx = c.idx join tb_gosus as g on r.gosu_idx = g.idx join tb_request_answer as a on r.idx = a.request_idx join tb_cate_question_answer as ca on a.question_answer_idx= ca.idx join tb_cate_question_title as ct on ca.title_idx=ct.idx where r.idx = ?; ', [idx], (err, result) => {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log(result);
                     var request_list = [];
                     var request = {};
                     var temp_idx = null;

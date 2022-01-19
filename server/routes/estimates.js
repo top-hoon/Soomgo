@@ -37,7 +37,7 @@ router.route("/estimate/regist").post(verifyToken, upload.single('files'), (req,
     const files = req.file.path;
     const mem_idx = req.body.mem_idx;   //   요청서 보낸 회원 idx;
     const gosu_idx = req.gosu_idx;   
-    const often = req.body.often;   // 자주쓰는 견적 추가하기 체크박수 (0, 1);
+    const often = req.body.often;  
     const titlename = req.body.titlename;   //  ex) 일본어(과외)
     const title = titlename + '과외 견적';
     const pay = req.body.pay;   // 캐쉬 사용금액인데 항상 1200원인가..?
@@ -64,6 +64,9 @@ const sendEstimate = function (salary, price, content, files, mem_idx, often, ti
                     console.log(err2)
                 } else {
                     console.log('견적서를 보냈습니다.');
+
+
+                    //  함수로 뺴기
                     if (often == 0 || often == '0') {
                         console.log("자주쓰는 견적서에 저장안함")
                     } else {
@@ -79,7 +82,6 @@ const sendEstimate = function (salary, price, content, files, mem_idx, often, ti
                                         const cash_bonus = result4[0].cash_bonus;
                                         const sm_type = '2';    //  타입 1:충전, 2:사용
                                         const details = pay + '원을 견적서 보내기에 사용하였습니다.'
-
                                         if (cash_bonus >= pay) {
                                             conn.query('insert into tb_cash_bonus(cash,gosu_idx, details)values(?,?,?)', [pay, gosu_idx, details])
                                             conn.query('update tb_gosus set cash_bonus=cash_bonus-? where idx=?', [pay, gosu_idx], (err5, result5) => {

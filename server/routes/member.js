@@ -97,7 +97,8 @@ router.route('/member/login').post((req, res) => {
                         email: member.email,
                         name: member.mem_name,
                         idx: member.idx,
-                        gosu_idx: member.gosu_idx
+                        gosu_idx: member.gosu_idx,
+                        isMember: true
                     }, SECRET_Key, {
                         expiresIn: '1d',
                         issuer: '관리자',

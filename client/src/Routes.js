@@ -18,7 +18,7 @@ import MypageSettingName from "./pages/mypage/MypageSettingName";
 import MypageSettingPwd from "./pages/mypage/MypageSettingPwd";
 import MypageSettingEmail from "./pages/mypage/MypageSettingEmail";
 import MypageSettingPhone from "./pages/mypage/MypageSettingPhone";
-import ProService from "./pages/ProService";
+import ProService from "./pages/proService/ProService";
 
 
 export default function Routes() {

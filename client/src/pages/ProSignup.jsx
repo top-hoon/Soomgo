@@ -38,7 +38,7 @@ function ProSignup(){
                     <h3>고수로 가입하실 분야를 선택하세요</h3>
                     <ul class="category1-buttons list-inline flex">
                         <li class="category">
-                            <a href="/pro/welcome/레슨" class="">
+                            <a href="/ProService" class="">
                                 <div class="category-icon">
                                     <img src="https://assets.cdn.soomgo.com/icons/category1/lesson.svg" alt="레슨" />
                                     <p class="category-title p2">레슨</p>

@@ -66,55 +66,56 @@ router.route('/member/login').post((req, res) => {
     const email = req.body.email;
     const mem_password = req.body.mem_password;
     if (pool) {
-                login(email, mem_password, (err, result) => {
-                    if (err) {
-                        console.log(err);
-                    } if(result[0]== undefined) {
-                        console.log("아이디가 존재하지 않음");
-                        console.log(req.body.email);
-                        res.end();
-                    } else {
-                        const member = result[0];  
-                        const pass = crypto.createHash("sha512").update(mem_password + member.salt).digest('base64');
+        login(email, mem_password, (err, result) => {
+            if (err) {
+                console.log(err);
+            } if(result[0]== undefined) {
+                console.log("아이디가 존재하지 않음");
+                console.log(req.body.email);
+                res.end();
+            } else {
+                const member = result[0];  
+                const pass = crypto.createHash("sha512").update(mem_password + member.salt).digest('base64');
 
-                        if (pass == member.mem_password) {
-                            console.log("로그인 성공");
-                            // 토큰 생성
-                            const token = jwt.sign({
-                                type: 'JWT',
-                                email: member.email,
-                                name: member.mem_name,
-                                idx: member.idx,
-                                gosu_idx: member.gosu_idx
-                                // exp = datetime.utcnow() + timedelta(hours = 9)
-                            }, SECRET_Key, {
-                                expiresIn: '25m',
-                                issuer: '관리자',
-                            });
-                            const refreshToken = jwt.sign({
-                                type: 'refreshJWT',
-                                email: member.email,
-                                name: member.mem_name,
-                                idx: member.idx,
-                                gosu_idx: member.gosu_idx
-                            }, SECRET_Key, {
-                                expiresIn: '1d',
-                                issuer: '관리자',
-                            });
-                            // 쿠키로 보내기
-                                res.cookie('JWT', token, {maxAge: 1800000,httpOnly: true})
-                                res.cookie('refreshJWT', refreshToken, {maxAge: 80000000, httpOnly: true})
-                                .status(200).json({
-                                code: 200,
-                                message: '토큰이 발급되었습니다.',
-                                idx: member.idx,
-                                gosu_idx:member.gosu_idx,
-                                Token: token,
-                                RefreshToken: refreshToken,
-                                });
-                        } else {
-                            console.log("비밀번호를 확인해주세요");
-                            res.end();
+                if (pass == member.mem_password) {
+                    console.log("로그인 성공");
+                    // 토큰 생성
+                    const token = jwt.sign({
+                        type: 'JWT',
+                        email: member.email,
+                        name: member.mem_name,
+                        idx: member.idx,
+                        gosu_idx: member.gosu_idx,
+                        isMember: true
+                        // exp = datetime.utcnow() + timedelta(hours = 9)
+                    }, SECRET_Key, {
+                        expiresIn: '25m',
+                        issuer: '관리자',
+                    });
+                    const refreshToken = jwt.sign({
+                        type: 'refreshJWT',
+                        email: member.email,
+                        name: member.mem_name,
+                        idx: member.idx,
+                        gosu_idx: member.gosu_idx
+                    }, SECRET_Key, {
+                        expiresIn: '1d',
+                        issuer: '관리자',
+                    });
+                    // 쿠키로 보내기
+                    res.cookie('JWT', token, {maxAge: 1800000,httpOnly: true})
+                    res.cookie('refreshJWT', refreshToken, {maxAge: 80000000, httpOnly: true})
+                    .status(200).json({
+                    code: 200,
+                    message: '토큰이 발급되었습니다.',
+                    idx: member.idx,
+                    gosu_idx:member.gosu_idx,
+                    Token: token,
+                    RefreshToken: refreshToken,
+                    });
+                } else {
+                    console.log("비밀번호를 확인해주세요");
+                    res.end();
                 }
             }
         });

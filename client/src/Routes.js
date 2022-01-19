@@ -18,6 +18,7 @@ import MypageSettingName from "./pages/mypage/MypageSettingName";
 import MypageSettingPwd from "./pages/mypage/MypageSettingPwd";
 import MypageSettingEmail from "./pages/mypage/MypageSettingEmail";
 import MypageSettingPhone from "./pages/mypage/MypageSettingPhone";
+import ProService from "./pages/proService/ProService";
 
 
 export default function Routes() {
@@ -40,6 +41,8 @@ export default function Routes() {
         <Route exact path="/MypageSettingPwd" component={MypageSettingPwd} />
         <Route exact path="/MypageSettingPhone" component={MypageSettingPhone} />
 
+
+        <Route exact path="/ProService" component={ProService} />
         <Route exact path="/SentRequest/Quotes" component={QuoteList} />
         <Route exact path="/Chat" component={ChatDetail} />
         <Route exact path="/Mypage" component={Mypage} />

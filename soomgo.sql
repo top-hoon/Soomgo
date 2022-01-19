@@ -6,6 +6,7 @@ select * from tb_members;
 select * from sessions;
 drop table tb_members;
 ALTER TABLE tb_members ADD image VARCHAR(200);
+select * from tb_category1;
 
 CREATE TABLE tb_members (
     idx bigint AUTO_INCREMENT,
@@ -22,6 +23,9 @@ CREATE TABLE tb_members (
     last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (idx)
 );
+select * from tb_category1;
+select * from tb_category2;
+select * from tb_category3;
 
 CREATE TABLE tb_gosus (
     idx bigint AUTO_INCREMENT,

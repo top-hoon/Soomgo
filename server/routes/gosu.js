@@ -17,7 +17,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(express.json());
 
 // 고수 회원가입
-router.route("/gosu/regist").post(verifyToken, (req, res) => {
+router.route("/gosu/regist").post((req, res) => {
     const cate1_idx = req.body.cate1_idx;
     const cate2_idx = req.body.cate2_idx;
     const cate3_idx = req.body.cate3_idx;
@@ -47,7 +47,7 @@ function createGosu(cate1_idx, cate2_idx, cate3_idx, my_place, distance, gender,
                     callback(err, result);
                 }
                 else{
-                    createGosuService(result.idx, callback)
+                    createGosuService(result.idx, cate3_idx, callback)
                 }
             })
         }
@@ -91,41 +91,77 @@ function readGosu(idx, callback){
     })
 }
 
-// 고수 수정
-
 // 고수 로그인
-router.route('gosu/login').post((req, res) => {
+router.route('/gosu/login').post((req, res) => {
     const email = req.body.email;
     const mem_password = req.body.mem_password;
     if(pool) {
-        gosu_login(email, mem_password, (err, result) => {
+        find_gosu(email, (err, result) => {
             if(err) console.log(err);
-            if(result[0] == null) {
-                console.log("아이디가 존재하지 않음");
-                console.log(req.body.email);
-                res.end();
-            }
             else{
-                const gosu = result[0];
-                const password = hashedPassword(mem_password, gosu.salt)
+                if(result[0] == null) {
+                    console.log("아이디가 존재하지 않음");
+                    console.log(req.body.email);
+                    res.end();
+                }
+                else{
+                    console.log(result)
+                    const gosu = result[0];
+                    const password = hashedPassword(mem_password, gosu.salt);
+
+                    if(password == mem_password){
+                        const token = jwt.sign({
+                            type: 'JWT',
+                            email: gosu.email,
+                            name: gosu.mem_name,
+                            idx: gosu.idx,
+                            mem_idx: gosu.mem_idx,
+                            isMember: false
+                        }, SECRET_Key, {
+                            expiresIn: '25m',
+                            issuer: '관리자',
+                        });
+                        const refreshToken = jwt.sign({
+                            type: 'refreshJWT',
+                            email: gosu.email,
+                            name: gosu.mem_name,
+                            idx: gosu.idx,
+                            mem_idx: gosu.mem_idx
+                        }, SECRET_Key, {
+                            expiresIn: '1d',
+                            issuer: '관리자',
+                        })
+                        res.cookie('JWT', token, {maxAge: 1800000,httpOnly: true})
+                        res.cookie('refreshJWT', refreshToken, {maxAge: 80000000, httpOnly: true})
+                        .status(200).json({
+                        code: 200,
+                        message: '토큰이 발급되었습니다.',
+                        idx: gosu.idx,
+                        mem_idx:gosu.mem_idx,
+                        Token: token,
+                        RefreshToken: refreshToken,
+                        });
+                    }
+                    else{
+                        res.end();
+                    }
+                }
             }
         })
     }
 })
 
-function gosu_login(email, mem_password, callback){
+function find_gosu(email, callback){
     pool.getConnection((err, conn) => {
         if(err) console.log(err);
         else{
-            const sql = conn.query('selecct * from tb_gosus where email = ?', [email], (err, result) => {
+            const sql = conn.query('select gosu.idx, member.idx, member.email, member.salt, member.mem_password, member.mem_name, gosu.mem_idx from tb_gosus as gosu join tb_members as member where member.email = ? and member.idx = gosu.mem_idx', [email], (err, result) => {
                 if(err) console.log(err);
                 callback(err, result)
             })
         }
     })
 }
-
-// 고수 삭제
 
 // 비밀번호 암호화
 function hashedPassword(plainPassword, salt){

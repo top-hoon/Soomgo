@@ -9,8 +9,6 @@ import Profile1 from '../assets/images/avatar-profile-1.jpg';
 import Profile2 from '../assets/images/avatar-profile-2.jpeg';
 import PrevBtn from '../assets/images/slick-arrow-left.svg';
 
-
-
 function SentRequest() {
 
   return (
@@ -37,7 +35,7 @@ function SentRequest() {
                     받은 견적이 없습니다.
                   </div>
                 </div>
-                <Link className="button" to="/sent-request/quotes">자세히 보기</Link>
+                <Link className="button" to="/Quotes">자세히 보기</Link>
               </div>
             </div>
           </li>
@@ -63,7 +61,7 @@ function SentRequest() {
                     </div>
                   </div>
                 </div>
-                <Link className="button" to="/sent-request/quotes">자세히 보기</Link>
+                <Link className="button" to="/Quotes">자세히 보기</Link>
               </div>
             </div>
           </li>

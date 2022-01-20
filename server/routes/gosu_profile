@@ -14,7 +14,7 @@ const multer = require('multer');
 const path = require('path');
 
 // 프로필 불러오기
-router.route("/profile").get(varifyToken, (req, res) => {
+router.route("/profile").get(verifyToken, (req, res) => {
     const idx = req.idx;
 
     if(pool){

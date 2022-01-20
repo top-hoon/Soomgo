@@ -19,6 +19,7 @@ import MypageSettingPwd from "./pages/mypage/MypageSettingPwd";
 import MypageSettingEmail from "./pages/mypage/MypageSettingEmail";
 import MypageSettingPhone from "./pages/mypage/MypageSettingPhone";
 import ProService from "./pages/proService/ProService";
+import ProAddress from "./pages/proService/ProAddress";
 
 
 export default function Routes() {
@@ -47,6 +48,7 @@ export default function Routes() {
         <Route exact path="/Chat" component={ChatDetail} />
         <Route exact path="/Mypage" component={Mypage} />
         <Route exact path="/Mypage/Account-info" component={AccountInfo} />
+        <Route exact path="/ProAddress" component={ProAddress} />
       </Switch>
     </BrowserRouter>
   );

@@ -330,3 +330,118 @@ div.step-navigator .wrapper .btn-container .btn-prev[data-v-28599ea4] {
     background-color: #00c7ae;
     border-color: #00c7ae;
 }
+
+/* ======75%======= */
+/* 다음 우편번호 api */
+.container[data-v-46822a38] {
+    width: auto;
+}
+.container, .container-lg, .container-md, .container-sm, .container-xl {
+    max-width: 62.5rem;
+}
+.container {
+    padding-right: 0.9375rem;
+    padding-left: 0.9375rem;
+    margin-right: auto;
+    margin-left: auto;
+}
+#id_pro_form[data-v-46822a38] {
+    max-width: 37.5rem;
+    margin: 3.125rem auto 7.6875rem;
+    padding: 2.5rem;
+    border-radius: 8px;
+    border: 0.0625rem solid #f2f2f2;
+}
+#id_pro_form[data-v-46822a38] {
+    background: #fff;
+}
+.signup-progress-bar[data-v-2b9a1ce0] {
+    margin: 0 0 2.5rem;
+}
+.signup-progress-bar[data-v-2b9a1ce0] {
+    position: relative;
+}
+.signup-progress-bar .progress[data-v-2b9a1ce0] {
+    border-radius: 0.25rem;
+}
+.signup-progress-bar .progress[data-v-2b9a1ce0] {
+    height: 0.25rem;
+    background-color: #f2f2f2;
+    /* border-radius: 0; */
+}
+.signup-progress-bar .value-text[data-v-2b9a1ce0] {
+    margin-top: 0.5rem;
+}
+.signup-progress-bar .value-text[data-v-2b9a1ce0] {
+    text-align: center;
+    font-size: .75rem;
+    color: #00c7ae;
+    font-weight: 500;
+    line-height: normal;
+}
+#id_pro_form #step3[data-v-46822a38] {
+    width: 100%;
+}
+#id_pro_form #step3[data-v-46822a38] h1{
+    font-size: 1.5rem;
+}
+#id_pro_form #step3[data-v-46822a38] h1{
+    /* font-size: 1.25rem; */
+    font-weight: 500;
+    text-align: center;
+    color: #351b1b;
+    line-height: normal;
+}
+h1[data-v-28301380] {
+    margin-bottom: 0.5rem;
+}
+
+#id_pro_form #step3[data-v-46822a38] p.headline{
+    font-size: 1rem;
+}
+#id_pro_form #step3[data-v-46822a38] p.headline{
+    text-align: center;
+    height: 1.25rem;
+    font-weight: 500;
+    line-height: normal;
+    color: #737373;
+}
+p[data-v-28301380] {
+    margin-bottom: 2.5rem;
+}
+#step3 .addr-search[data-v-28301380] {
+    background-color: #fff;
+    margin-bottom: 1.5rem;
+}
+#step3 .addr-search .daum-post-code[data-v-28301380] {
+    position: relative;
+}
+#step3 .addr-search .col-12[data-v-28301380] {
+    padding: 0;
+}
+.col-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+#step3 .addr-search .id-addr1[data-v-28301380] {
+    color: #737373;
+}
+.form-control:disabled, .form-control[readonly] {
+    background-color: #f2f2f2;
+    opacity: 1;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 1.5rem);
+    padding: 0.6875rem 1rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #323232;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 0.0625rem solid #e1e1e1;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}

@@ -44,6 +44,7 @@ const ProAddress = ({}) => {
         }
         //fullAddress -> 전체 주소반환
     }
+
     return (
         <div data-v-46822a38="" class="container">
             <form data-v-46822a38="" id="id_pro_form" autocomplete="off">
@@ -60,8 +61,7 @@ const ProAddress = ({}) => {
                         <div data-v-28301380="" class="daum-post-code vue-daum-postcode">
                             <div class="vue-daum-postcode-container" style={{height: '444px'}}>
                                 <div id="__daum__layer_7" style={style1}>
-                                    <DaumPostCode onComplete={handleComplete} className="post-code" />
-                                    
+                                    <DaumPostCode onComplete={handleComplete} className="post-code" style={style2}/>          
                                 </div>
                             </div>
                         </div>

@@ -5,26 +5,7 @@ import '../../assets/css/common.css';
 import '../../assets/css/proService.css';
 
 
-const DaumPost = ({}) => {
-    const handleComplete = (data) => {
-        let fullAddress = data.address;
-        let extraAddress = '';
-        if (data.addressType === 'R') {
-            if (data.bname !== '') {
-                extraAddress += data.bname;
-            }
-            if (data.buildingName !== '') {
-                extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
-            }
-            fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
-        }
-        //fullAddress -> 전체 주소반환
-    }
-    return (<DaumPostCode onComplete={handleComplete} className="post-code" />);
-}
-
-function ProAddress(props) {
-
+const ProAddress = ({}) => {
     const style1 = {
         position: 'relative', 
         width: '100%', 
@@ -49,7 +30,21 @@ function ProAddress(props) {
         minWidth: '300px'
     }
 
-    return(
+    const handleComplete = (data) => {
+        let fullAddress = data.address;
+        let extraAddress = '';
+        if (data.addressType === 'R') {
+            if (data.bname !== '') {
+                extraAddress += data.bname;
+            }
+            if (data.buildingName !== '') {
+                extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+            }
+            fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
+        }
+        //fullAddress -> 전체 주소반환
+    }
+    return (
         <div data-v-46822a38="" class="container">
             <form data-v-46822a38="" id="id_pro_form" autocomplete="off">
                 <div data-v-2b9a1ce0="" data-v-46822a38="" class="signup-progress-bar header">
@@ -65,8 +60,8 @@ function ProAddress(props) {
                         <div data-v-28301380="" class="daum-post-code vue-daum-postcode">
                             <div class="vue-daum-postcode-container" style={{height: '444px'}}>
                                 <div id="__daum__layer_7" style={style1}>
-                                    <iframe frameborder="0" src="about:blank" style={style2}>
-                                    </iframe>
+                                    <DaumPostCode onComplete={handleComplete} className="post-code" />
+                                    
                                 </div>
                             </div>
                         </div>
@@ -90,8 +85,9 @@ function ProAddress(props) {
                 </div>
             </form>
         </div>
+        
 
-    )
-
+    );
 }
+
 export default ProAddress;

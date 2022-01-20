@@ -25,6 +25,13 @@ function ProService2nd(props) {
     .catch(err => console.log(err))
   },[])
 
+    // 이전 버튼 클릭 시
+    const back = event => {
+        event.preventDefault()
+        window.location.replace('/ProSignup')
+       
+    }
+
   return (
     <div data-v-46822a38="" className="container">
       <form data-v-46822a38="" id="id_pro_form">
@@ -56,7 +63,7 @@ function ProService2nd(props) {
           <div data-v-28599ea4="" className="wrapper">
             <div data-v-28599ea4="" className="warning"></div>
             <span data-v-28599ea4="" className="left btn-container">
-              <button data-v-28599ea4="" type="button" className="btn btn-prev btn-outline-primary"> 이전 </button>
+              <button data-v-28599ea4="" type="button" className="btn btn-prev btn-outline-primary" onClick={back}> 이전 </button>
             </span>
             <span data-v-28599ea4="" className="right btn-container">
               <button data-v-28599ea4="" type="button" className="btn btn-next btn-primary" onClick={getData}> 다음 </button>

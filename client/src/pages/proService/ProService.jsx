@@ -5,23 +5,25 @@ import '../../assets/css/proService.css';
 import ProService2nd from './ProService2nd';
 import ProService3rd from './ProService3rd';
 
-function ProService(){
-    //let values = []
-    const[state, setState] = useState('')
+function ProService() {
+  const [cate2nd, setCate2nd] = useState([])
+  const [isData, setIsData] = useState(false)
 
-    const cate2Idx = (props) => {
-        setState(props)
-        
+  const cate2Idx = (props) => {
+    setCate2nd(props)
+    if (cate2nd == 0) {
+      setIsData(false) 
+    } else {
+      setIsData(true)
     }
+  
+  }
 
-
-
-    return(
-        <ProService2nd cate2Idx={cate2Idx}/>
-        // <ProService3rd data={data}/>       
-        // state에 값이 있으면 ProService3rd로 이동 
-        
-
-    )
+  return (
+    <>
+      {isData ? <ProService3rd cate2Idx={cate2nd} /> : <ProService2nd cate2Idx={cate2Idx} />}
+    </>
+  )
 }
+
 export default ProService;

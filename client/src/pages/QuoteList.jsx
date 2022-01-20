@@ -52,9 +52,9 @@ function QuoteList() {
                     <div className="profile-badges">
                       <div className="review-rate">
                         <img src={FullStar} />
-                        <span class="rate">5.0</span>
-                        <span class="count">(65)</span>
-                        <span class="badge-item">91회 고용</span>
+                        <span className="rate">5.0</span>
+                        <span className="count">(65)</span>
+                        <span className="badge-item">91회 고용</span>
                       </div>
                     </div>
                     <div className="bottom-area">

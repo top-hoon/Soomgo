@@ -269,7 +269,7 @@ label {
 }
 /* 이전, 다음 */
 #id_pro_form .footer[data-v-46822a38] {
-    position: fixed;
+    /* position: fixed; */
     bottom: 0;
     width: 100%;
     z-index: 3;
@@ -285,7 +285,7 @@ div.step-navigator[data-v-28599ea4] {
     background-color: #fff;
 }
 div.step-navigator .wrapper[data-v-28599ea4] {
-    width: 37.5rem;
+    width: 43rem;
     justify-content: flex-end;
     display: inline-flex;
     flex-direction: row;

@@ -10,7 +10,6 @@ import Categories from './pages/Categories';
 import SendRequest from './pages/SendRequest';
 import SentRequest from './pages/SentRequest';
 import QuoteList from './pages/QuoteList';
-// import ChatDetail from './pages/ChatDetail';
 import Mypage from './pages/mypage/Mypage';
 import AccountInfo from './pages/mypage/AccountInfo';
 import ProSearch from './pages/ProSearch';
@@ -21,7 +20,8 @@ import MypageSettingPhone from "./pages/mypage/MypageSettingPhone";
 import Chatroom from "./pages/Chatroom";
 import ProService from './pages/proService/ProService';
 import ProAddress from './pages/proService/ProAddress';
-import Geolocation from './pages/proService/Geolocation';
+import GoogleMaps from './pages/proService/GoogleMaps';
+import ProLocation from './pages/proService/ProLocation';
 
 export default function Routes() {
   return (
@@ -37,20 +37,19 @@ export default function Routes() {
         <Route exact path="/SendRequest" component={SendRequest} />
         <Route exact path="/SentRequest" component={SentRequest} />
         
-        {/* 마이페이지 */}
         <Route exact path="/MypageSettingName" component={MypageSettingName} />
         <Route exact path="/MypageSettingEmail" component={MypageSettingEmail} />
         <Route exact path="/MypageSettingPwd" component={MypageSettingPwd} />
         <Route exact path="/MypageSettingPhone" component={MypageSettingPhone} />
 
         <Route exact path="/SentRequest/Quotes" component={QuoteList} />
-        {/* <Route exact path="/Chat" component={ChatDetail} /> */}
         <Route exact path="/Mypage" component={Mypage} />
         <Route exact path="/Mypage/Account-info" component={AccountInfo} />
         <Route exact path="/Chatroom" component={Chatroom} />
         <Route exact path="/ProService" component={ProService} />
         <Route exact path="/ProAddress" component={ProAddress} />
-        <Route exact path="/Geolocation" component={Geolocation} />
+        <Route exact path="/GoogleMaps" component={GoogleMaps} />
+        <Route exact path="/ProLocation" component={ProLocation} />
       </Switch>
     </BrowserRouter>
   );

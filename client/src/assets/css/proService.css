@@ -445,3 +445,90 @@ p[data-v-28301380] {
     border-radius: 0.25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+
+
+
+
+/* GoogleMaps.jsx */
+.addr-input[data-v-28301380] {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+.addr-input .active-area[data-v-28301380] {
+  font-size: 1rem;
+  margin: 0.625rem 0;
+  display: inline-block;
+}
+
+.addr-input .edit-addr-btn[data-v-28301380] {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.addr-input .edit-addr-btn[data-v-28301380] > a {
+  color: #00c7ae;
+}
+
+.addr-search .col-12[data-v-28301380] {
+  padding: 0;
+  flex: 0 0 100%;
+  max-width: 100%;
+  margin-left: 0;
+}
+
+.map-distance .title[data-v-28301380] {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+ul.distance-list[data-v-28301380] {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1rem -0.3125rem 0;
+  padding: 0;
+  margin-bottom: 80px;
+}
+
+ul.distance-list li[data-v-28301380] {
+    flex-basis: 25%;
+    max-width: 25%;
+    padding: 0.3125rem;
+    text-align: center;
+}
+
+ul.distance-list li .wrap.selected[data-v-28301380] {
+  color: #fff;
+  background-color: #00c7ae;
+}
+
+ul.distance-list li .wrap[data-v-28301380] {
+  display: block;
+  cursor: pointer;
+  position: relative;
+  padding: 0.75rem 0;
+  text-align: center;
+  width: 100%;
+  border-radius: 4px;
+  border: 0.0625rem solid #e1e1e1;
+  font-size: .875rem;
+  color: #323232;
+}
+
+.map-wrap {
+  position: relative;
+}
+
+.radius-point {
+  position: absolute;
+  top: 50%;
+  right: 40%;
+  transform: translateY(-30%);
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 0, 0, 0.253);
+  border-radius: 50%;
+  border: 2px solid red;
+  z-index: 1;
+}

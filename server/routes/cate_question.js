@@ -145,10 +145,10 @@ const memberQuestion = function (cate1_idx, cate2_idx, cate3_idx, callback) {
                     console.log(err);
                     conn.release();
                 } else {
-                    var question_list = [];
-                    var question = {};
-                    var temp_question_idx = null;
-                    var answer = {}
+                    let question_list = [];
+                    let question = {};
+                    let temp_question_idx = null;
+                    let answer = {}
 
                     Array.from(result1).forEach((e) => {
                         if(temp_question_idx != e.cate_question_title_idx){

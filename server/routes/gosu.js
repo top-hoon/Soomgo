@@ -109,7 +109,7 @@ router.route('/gosu/login').post((req, res) => {
                     const gosu = result[0];
                     const password = hashedPassword(mem_password, gosu.salt);
 
-                    if(password == mem_password){
+                    if(password == gosu.mem_password){
                         const token = jwt.sign({
                             type: 'JWT',
                             email: gosu.email,
@@ -126,7 +126,8 @@ router.route('/gosu/login').post((req, res) => {
                             email: gosu.email,
                             name: gosu.mem_name,
                             idx: gosu.idx,
-                            mem_idx: gosu.mem_idx
+                            mem_idx: gosu.mem_idx,
+                            isMember: false
                         }, SECRET_Key, {
                             expiresIn: '1d',
                             issuer: '관리자',

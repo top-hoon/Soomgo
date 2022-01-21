@@ -20,6 +20,7 @@ import MypageSettingEmail from "./pages/mypage/MypageSettingEmail";
 import MypageSettingPhone from "./pages/mypage/MypageSettingPhone";
 import ProService from "./pages/proService/ProService";
 import ProAddress from "./pages/proService/ProAddress";
+import ChatRoom from "./pages/ChatRoom";
 
 
 export default function Routes() {
@@ -45,10 +46,11 @@ export default function Routes() {
 
         <Route exact path="/ProService" component={ProService} />
         <Route exact path="/Quotes" component={QuoteList} />
-        <Route exact path="/Chat" component={ChatDetail} />
+        {/* <Route exact path="/ChatDetail" component={ChatDetail} /> */}
         <Route exact path="/Mypage" component={Mypage} />
         <Route exact path="/Mypage/Account-info" component={AccountInfo} />
         <Route exact path="/ProAddress" component={ProAddress} />
+        <Route exact path="/ChatRoom" component={ChatRoom} />
       </Switch>
     </BrowserRouter>
   );

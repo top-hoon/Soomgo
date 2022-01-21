@@ -102,7 +102,7 @@ export default function Geolocation(props) {
               <button data-v-28599ea4="" type="button" className="btn btn-prev btn-outline-primary"> 이전 </button>
             </span>
             <span data-v-28599ea4="" className="right btn-container">
-              <button data-v-28599ea4="" type="button" className="btn btn-next btn-primary"> 다음 </button>
+              <a href='/RequiredInfo'><button data-v-28599ea4="" type="button" className="btn btn-next btn-primary"> 다음 </button></a>
             </span>
           </div>
         </div>

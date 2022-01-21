@@ -3,14 +3,6 @@ import axios from 'axios';
 import '../../assets/css/common.css';
 import '../../assets/css/proService.css';
 
-  /* 
-    50km : zoom 7 
-    25km : zoom 8
-    10km : zoom 9
-    5km : zoom 10
-    2km : zoom 13
-  */
-
 export default function Geolocation(props) {
 
   const [location, setLocation] = useState([])
@@ -24,22 +16,17 @@ export default function Geolocation(props) {
     })
   }, [mapRef])
 
-  console.log(location.lat, location.lng)
-
   const zoom = (event) => {
     initMap(event.target.getAttribute('value'))
   }
 
-  const maps = () => {
+  useEffect(() => {
     axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${props.data}&key=${API_KEY}`)
     .then(res => setLocation(res.data.results[0].geometry.location))
     .catch(err => console.log(err))
-  }
-
-  useEffect(() => {
-    initMap(maps())
+    
+    initMap()
   },[])
-
 
   return (
     <div data-v-46822a38="" className="container">

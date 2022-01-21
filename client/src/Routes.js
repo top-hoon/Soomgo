@@ -10,7 +10,7 @@ import Categories from './pages/Categories';
 import SendRequest from './pages/SendRequest';
 import SentRequest from './pages/SentRequest';
 import QuoteList from './pages/QuoteList';
-import ChatDetail from './pages/ChatDetail';
+// import ChatDetail from './pages/ChatDetail';
 import Mypage from './pages/mypage/Mypage';
 import AccountInfo from './pages/mypage/AccountInfo';
 import ProSearch from './pages/ProSearch';
@@ -18,7 +18,10 @@ import MypageSettingName from "./pages/mypage/MypageSettingName";
 import MypageSettingPwd from "./pages/mypage/MypageSettingPwd";
 import MypageSettingEmail from "./pages/mypage/MypageSettingEmail";
 import MypageSettingPhone from "./pages/mypage/MypageSettingPhone";
-
+import Chatroom from "./pages/Chatroom";
+import ProService from './pages/proService/ProService';
+import ProAddress from './pages/proService/ProAddress';
+import Geolocation from './pages/proService/Geolocation';
 
 export default function Routes() {
   return (
@@ -41,9 +44,13 @@ export default function Routes() {
         <Route exact path="/MypageSettingPhone" component={MypageSettingPhone} />
 
         <Route exact path="/SentRequest/Quotes" component={QuoteList} />
-        <Route exact path="/Chat" component={ChatDetail} />
+        {/* <Route exact path="/Chat" component={ChatDetail} /> */}
         <Route exact path="/Mypage" component={Mypage} />
         <Route exact path="/Mypage/Account-info" component={AccountInfo} />
+        <Route exact path="/Chatroom" component={Chatroom} />
+        <Route exact path="/ProService" component={ProService} />
+        <Route exact path="/ProAddress" component={ProAddress} />
+        <Route exact path="/Geolocation" component={Geolocation} />
       </Switch>
     </BrowserRouter>
   );

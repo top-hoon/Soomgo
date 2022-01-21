@@ -64,7 +64,7 @@ function UserNav({data, getData}) {
         <div className="user-navi">  
           <a className="pro-search" href="/ProSearch">고수찾기</a>
           <a className="received" href="/SentRequest">받은견적</a>
-          <a className="chat" href="/ChatRoom">
+          <a className="chat" href="/Chatroom">
             채팅
             <span className="chat-count">17</span>
           </a>

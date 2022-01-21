@@ -3,7 +3,7 @@ import React from 'react';
 import '../assets/css/common.css';
 import '../assets/css/chatroom.css';
 
-function ChatRoom() {
+function Chatroom() {
     return(
         <div data-v-3d74d9b1="" class="chat-room" chatid="41474484">
             <div data-v-3d74d9b1="" class="row no-gutters">
@@ -752,4 +752,4 @@ function ChatRoom() {
         </div>
     )
 }
-export default ChatRoom;
+export default Chatroom;

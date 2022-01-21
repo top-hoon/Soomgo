@@ -20,6 +20,7 @@ import MypageSettingEmail from "./pages/mypage/MypageSettingEmail";
 import MypageSettingPhone from "./pages/mypage/MypageSettingPhone";
 import ProService from "./pages/proService/ProService";
 import ProAddress from "./pages/proService/ProAddress";
+import Geolocation from "./pages/proService/Geolocation";
 
 
 export default function Routes() {
@@ -49,6 +50,7 @@ export default function Routes() {
         <Route exact path="/Mypage" component={Mypage} />
         <Route exact path="/Mypage/Account-info" component={AccountInfo} />
         <Route exact path="/ProAddress" component={ProAddress} />
+        <Route exact path="/Geolocation" component={Geolocation} />
       </Switch>
     </BrowserRouter>
   );

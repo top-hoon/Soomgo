@@ -6,7 +6,6 @@ import '../../assets/css/proService.css';
 
 function ProService3rd(props) {
 
-  // props.cate2Idx = [idx, idx, idx]
   const [categories, setCategories] = useState([])
   const cate3nd = []
   const cate3box = []
@@ -72,4 +71,5 @@ function ProService3rd(props) {
     </div>
   )
 }
+
 export default ProService3rd;

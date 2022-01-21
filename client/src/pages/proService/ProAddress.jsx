@@ -28,6 +28,9 @@ const ProAddress = ({}) => {
         padding: '0px',
         overflow: 'hidden',
         minWidth: '300px'
+    };
+    const color = {
+      color: '#fff'
     }
 
     const handleComplete = (data) => {
@@ -42,7 +45,7 @@ const ProAddress = ({}) => {
             }
             fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
         }
-        //fullAddress -> 전체 주소반환
+        console.log(fullAddress)
     }
 
     return (
@@ -79,14 +82,12 @@ const ProAddress = ({}) => {
                             <button data-v-28599ea4="" type="button" class="btn btn-prev btn-outline-primary"> 이전 </button>
                         </span>
                         <span data-v-28599ea4="" class="right btn-container">
-                            <button data-v-28599ea4="" type="button" class="btn btn-next btn-primary"> 다음 </button>
+                            <button data-v-28599ea4="" type="button" class="btn btn-next btn-primary"><a href="/Geolocation" style={color}>다음</a></button>
                         </span>
                     </div>
                 </div>
             </form>
         </div>
-        
-
     );
 }
 

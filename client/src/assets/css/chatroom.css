@@ -13,7 +13,11 @@
 .row {
     display: flex;
     flex-wrap: wrap;
+    margin-right: -0.9375rem;
+    margin-left: -0.9375rem;
 }
+
+/* 왼쪽 채팅 body */
 section.chatbody-section[data-v-3d74d9b1] {
     display: flex;
     flex-direction: column;
@@ -29,6 +33,11 @@ section.chatbody-section[data-v-3d74d9b1] {
     flex-grow: 1;
     max-width: 100%;
 }
+.col {
+    position: relative;
+    width: 100%;
+}
+/* 채팅 header */
 .chat-header[data-v-2271e38a] {
     display: flex;
     justify-content: space-between;
@@ -57,7 +66,7 @@ section.chatbody-section[data-v-3d74d9b1] {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    /* padding: 0.75rem 1rem; */
+    padding: 0.75rem 1rem;
     font-size: 1rem;
     line-height: 1.375;
     border-radius: 0.5rem;
@@ -365,7 +374,7 @@ section.chatbody-section div[data-name=chat-messages][data-v-3d74d9b1] {
     padding-bottom: 0;
 }
 div.chat-messages[data-v-41f6ab7e] {
-    position: absolute;
+    /* position: absolute; */
     top: 0;
     right: 0;
     left: 0;
@@ -1026,6 +1035,10 @@ ul > .resize-sensor {
     border-top: 0.0625rem solid #f2f2f2;
     padding: 0.3125rem 0.75rem;
 }
+.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+}
 .no-gutters>[class*=col-] {
     padding-right: 0;
     padding-left: 0;
@@ -1179,6 +1192,7 @@ label {
 .d-block {
     display: block!important;
 }
+/* 오른쪽 영역 */
 section.aside-sheet-section[data-v-3d74d9b1] {
     width: 26.25rem;
     border-left: 0.0625rem solid #e1e1e1;
@@ -1187,6 +1201,18 @@ section.aside-sheet-section[data-v-3d74d9b1] {
     overflow-y: auto;
     overflow-x: hidden;
     z-index: 1;
+}
+.no-gutters>[class*=col-] {
+    padding-right: 0;
+    padding-left: 0;
+}
+.col-auto {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+}
+.col-auto {
+    position: relative;
 }
 section.aside-sheet-section>[data-v-3d74d9b1] {
     position: absolute;
@@ -1208,27 +1234,27 @@ section.aside-sheet-section>[data-v-3d74d9b1] {
     border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
 }
 .card-header {
-    padding: 0.75rem 1.25rem;
+    /* padding: 0.75rem 1.25rem; */
     margin-bottom: 0;
-    background-color: rgba(0,0,0,.03);
-    border-bottom: 0.0625rem solid rgba(0,0,0,.125);
+    /* background-color: rgba(0,0,0,.03);
+    border-bottom: 0.0625rem solid rgba(0,0,0,.125); */
 }
-.tabs-container[data-v-7d63c82e] .nav {
+.tabs-container[data-v-7d63c82e] .nav_ {
     display: flex;
     margin: 0;
     border-radius: 6px;
     border: 0.0625rem solid #e1e1e1;
 }
 
-.card-header-pills, .card-header-tabs {
+/* .card-header-pills {
     margin-right: -0.625rem;
     margin-left: -0.625rem;
-}
-.nav {
-    display: flex;
+} */
+.nav_ {
+    /* display: flex; */
     flex-wrap: wrap;
     padding-left: 0;
-    margin-bottom: 0;
+    /* margin-bottom: 0; */
     list-style: none;
 }
 .tabs-container[data-v-7d63c82e] .nav-item {
@@ -1245,10 +1271,10 @@ section.aside-sheet-section>[data-v-3d74d9b1] {
 }
 .nav-link {
     display: block;
-    padding: 0.5rem 1rem;
+    /* padding: 0.5rem 1rem; */
 }
 a {
-    color: #323232;
+    /* color: #323232; */
     text-decoration: none;
     background-color: transparent;
 }
@@ -2133,6 +2159,8 @@ hr[data-v-10059fe0] {
 .profile-external-link ul li>div.kakaostory[data-v-fe1ba8e4] {
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NSIgaGVpZ2h0PSI1NSI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48Y2lyY2xlIGN4PSIyNy41IiBjeT0iMjcuNSIgcj0iMjcuNSIgZmlsbD0iI0ZBQjkwMCIvPjxwYXRoIGZpbGw9IiNGRUZFRkUiIGQ9Ik0zMy4xMTggMTUuMjk2SDIyLjY2MmMtLjcwNSAwLTEuMjczLjU1Ny0xLjI3MyAxLjI0MnYxMC4xODZjMCAuNjg2LjU2OCAxLjI0MyAxLjI3MyAxLjI0M2g0LjgyMWMtLjAzNSAxLjIwOC0uNTUgMi41MjctMS4yOTUgMy42OTYtLjg0MiAxLjMxOC0yLjYzMSAyLjc3Ni0yLjY0NiAyLjc4OS0uMTQyLjEzMS0uMjQ1LjI4My0uMjQ3LjQ5Ni0uMDAyLjE2Ny4wODQuMjg5LjE4LjQxOWwzLjM2IDMuNzA2cy4xNjUuMTcuMzAxLjE5OGMuMTUyLjA0LjMyMy4wNC40NDQtLjA1IDUuODItNC4zOTUgNi42NjItOS45MSA2LjgwOS0xMi44OXYtOS43OTNjMC0uNjg1LS41NjktMS4yNDItMS4yNzEtMS4yNDIiLz48L2c+PC9zdmc+);
 }
+
+/* 오른쪽 */
 .tabs-container[data-v-7d63c82e] .card-body {
     padding-top: 0;
 }
@@ -2144,9 +2172,18 @@ hr[data-v-10059fe0] {
 .tab-content>.active {
     display: block;
 }
-.tab-content>.tab-pane {
-    display: none;
+.safe-payment-detail-drawer .safe-payment-detail-wrapper[data-v-7d63c82e] {
+    padding-top: 2rem;
 }
+.safe-payment-detail[data-v-6f1105c0] {
+    height: 100%;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
 .card-body {
     flex: 1 1 auto;
     min-height: 0.0625rem;

@@ -8,6 +8,7 @@ function Chatroom() {
         <div data-v-3d74d9b1="" class="chat-room" chatid="41474484">
             <div data-v-3d74d9b1="" class="row no-gutters">
                 <section data-v-3d74d9b1="" class="chatbody-section col">
+                    {/* 채팅 헤더 */}
                     <div data-v-3d74d9b1="" data-name="chat-header">
                         <div data-v-2271e38a="" data-v-3d74d9b1="">
                             <div data-v-2271e38a="" class="chat-header">
@@ -31,6 +32,7 @@ function Chatroom() {
                                             <button aria-haspopup="true" aria-expanded="false" type="button" class="btn dropdown-toggle btn-secondary" id="__BVID__356__BV_toggle_">
                                                 <img data-v-2271e38a="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGcgZmlsbD0iIzMyMzIzMiIgc3Ryb2tlPSIjMzIzMjMyIiBzdHJva2Utd2lkdGg9IjEuNSI+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yODcgLTQ0MCkgdHJhbnNsYXRlKDUwIDQyMykgdHJhbnNsYXRlKDU4IDE2KSB0cmFuc2xhdGUoMTc5IDEpIHRyYW5zbGF0ZSgxMSA0KSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8Y2lyY2xlIGN4PSIxIiBjeT0iOCIgcj0iMSIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxjaXJjbGUgY3g9IjEiIGN5PSIxNSIgcj0iMSIvPgogICAgICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4K" alt="더 보기"/>
                                             </button>
+                                            {/* 더보기 클릭시 */}
                                             <ul role="menu" tabindex="-1" class="dropdown-menu dropdown-menu-right" aria-labelledby="__BVID__356__BV_toggle_">
                                                 <li data-v-2271e38a="" role="presentation">
                                                     <a role="menuitem" href="#" target="_self" class="dropdown-item"> 고용하기 </a>
@@ -59,14 +61,17 @@ function Chatroom() {
                             </div>
                         </div>
                     </div>
+                    {/* 채팅 메세지 */}
                     <div data-v-3d74d9b1="" data-name="chat-messages">
                         <div data-v-41f6ab7e="" data-v-3d74d9b1="" class="chat-messages">
                             <ul data-v-41f6ab7e="" class="" style={{position: 'relative'}}>
+                                {/* 채팅 시작 날짜 */}
                                 <li data-v-41f6ab7e="" class="">
                                     <div data-v-16d5f847="" data-v-41f6ab7e="" data-type="date" class="date">
                                         <div data-v-16d5f847="">2021년 12월 01일 수요일</div>
                                     </div>
                                 </li>
+                                {/* 견적서 채팅 */}
                                 <li data-v-41f6ab7e="" class="is-quote-msg">
                                     <div data-v-89b0c4ce="" data-v-41f6ab7e="" data-type="normal" data-message-type="ST_QUOTE" class="row message-box justify-content-start">
                                         <div data-v-89b0c4ce="" data-name="user-profile" class="col-auto order-1 align-self-start">
@@ -107,6 +112,7 @@ function Chatroom() {
                                         </div>
                                     </div>
                                 </li>
+                                {/* 일반 고수 -> 유저에게 채팅 */}
                                 <li data-v-41f6ab7e="" class="">
                                     <div data-v-1ebc00b3="" data-v-41f6ab7e="" data-type="normal" class="row message-box justify-content-start">
                                         <div data-v-1ebc00b3="" data-name="user-profile" class="col-auto order-1 align-self-start">
@@ -129,6 +135,7 @@ function Chatroom() {
                                         </div>
                                     </div>
                                 </li>
+                                {/* 파일 전송 채팅 */}
                                 <li data-v-41f6ab7e="" class="">
                                     <div data-v-1ebc00b3="" data-v-41f6ab7e="" data-type="normal" class="row message-box justify-content-start">
                                         <div data-v-1ebc00b3="" data-name="user-profile" class="col-auto order-1 align-self-start">
@@ -150,6 +157,7 @@ function Chatroom() {
                                         </div>
                                     </div>
                                 </li>
+                                {/* 숨고알리미 거래 꿀팁 채팅 */}
                                 <li data-v-41f6ab7e="" class="">
                                     <div data-v-89b0c4ce="" data-v-41f6ab7e="" data-type="normal" data-message-type="SB_001" class="row message-box justify-content-start">
                                         <div data-v-89b0c4ce="" data-name="user-profile" class="col-auto order-1 align-self-start">
@@ -175,6 +183,7 @@ function Chatroom() {
                                         </div>
                                     </div>
                                 </li>
+                                {/* 숨고페이 거래요청 */}
                                 <li data-v-41f6ab7e="" class="">
                                     <div data-v-89b0c4ce="" data-v-41f6ab7e="" data-type="normal" data-message-type="SP_SB_001" class="row message-box justify-content-start">
                                         <div data-v-89b0c4ce="" data-name="user-profile" class="col-auto order-1 align-self-start">
@@ -203,6 +212,7 @@ function Chatroom() {
                                         </div>
                                     </div>
                                 </li>
+                                {/* 간편답변 고수 -> 유저 채팅 */}
                                 <li data-v-41f6ab7e="" data-mymessage="true" class="">
                                     <div data-v-1ebc00b3="" data-v-41f6ab7e="" data-type="normal" class="row message-box justify-content-end my-message">
                                         <div data-v-1ebc00b3="" data-name="user-profile" class="col-auto order-3 align-self-start d-none d-lg-block">
@@ -227,6 +237,7 @@ function Chatroom() {
                                         </div>
                                     </div>
                                 </li>
+                                {/* 숨고페이 거래 취소 */}
                                 <li data-v-41f6ab7e="" class="">
                                     <div data-v-89b0c4ce="" data-v-41f6ab7e="" data-type="normal" data-message-type="SP_SB_001" class="row message-box justify-content-start">
                                         <div data-v-89b0c4ce="" data-name="user-profile" class="col-auto order-1 align-self-start">
@@ -260,6 +271,7 @@ function Chatroom() {
                                         <div data-v-16d5f847="">2021년 12월 02일 목요일</div>
                                     </div>
                                 </li>
+                                {/* 숨고페이 거래요청 */}
                                 <li data-v-41f6ab7e="" class="">
                                     <div data-v-89b0c4ce="" data-v-41f6ab7e="" data-type="normal" data-message-type="SP_SB_001" class="row message-box justify-content-start">
                                         <div data-v-89b0c4ce="" data-name="user-profile" class="col-auto order-1 align-self-start">
@@ -299,12 +311,14 @@ function Chatroom() {
                             </ul>
                         </div>
                     </div>
+
+                    {/* 채팅 입력 */}
                     <div data-v-3d74d9b1="" data-name="chat-message-input">
                         <div data-v-33dd68f8="" data-v-3d74d9b1="" class="chat-message-input" myrole="CUSTOMER">
-                            <div data-v-33dd68f8="" class="row message-input-form no-gutters align-items-center">
+                            <div data-v-33dd68f8="" class='row message-input-form no-gutters align-items-center'>
                                 <div data-v-33dd68f8="" class="col-auto">
                                     <div data-v-3a689086="" data-v-33dd68f8="" class="button-container">
-                                        <ul data-v-3a689086="" class="chat-function-buttons" max-width="767.98px">
+                                        <ul data-v-3a689086="" class="chat-function-buttons">
                                             <li data-v-3a689086="" class="add-file">
                                                 <img data-v-3a689086="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KICAgICAgICA8ZyBzdHJva2U9IiMzMjMyMzIiIHN0cm9rZS13aWR0aD0iMS41Ij4KICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICA8Zz4KICAgICAgICAgICAgICAgICAgICA8Zz4KICAgICAgICAgICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNOC41IDBIMS43NUMuNzg0IDAgMCAuODA2IDAgMS44djEyLjRjMCAuOTk0Ljc4NCAxLjggMS43NSAxLjhoMTAuNWMuOTY2IDAgMS43NS0uODA2IDEuNzUtMS44VjEzTTcuNSA4TDMuNSA4TTkuNSAxMS41TDMuNSAxMS41TTYgNC41TDQuMjk1IDQuNSAzLjUgNC41eiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEzMjcgLTE5NikgdHJhbnNsYXRlKDEzMTUgMTc5KSB0cmFuc2xhdGUoMTIgMTcpIHRyYW5zbGF0ZSg0IDMpIHRyYW5zbGF0ZSgwIDEpIi8+CiAgICAgICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggZD0iTTExLjUgMi4ydjYuMDVjMCAxLjUxOSAxLjIzMSAyLjc1IDIuNzUgMi43NVMxNyA5Ljc2OSAxNyA4LjI1VjEuMzc1QzE3IC42MTUgMTYuMzg0IDAgMTUuNjI1IDBjLS43NiAwLTEuMzc1LjYxNi0xLjM3NSAxLjM3NVY4LjI1aDAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMzI3IC0xOTYpIHRyYW5zbGF0ZSgxMzE1IDE3OSkgdHJhbnNsYXRlKDEyIDE3KSB0cmFuc2xhdGUoNCAzKSBtYXRyaXgoLTEgMCAwIDEgMjguNSAwKSIvPgogICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg==" class="img-fluid"/>
                                             </li>
@@ -339,12 +353,14 @@ function Chatroom() {
                         </div>
                     </div>
                 </section>
+                
+                {/* 오른쪽 고수프로필/ 거래정보 창 */}
                 <section data-v-3d74d9b1="" class="aside-sheet-section col-auto">
                     <div data-v-390eb83d="" data-v-3d74d9b1="" class="chat-aside-container">
                         <div data-v-7d63c82e="" data-v-390eb83d="" class="provider-profile">
                             <div data-v-7d63c82e="" class="tabs tabs-container" id="__BVID__375">
                                 <div class="card-header">
-                                    <ul role="tablist" class="nav nav-pills card-header-pills" id="__BVID__375__BV_tab_controls_" max-width="767.98px" style={{position: 'relative'}}>
+                                    <ul role="tablist" class="nav_ nav-pills card-header-pills" id="__BVID__375__BV_tab_controls_" max-width="767.98px" style={{position: 'relative'}}>
                                         <li role="presentation" class="nav-item">
                                             <a role="tab" tabindex="-1" aria-selected="false" aria-setsize="2" aria-posinset="1" href="#" target="_self" class="nav-link" id="__BVID__376___BV_tab_button__" aria-controls="__BVID__376">고수 프로필</a>
                                         </li>
@@ -362,7 +378,8 @@ function Chatroom() {
                                     </ul>
                                 </div>
                                 <div class="tab-content" id="__BVID__375__BV_tab_container_">
-                                    <div data-v-7d63c82e="" role="tabpanel" aria-hidden="true" class="tab-pane card-body" style={{display: 'none'}} id="__BVID__376" aria-labelledby="__BVID__376___BV_tab_button__">
+                                    {/* 고수 프로필 */}
+                                    {/* <div data-v-7d63c82e="" role="tabpanel" aria-hidden="true" class="tab-pane card-body" style={{display: 'none'}} id="__BVID__376" aria-labelledby="__BVID__376___BV_tab_button__">
                                         <div data-v-25f8234c="" data-v-7d63c82e="" class="profile-wrapper">
                                             <div data-v-10059fe0="" data-v-25f8234c="" class="profile-body small">
                                                 <div data-v-526fe9e7="" data-v-10059fe0="" class="profile-overview small">
@@ -678,7 +695,9 @@ function Chatroom() {
                                                 </section>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
+
+                                    {/* 거래 상세정보 */}
                                     <div data-v-7d63c82e="" role="tabpanel" aria-hidden="false" class="tab-pane safe-payment-detail-drawer active card-body" id="__BVID__395" aria-labelledby="__BVID__395___BV_tab_button__">
                                         <div data-v-7d63c82e="" class="safe-payment-detail-wrapper">
                                             <div data-v-6f1105c0="" data-v-7d63c82e="" class="safe-payment-detail">
@@ -748,7 +767,7 @@ function Chatroom() {
                     </div>
                 </section>
             </div>
-            <div data-v-281abc79="" data-v-3d74d9b1=""></div>
+            {/* <div data-v-281abc79="" data-v-3d74d9b1=""></div> */}
         </div>
     )
 }

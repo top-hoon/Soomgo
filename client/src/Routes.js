@@ -22,6 +22,7 @@ import ProService from './pages/proService/ProService';
 import ProAddress from './pages/proService/ProAddress';
 import GoogleMaps from './pages/proService/GoogleMaps';
 import ProLocation from './pages/proService/ProLocation';
+import RequiredInfo from "./pages/proService/RequiredInfo";
 
 export default function Routes() {
   return (
@@ -50,6 +51,7 @@ export default function Routes() {
         <Route exact path="/ProAddress" component={ProAddress} />
         <Route exact path="/GoogleMaps" component={GoogleMaps} />
         <Route exact path="/ProLocation" component={ProLocation} />
+        <Route exact path="/RequiredInfo" component={RequiredInfo} />
       </Switch>
     </BrowserRouter>
   );

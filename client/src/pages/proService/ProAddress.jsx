@@ -64,7 +64,7 @@ const ProAddress = (props) => {
                         <div data-v-28301380="" className="daum-post-code vue-daum-postcode">
                             <div className="vue-daum-postcode-container" style={{height: '444px'}}>
                                 <div id="__daum__layer_7" style={style1}>
-                                    <DaumPostCode onComplete={handleComplete} classNameName="post-code" style={style2}/>          
+                                    <DaumPostCode onComplete={handleComplete} className="post-code" style={style2}/>          
                                 </div>
                             </div>
                         </div>

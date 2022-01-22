@@ -5,27 +5,30 @@ import '../../assets/css/proService.css';
 
 export default function Geolocation(props) {
 
-  const [location, setLocation] = useState([])
+  const [location, setLocation] = useState([]) // 좌표값 담는 state
   const mapRef = useRef(null)
-  const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+  const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY // 구글맵 API 키
 
-  const initMap = useCallback((value) => {
-    new window.google.maps.Map(mapRef.current, {
-      center: { lat: Number(location.lat), lng: Number(location.lng) },
-      zoom: Number(value),
+  const initMap = useCallback((value) => { 
+    new window.google.maps.Map(mapRef.current, { // 구글 맵 호출 
+      center: { lat: Number(location.lat), lng: Number(location.lng) }, // axios로 가져온 좌표값
+      zoom: Number(value), // zoom 함수에서 넘겨주는 반경값
     })
   }, [mapRef])
 
   const zoom = (event) => {
-    initMap(event.target.getAttribute('value'))
+    initMap(event.target.getAttribute('value')) // 반경 n키로미터 클릭 시 value값 뽑아서 initMap으로 값 보냄
   }
 
-  useEffect(() => {
-    axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${props.data}&key=${API_KEY}`)
-    .then(res => setLocation(res.data.results[0].geometry.location))
+
+  // 파라미터로 도로명주소, key 보내면 위도/경도값 변환해줌
+  // props.data : 상위 컴포에서 넘어온 도로명주소
+  useEffect(() => { 
+    axios.post(`https://maps.googleapis.com/maps/api/geocode/json?address=${props.data}&key=${API_KEY}`)
+    .then(res => setLocation(res.data.results[0].geometry.location)) // 그중에서 위치값만 추출
     .catch(err => console.log(err))
     
-    initMap()
+    initMap() // 구글맵 한번만 실행
   },[])
 
   return (
@@ -57,7 +60,7 @@ export default function Geolocation(props) {
               <div className="radius-point"></div>
               <div data-v-28301380="" className="map">
                 <div data-v-28301380="" className="google-map" style={{ width: '100%', height: '220px', position: 'relative', overflow: 'hidden' }}>
-                  {/* googole map */}
+                  {/* googole map (top, rhight으로 중앙 정렬 맞춤) */}
                   <center>
                     <div
                       className="map"

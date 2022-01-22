@@ -533,6 +533,11 @@ ul.distance-list li .wrap[data-v-28301380] {
   z-index: 1;
 }
 
+ul.distance-list li .wrap[data-v-28301380]:hover {
+  opacity: .6;
+}
+
+
 
 /* 필수 정보 */
 #id_pro_form #step4[data-v-46822a38] {

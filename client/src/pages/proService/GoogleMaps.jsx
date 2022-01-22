@@ -5,31 +5,36 @@ import '../../assets/css/proService.css';
 
 export default function Geolocation(props) {
 
-  const [location, setLocation] = useState([]) // 좌표값 담는 state
+  const [zoom, setZoom] = useState(9)
   const mapRef = useRef(null)
-  const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY // 구글맵 API 키
+  const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
-  const initMap = useCallback((value) => { 
-    new window.google.maps.Map(mapRef.current, { // 구글 맵 호출 
-      center: { lat: Number(location.lat), lng: Number(location.lng) }, // axios로 가져온 좌표값
-      zoom: Number(value), // zoom 함수에서 넘겨주는 반경값
-    })
-  }, [mapRef])
+  useEffect(() => {
+    location();
+  },[])
 
-  const zoom = (event) => {
-    initMap(event.target.getAttribute('value')) // 반경 n키로미터 클릭 시 value값 뽑아서 initMap으로 값 보냄
+  // 화면이 넘어오면 location()을 먼저 실행하는데, 구글맵을 띄우는 initMap()에 반경(초기값)과 좌표값을 매개변수로 보낸다.
+  const location = () => {
+    if (props) {
+      axios.post(`https://maps.googleapis.com/maps/api/geocode/json?address=${props.data}&key=${API_KEY}`)
+      .then(res => initMap(zoom, res.data.results[0].geometry.location))
+      .catch(err => console.log(err))
+    } else {
+      console.log('undefined')
+    }
   }
 
-
-  // 파라미터로 도로명주소, key 보내면 위도/경도값 변환해줌
-  // props.data : 상위 컴포에서 넘어온 도로명주소
-  useEffect(() => { 
-    axios.post(`https://maps.googleapis.com/maps/api/geocode/json?address=${props.data}&key=${API_KEY}`)
-    .then(res => setLocation(res.data.results[0].geometry.location)) // 그중에서 위치값만 추출
-    .catch(err => console.log(err))
-    
-    initMap() // 구글맵 한번만 실행
-  },[])
+  // 반경, 좌표를 받아 구글 맵 실행 (우선 클릭이벤트 실행하면 location이 null이라 조건문 걸어줌)
+  const initMap = useCallback((zoom, location) => {
+    if (location != undefined) {
+      new window.google.maps.Map(mapRef.current, {
+        center: { lat: Number(location.lat), lng: Number(location.lng) },
+        zoom: Number(zoom)
+      })
+    } else {
+      console.log('location is null!')
+    }
+  })
 
   return (
     <div data-v-46822a38="" className="container">
@@ -73,25 +78,25 @@ export default function Geolocation(props) {
               </div>
             </div>
             <ul data-v-28301380="" className="distance-list">
-              <li data-v-28301380="" onClick={zoom}>
+              <li data-v-28301380="" onClick={initMap}>
                 <div data-v-28301380="" className="wrap" value={12}> 2Km </div>
               </li>
-              <li data-v-28301380="" onClick={zoom}>
+              <li data-v-28301380="" onClick={initMap}>
                 <div data-v-28301380="" className="wrap" value={10}> 5Km </div>
               </li>
-              <li data-v-28301380="" onClick={zoom}>
+              <li data-v-28301380="" onClick={initMap}>
                 <div data-v-28301380="" className="wrap" value={9}> 10Km </div>
               </li>
-              <li data-v-28301380="" onClick={zoom}>
+              <li data-v-28301380="" onClick={initMap}>
                 <div data-v-28301380="" className="wrap" value={8}> 25Km </div>
               </li>
-              <li data-v-28301380="" onClick={zoom}>
+              <li data-v-28301380="" onClick={initMap}>
                 <div data-v-28301380="" className="wrap" value={7}> 50Km </div>
               </li>
-              <li data-v-28301380="" onClick={zoom}>
+              <li data-v-28301380="" onClick={initMap}>
                 <div data-v-28301380="" className="wrap" value={6}> 100Km </div>
               </li>
-              <li data-v-28301380="" onClick={zoom}>
+              <li data-v-28301380="" onClick={initMap}>
                 <div data-v-28301380="" className="wrap" value={3}> 전국 </div>
               </li>
             </ul>

@@ -6,7 +6,7 @@ import '../../assets/css/proService.css';
 
 function ProService3rd(props) {
   const [categories, setCategories] = useState([])
-  const cate3nd = []
+  const cate3rd = []
   const cate3box = []
 
   useEffect(() => {
@@ -18,11 +18,11 @@ function ProService3rd(props) {
   props.cate2Idx.forEach(cate2Idx => {
     categories.forEach(cate2 => {
       if (cate2Idx == cate2.idx) {
-        cate3nd.push(cate2.cate3_list)
+        cate3rd.push(cate2.cate3_list)
       }
     })
   })
-  cate3nd.forEach(data => data.map(item => cate3box.push(item)))
+  cate3rd.forEach(data => data.map(item => cate3box.push(item)))
 
   return (
     <div data-v-46822a38="" className="container">
@@ -61,7 +61,7 @@ function ProService3rd(props) {
               <button data-v-28599ea4="" type="button" className="btn btn-prev btn-outline-primary"> 이전 </button>
             </span>
             <span data-v-28599ea4="" className="right btn-container">
-            <button data-v-28599ea4="" type="button" className="btn btn-next btn-primary"> 다음 </button>
+            <a href="/ProLocation"><button data-v-28599ea4="" type="button" className="btn btn-next btn-primary"> 다음 </button></a>
             </span>
           </div>
         </div>

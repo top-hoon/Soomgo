@@ -6,6 +6,7 @@ import '../../assets/css/proService.css';
 
 function ProService2nd(props) {
 
+  const [cate2nd, setCate2nd] = useState([])
   let input = document.querySelectorAll('.custom-control-input');
   let categories = []
 
@@ -18,7 +19,6 @@ function ProService2nd(props) {
     props.cate2Idx(categories)
   }
 
-  const [cate2nd, setCate2nd] = useState([])
   useEffect(() => {
     axios.get(`/category2/list`)
     .then(res => setCate2nd(res.data))

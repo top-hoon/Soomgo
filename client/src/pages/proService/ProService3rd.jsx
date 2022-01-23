@@ -5,7 +5,6 @@ import '../../assets/css/common.css';
 import '../../assets/css/proService.css';
 
 function ProService3rd(props) {
-
   const [categories, setCategories] = useState([])
   const cate3nd = []
   const cate3box = []
@@ -23,7 +22,6 @@ function ProService3rd(props) {
       }
     })
   })
-
   cate3nd.forEach(data => data.map(item => cate3box.push(item)))
 
   return (
@@ -63,7 +61,7 @@ function ProService3rd(props) {
               <button data-v-28599ea4="" type="button" className="btn btn-prev btn-outline-primary"> 이전 </button>
             </span>
             <span data-v-28599ea4="" className="right btn-container">
-            <a href='/ProLocation'><button data-v-28599ea4="" type="button" className="btn btn-next btn-primary"> 다음 </button></a>
+            <button data-v-28599ea4="" type="button" className="btn btn-next btn-primary"> 다음 </button>
             </span>
           </div>
         </div>

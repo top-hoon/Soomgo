@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react'
 import ProAddress from './ProAddress'
 import GoogleMaps from './GoogleMaps'
 
-export default function ProLocation() {
+export default function ProLocation(props) {
 
   const [address, setAddress] = useState()
   
-  const location = (props) => {
+  const fullAddress = (props) => {
     setAddress(props)
   }
 
   return (
     <>
-      {address ? <GoogleMaps data={address} /> : <ProAddress location={location} /> }
+      {address ? <GoogleMaps data={address} /> : <ProAddress fullAddress={fullAddress} /> }
     </>
   )
 }

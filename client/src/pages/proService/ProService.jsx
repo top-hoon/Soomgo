@@ -16,7 +16,6 @@ function ProService() {
     } else {
       setIsData(true)
     }
-  
   }
 
   return (

@@ -45,7 +45,7 @@ const ProAddress = (props) => {
             }
             fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
         }
-        props.location(fullAddress)
+        props.fullAddress(fullAddress)
     }
 
     return (

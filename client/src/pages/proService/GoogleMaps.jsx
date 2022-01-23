@@ -5,12 +5,12 @@ import '../../assets/css/proService.css';
 
 export default function Geolocation(props) {
 
-  const [zoom, setZoom] = useState(9)
+  const [zoom, setZoom] = useState(10)
   const mapRef = useRef(null)
   const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
   useEffect(() => {
-    location();
+    location()
   },[])
 
   // 화면이 넘어오면 location()을 먼저 실행하는데, 구글맵을 띄우는 initMap()에 반경(초기값)과 좌표값을 매개변수로 보낸다.
@@ -85,7 +85,7 @@ export default function Geolocation(props) {
                 <div data-v-28301380="" className="wrap" value={10}> 5Km </div>
               </li>
               <li data-v-28301380="" onClick={initMap}>
-                <div data-v-28301380="" className="wrap" value={9}> 10Km </div>
+                <div data-v-28301380="" className="wrap selected" value={9}> 10Km </div>
               </li>
               <li data-v-28301380="" onClick={initMap}>
                 <div data-v-28301380="" className="wrap" value={8}> 25Km </div>

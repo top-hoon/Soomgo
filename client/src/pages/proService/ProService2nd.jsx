@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import axios from 'axios';
 
 import '../../assets/css/common.css';
@@ -29,7 +29,7 @@ function ProService2nd(props) {
     const back = event => {
         event.preventDefault()
         window.location.replace('/ProSignup')
-       
+      
     }
 
   return (
@@ -66,7 +66,7 @@ function ProService2nd(props) {
               <button data-v-28599ea4="" type="button" className="btn btn-prev btn-outline-primary" onClick={back}> 이전 </button>
             </span>
             <span data-v-28599ea4="" className="right btn-container">
-              <button data-v-28599ea4="" type="button" className="btn btn-next btn-primary" onClick={getData}> 다음 </button>
+              <button data-v-28599ea4="" type="button" className="btn btn-next btn-primary" onClick={getData}>다음 </button>
             </span>
           </div>
         </div>
@@ -74,4 +74,4 @@ function ProService2nd(props) {
     </div>
   )
 }
-export default ProService2nd;
+export default React.memo(ProService2nd);

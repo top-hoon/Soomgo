@@ -66,7 +66,7 @@ function ProNav({data, getData}) {
         <div className="pro-navi">
           <a className="pro-navi-1" href="#">받은요청</a>
           <a className="pro-navi-2" href="#">바로견적</a>
-          <a className="chat" href="/chat">채팅</a>
+          <a className="chat" href="/Chatroom">채팅</a>
           <a className="pro-profile" href="#">프로필</a>
           <span className="alram-btn" onClick={alram}></span>
 

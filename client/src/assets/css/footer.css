@@ -45,6 +45,7 @@
 }
 
 .footer-container div:last-child h4 {
+  font-size: .875rem;
   margin: 0;
   font-weight: 500;
   color: #323232;

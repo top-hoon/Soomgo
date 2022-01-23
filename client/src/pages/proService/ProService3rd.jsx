@@ -5,16 +5,35 @@ import '../../assets/css/common.css';
 import '../../assets/css/proService.css';
 
 function ProService3rd(props) {
-
-  const [cate3nd, setCate3nd] = useState([])
+  const [categories, setCategories] = useState([])
+  const cate3list = []
+  const cate3rd = []
+  const cate3box = []
 
   useEffect(() => {
-    axios.get(`/category3/list?cate2_idx=${props.cate2Idx}`)
-    .then(res => setCate3nd(res.data))
+    axios.get(`/categoryFullList`)
+    .then(res => setCategories(res.data.cate1_list[0].cate2_list))
     .catch(err => console.log(err))
   },[])
 
+  props.cate2Idx.forEach(cate2Idx => {
+    categories.forEach(cate2 => {
+      if (cate2Idx == cate2.idx) {
+        cate3rd.push(cate2.cate3_list)
+      }
+    })
+  })
+  cate3rd.forEach(data => data.map(item => cate3box.push(item)))
   
+  let input = document.querySelectorAll('.custom-control-input');
+  const getData = () => {
+    input.forEach((el) => {
+      if (el.checked) {
+        cate3list.push(el.value)
+      }
+    })
+    props.cate3Idx(cate3list)
+  }
 
   return (
     <div data-v-46822a38="" className="container">
@@ -33,12 +52,12 @@ function ProService3rd(props) {
         <div data-v-520e67b0="" data-v-46822a38="" id="step1" is-from-prev="true" className="body">
           <h1 data-v-520e67b0="">어떤 서비스를 제공할 수 있나요?</h1>
           <div data-v-520e67b0="" id="selectCat2Box" className="list-group list-group">
-            {cate3nd.map((item, idx) => 
+            {cate3box.map((item, idx) => 
               <div data-v-520e67b0="" className="list-group-item list-group-item" key={idx}>
                 <div data-v-520e67b0="" className="checkbox">
                   <div data-v-520e67b0="" className="service custom-control custom-checkbox" aria-required="true" aria-invalid="false">
-                    <input type="checkbox" name="cat2[]" className="custom-control-input" value={item.idx} id={idx} />
-                    <label className="custom-control-label" htmlFor={idx}>{item.cate_name}</label>
+                    <input type="checkbox" name="cat2[]" className="custom-control-input" value={item.idx} id={item.idx} />
+                    <label className="custom-control-label" htmlFor={item.idx}>{item.cate_name}</label>
                   </div>
                 </div>
               </div>
@@ -53,7 +72,8 @@ function ProService3rd(props) {
               <button data-v-28599ea4="" type="button" className="btn btn-prev btn-outline-primary"> 이전 </button>
             </span>
             <span data-v-28599ea4="" className="right btn-container">
-            <a href='/ProAddress'><button data-v-28599ea4="" type="button" className="btn btn-next btn-primary">다음  </button></a>
+            <a href="/ProLocation"></a>
+            <button data-v-28599ea4="" type="button" className="btn btn-next btn-primary" onClick={getData}> 다음 </button>
             </span>
           </div>
         </div>
@@ -61,4 +81,5 @@ function ProService3rd(props) {
     </div>
   )
 }
+
 export default ProService3rd;

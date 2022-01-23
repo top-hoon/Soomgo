@@ -36,4 +36,32 @@ function createNewGosuToken(gosu){
     return {newToken, newRefreshToken};
 }
 
+function createNewMemberToken(member){
+    const newToken = jwt.sign({
+        type : 'JWT',
+        email: member.email,
+        name: member.name,
+        idx: member.idx,
+        gosu_idx: member.gosu_idx,
+        isMember: true
+    }, SECRET_Key, {
+        expiresIn: '25m',
+        issuer: '관리자'
+    });
+    
+    const newRefreshToken = jwt.sign({
+        type: 'refreshJWT',
+        email: member.email,
+        name: member.name,
+        idx: member.idx,
+        gosu_idx: member.gosu_idx,
+        isMember: true
+    }, SECRET_Key, {
+        expiresIn: '1d',
+        issuer: '관리자',
+    })
+
+    return {newToken, newRefreshToken};
+}
+
 exports.createNewToken = createNewToken;

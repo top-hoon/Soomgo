@@ -14,8 +14,8 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.route('/request/hire').post(verifyToken, (req, res) => {
     const mem_idx = req.idx;
     const cate3_idx = req.body.cate3_idx;
-    const gosu_idx = req.body.gosu_idx; // 직접요청시에 피료할듯
-    const data = req.body.data; // 배열로 받음
+    const gosu_idx = req.body.gosu_idx; 
+    const data = req.body.data; 
 
     if (pool) {
         registRequest(mem_idx, cate3_idx, gosu_idx, (err, result) => {
@@ -75,6 +75,80 @@ const registRequestAns = function (request_idx, question_title_idx, question_ans
     })
 }
 
+// 요청서 등록  (위치)
+router.route('/request/location/hire').post(verifyToken, (req, res) => {
+    const mem_idx = req.idx;
+    const cate3_idx = req.body.cate3_idx;
+    const data = req.body.data; 
+
+    if (pool) {
+        // findGosu(mem_idx, cate3_idx, data, (err, result) => {
+        //     if (err) console.log(err);
+        //     else
+                registMyplaceRequest(mem_idx, cate3_idx, (err, result) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    if (result.insertId != undefined);
+                    console.log('요청서 등록완료');
+                    Array.from(data).forEach((e) => {
+                        const request_idx = result.insertId;
+                        question_title_idx = e.question_title_idx;
+                        question_answer_idx = e.question_answer_idx;
+                        answer_text = e.answer_text;
+                        registMyplaceRequestAns(request_idx, question_title_idx, question_answer_idx, answer_text, (err, result) => {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                console.log("요청서 답변등록 완료")
+                                res.end();
+                            }
+                        });
+                    });
+                }
+            });
+        // });
+    }
+});
+
+
+const registMyplaceRequest = function (mem_idx, cate3_idx, gosu_idx, callback) {
+    pool.getConnection((err, conn) => {
+        if (err) {
+            console.log(err)
+        } else {
+            const sql = conn.query('insert into tb_requests(mem_idx, cate3_idx,gosu_idx)values(?,?,?);', [mem_idx, cate3_idx,gosu_idx], (err, result) => {
+                conn.release();
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, result);
+                }
+            });
+        }
+    });
+}
+const registMyplaceRequestAns = function (request_idx, question_title_idx, question_answer_idx, answer_text, callback) {
+    pool.getConnection((err, conn) => {
+        if (err) {
+            console.log(err);
+        } else {
+            const sql = conn.query('insert tb_request_answer(request_idx, question_title_idx, question_answer_idx, answer_text)values(?,?,?,?);', [request_idx, question_title_idx, question_answer_idx, answer_text], (err, result) => {
+                conn.release();
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, result);
+                }
+            })
+        }
+    })
+}
+
+
+
+
+
 //  고수 개인 요청서 리스트    
 router.route("/request/list").get(verifyToken, (req, res) => {
     const gosu_idx = req.gosu_idx;
@@ -90,29 +164,6 @@ router.route("/request/list").get(verifyToken, (req, res) => {
     }
 });
 
-// const gerList = function (gosu_idx, callback) {
-//     pool.getConnection((err, conn) => {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             const sql1 = 'select r.idx, r.regdate, m.mem_name, c.cate_name, g.my_place from tb_requests as r join tb_members as m on r.mem_idx=m.idx join tb_category3 as c on r.cate3_idx = c.idx join tb_gosus as g on r.gosu_idx = g.idx  where r.gosu_idx = ?;';
-//             const sql1s = mysql.format(sql1, gosu_idx);
-
-//             const sql2 = 'select r.idx, ca.des, a.answer_text from tb_requests as r join tb_request_answer as a on r.idx = a.request_idx join tb_cate_question_answer as ca on a.question_answer_idx= ca.idx where gosu_idx =?;';
-//             const sql2s = mysql.format(sql2, gosu_idx);
-
-//             conn.query(sql1s + sql2s, (err, result) => {
-//                 conn.release();
-//                 if (err) {
-//                     callback(err, null);
-//                 }
-//                 else {
-//                     callback(null, result);
-//                 };
-//             });
-//         }
-//     });
-// }
 const gerList = function (gosu_idx, callback) {
     pool.getConnection((err, conn) => {
         if (err) {

@@ -10,12 +10,12 @@ const conn = mysql.createConnection(config);
 router.use(bodyParser.urlencoded({ extended: false }));
 
 router.route('/payment/store').post((req, res) => {
-    const service_price = req.body.service_price; //=> 보너스 금액?이지?
-    const service_date = req.body.service_date;//=> 이게 뭐였쥐...
+    const service_price = req.body.service_price; 
+    const service_date = req.body.service_date;//.
     const payment_type = req.body.payment_type; 
     const total_price = req.body.total_price;
     const gosu_idx = req.body.gosu_idx;
-    // details(내역) 에는 어떤식으로 기록할지 얘기를.. 
+
     if (pool) {
         payment(service_price, service_date,  payment_type,total_price, gosu_idx, (err, result1) => {
             if (err) {
@@ -53,7 +53,6 @@ router.route('/payment/store').post((req, res) => {
         });
     }
 })
-// 일부러 쿼리문 그냥 좀 나눠서 썼는데 다음에 줄여 놓을게...
 const payment = function (service_price, service_date,  payment_type,total_price, gosu_idx, callback) {
     pool.getConnection((err, conn) => {
         if (err) {

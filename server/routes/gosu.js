@@ -47,7 +47,7 @@ function createGosu(cate1_idx, cate2_idx, cate3_idx, my_place, distance, gender,
                     callback(err, result);
                 }
                 else{
-                    createGosuService(result.idx, cate3_idx, callback)
+                    createGosuService(result.insertId, cate3_idx, callback)
                 }
             })
         }

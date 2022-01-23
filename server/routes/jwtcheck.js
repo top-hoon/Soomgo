@@ -8,7 +8,6 @@ const app = express();
 app.use(cookieParser());
 const SECRET_Key = config['Secret-key'];
 
-
 const verifyToken = (req, res, next) => {
     const token = req.cookies.JWT;
     const refreshToken = req.cookies.refreshJWT;
@@ -69,7 +68,6 @@ exports.verifyToken = verifyToken
 
 const gosuVerifyToken = (req, res, next) => {
     const token = req.cookies.JWT;
-
     try {
         const gosu = jwt.verify(token, SECRET_Key);
         
@@ -84,7 +82,6 @@ const gosuVerifyToken = (req, res, next) => {
 
 const gosuVerifyRefreshToken = (req, res, next) => {
     const refreshToken = req.cookies.refreshJWT;
-
     try {
         const gosu = jwt.verify(refreshToken, SECRET_Key);
 

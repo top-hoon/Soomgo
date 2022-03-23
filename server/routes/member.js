@@ -12,6 +12,7 @@ const SECRET_Key = config['Secret-key'];
 const { verifyToken } = require('./jwtcheck');
 const multer = require('multer');
 const path = require('path');
+const { url } = require('inspector');
 
 
 router.use(express.json());
@@ -123,9 +124,11 @@ router.route('/member/login').post((req, res) => {
     }
 });
 
+
+
 // 로그아웃        
-router.route('/member/logout').get(verifyToken,(req, res) => {
-            res.clearCookie('JWT');
+router.route('/member/logout').get(verifyToken, (req, res) => {
+            res.cookie.clearCookie('JWT');
             console.log("로그아웃완료");
             res.end();
 });
@@ -148,8 +151,8 @@ router.route('/mypage/account-info').get(verifyToken,(req, res) => {
 });
 //---------------------------------
 // 마이페이지 /mypage/account-info/settings/name
-router.route('/mypage/account-info/settings/name').get((req, res) => {
-        const idx = req.idx;
+router.route('/mypage/account-info/settings/name').get(verifyToken,(req, res) => {
+    const idx = req.idx;
         if (pool) {
         settingsName(idx, (err, result) => {
             if (err) {
@@ -496,7 +499,7 @@ const infomation = function (idx, callback) {
         if (err) {
             console.log(err);
         } else {
-            const sql = conn.query('select mem_name, email , mem_password, hp, image from tb_members where idx=?', [idx], (err, result) => {
+            const sql = conn.query('select mem_name, email , mem_password, hp, gosu_flag, image from tb_members where idx=?', [idx], (err, result) => {
                 conn.release();
                 if (err) {
                     callback(err, null);

@@ -80,15 +80,16 @@ router.route('/request/location/hire').post(verifyToken, (req, res) => {
     const mem_idx = req.idx;
     const cate3_idx = req.body.cate3_idx;
     const data = req.body.data; 
+    const lat = req.body.lat;
+    const lon = req.body.lon;
 
     if (pool) {
-        // findGosu(mem_idx, cate3_idx, data, (err, result) => {
-        //     if (err) console.log(err);
-        //     else
-                registMyplaceRequest(mem_idx, cate3_idx, (err, result) => {
+                registMyplaceRequest(mem_idx, cate3_idx,lat,lon, (err, result) => {
                 if (err) {
                     console.log(err);
                 } else {
+                    console.log(result);
+
                     if (result.insertId != undefined);
                     console.log('요청서 등록완료');
                     Array.from(data).forEach((e) => {
@@ -110,14 +111,12 @@ router.route('/request/location/hire').post(verifyToken, (req, res) => {
         // });
     }
 });
-
-
-const registMyplaceRequest = function (mem_idx, cate3_idx, gosu_idx, callback) {
+const registMyplaceRequest = function (mem_idx, cate3_idx,lat,lon, callback){
     pool.getConnection((err, conn) => {
         if (err) {
             console.log(err)
         } else {
-            const sql = conn.query('insert into tb_requests(mem_idx, cate3_idx,gosu_idx)values(?,?,?);', [mem_idx, cate3_idx,gosu_idx], (err, result) => {
+            const sql = conn.query('SELECT idx, (6371 * acos (cos ( radians(?) )* cos( radians( latitude ) )* cos( radians( longitude ) - radians(?) )+ sin ( radians(?) )* sin( radians( latitude ) )* sin( radians( latitude ) ))) AS distance1 FROM tb_gosus;', [lat, lon,lat], (err, result) => {
                 conn.release();
                 if (err) {
                     callback(err, null);
@@ -128,6 +127,10 @@ const registMyplaceRequest = function (mem_idx, cate3_idx, gosu_idx, callback) {
         }
     });
 }
+
+
+
+
 const registMyplaceRequestAns = function (request_idx, question_title_idx, question_answer_idx, answer_text, callback) {
     pool.getConnection((err, conn) => {
         if (err) {
@@ -211,6 +214,7 @@ const gerList = function (gosu_idx, callback) {
         }
     });
 }
+
 //  고수 요청서 읽기(견적서 보내는 페이지)
 router.route("/request/received").get((req, res) => {
     const idx = req.query.idx;   // 요청서 idx

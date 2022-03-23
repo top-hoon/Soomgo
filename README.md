@@ -1,2 +1,2 @@
 # Soomgo
- - error처리, asyncm callbackHell
+ - error처리, async,await, callbackHell

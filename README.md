@@ -1,4 +1,5 @@
-# Soomgo 향후( - error처리, async,await, callbackHell)
+# Soomgo 
+
 ### 전문가 매칭 서비스 플랫폼
  - 홈/리빙, 레슨등 8가지의 카테고리에서 1,000개가 넘는 서비스를 제공하는 플랫폼
  - 기간 : 2021.12.24 ~ 2021.01.23 2021.03.24~ 
@@ -23,3 +24,6 @@
  <strong>프론트엔드 2명</strong><br>
  <strong>백엔드 2명</strong><br>
 </div>
+
+
+향후( - error처리, async,await, callbackHell, )

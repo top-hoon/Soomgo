@@ -42,9 +42,9 @@
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black">
 
 
- - 향후( - custom error처리, async,await, callbackHell, 라우터정리)
 
 #### 구조(두가지 형태로 만들어보면서 차이점 비교)
+ - 향후( - custom error처리, async,await, callbackHell, 라우터정리)
  - express+sequelize
  - nest+TypeORM
 

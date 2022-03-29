@@ -43,6 +43,8 @@
 
 
  - 향후( - custom error처리, async,await, callbackHell, 라우터정리)
+
+#### 구조(두가지 형태로 만들어보면서 차이점 비교)
  - express+sequelize
  - nest+TypeORM
 

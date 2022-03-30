@@ -9,6 +9,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(express.json());
 
 
+
 // 카테고리  질문등록
 router.route("/categoryQuestion/regist").post((req, res) => {
     const cate_level = req.body.cate_level;

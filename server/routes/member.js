@@ -476,7 +476,7 @@ const login = function (
     email, mem_password, callback) {
     pool.getConnection((err, conn) => {
         if (err) {
-            console.login(err);
+            console.log(err);
         } else {
             const sql = conn.query('select * from tb_members where email = ?;', [email], (err, result) => {
                 conn.release();

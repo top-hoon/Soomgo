@@ -24,9 +24,9 @@ module.exports = class faq extends Sequelize.Model{
             timestamps: true,
             paranoid: true,
             modelName: 'Faq',
-            tableName: 'FAQ',
+            tableName: 'faq',
             charset: 'utf8',
             collate: 'utf8_general_ci',
-        })
+        });
     }
-}
+};

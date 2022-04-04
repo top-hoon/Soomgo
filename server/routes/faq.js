@@ -21,7 +21,7 @@ router.post('/insert', async (req,res,next)=>{
 router.get('/select', async (req,res,next)=>{
     try {
         const result = await faq.findAll({
-            attributes:['title','content']
+            attributes:['title','content'],
         });
         res.json(result)
     }catch (err){

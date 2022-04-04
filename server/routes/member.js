@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser');
 const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
 const {verifyToken} = require("./jwtcheck");
-const {ne} = require("nunjucks/src/tests");
 const router = express.Router();
 router.use(cookieParser());
 
@@ -123,5 +122,117 @@ router.get('/account-info/settings/name', verifyToken, async (req,res,next)=>{
         next(err);
     }
 })
+
+//이름수정
+router.patch('/account-info/settings/editName',verifyToken, async (req,res,next)=>{
+    try {
+        const {mem_name} = req.body;
+        const result = await Member.update(
+            {
+                mem_name:mem_name,
+            },
+            {
+                where:{id:req.id},
+            });
+        res.status(200).json(result);
+    }catch (err){
+        console.log(err)
+        next(err);
+    }
+});
+
+// 마이페이지 /mypage/account-info/settings/name
+router.get('/account-info/settings/email', verifyToken, async (req,res,next)=>{
+    try {
+        const result = await Member.findOne({
+            attributes:['email'],
+            where:{id:req.id},
+            paranoid: false,
+        })
+        res.status(200).json(result);
+    }catch (err){
+        console.log(err)
+        next(err);
+    }
+})
+
+// 이메일수정
+router.patch('/account-info/settings/editEmail',verifyToken, async (req,res,next)=>{
+    try {
+        const {email} = req.body;
+        const result = await Member.update(
+            {
+                email:email,
+            },
+            {
+                where:{id:req.id},
+            });
+        res.status(200).json(result);
+    }catch (err){
+        console.log(err)
+        next(err);
+    }
+});
+
+// 비밀번호 수정
+router.patch('/mypage/account-info/settings/editPassword', verifyToken, async (req,res,next)=>{
+    try{
+        const {nowPassword, cPassword} = req.body;
+        const pass = await Member.findOne({
+            where: {id: req.id},
+            attributes:['mem_password','salt'],
+        });
+        const password = crypto.createHash("sha512").update(nowPassword + pass.salt).digest('base64');
+        if (password === pass.mem_password){
+            console.log('비밀번호 맞음')
+            const CPassword = crypto.createHash("sha512").update(cPassword + pass.salt).digest('base64');
+            const result = await Member.update(
+                {
+                    mem_password:CPassword
+                },
+                {
+                    where:{id:req.id}
+                }
+            );
+            res.status(200).json(result);
+        }else {
+            res.status(999).json('비밀번호 오류');
+        }
+    }catch (err){
+        console.log(err)
+        next(err);
+    }
+})
+
+// 이미지 나중에
+
+// 회원목록(admin)
+router.get('/list',async (req,res,next)=>{
+    try{
+        const result = await Member.findAll({
+            attributes:{exclude:['mem_password', 'salt', 'deletedAt', 'image']},
+            paranoid:false
+        });
+        res.status(200).json(result);
+    }catch (err){
+        console.log(err)
+        next(err);
+    }
+})
+
+router.get('/list/:id', async (req,res,next)=>{
+    try{
+        const result = await Member.findOne({
+            attributes:{exclude:['mem_password', 'salt', 'deletedAt', 'image']},
+            where:{id:req.params.id}
+        });
+        res.status(200).json(result);
+    }catch (err){
+        console.log(err)
+        next(err);
+    }
+})
+
+
 
 module.exports = router;

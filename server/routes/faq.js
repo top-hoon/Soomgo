@@ -9,10 +9,6 @@ router.post('/insert', async (req,res,next)=>{
         const {faq_type, subject, title, content} =req.body;
         const insert = await faq.create({
             faq_type, subject, title, content
-            // faq_type:req.body.faq_type,
-            // subject:req.body.subject,
-            // title:req.body.title,
-            // content:req.body.content,
         });
         res.status(200).json(1);
 

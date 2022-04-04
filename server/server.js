@@ -9,9 +9,12 @@ dotenv.config();
 const { sequelize } = require('./models');
 const faq = require('./routes/faq');
 const member = require('./routes/member');
+const notice = require('./routes/notice');
 
 const app = express();
+app.use(cookieParser());
 app.set('port', process.env.PORT || 8081);
+
 
 sequelize.sync({ force: false })
     .then(() => {
@@ -29,6 +32,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/faq',faq);
 app.use('/member',member);
+app.use('/notice',notice);
 
 
 app.use((req, res, next) => {
@@ -41,6 +45,7 @@ app.use((err, req, res, next) => {
     res.locals.message = err.message;
     res.locals.error = process.env.NODE_ENV !== 'production' ? err : {};
     res.status(err.status || 500);
+    console.log(err)
     res.send('error');
 });
 

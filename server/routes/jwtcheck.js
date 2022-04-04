@@ -6,7 +6,7 @@ const token = require('./token');
 const { json } = require('body-parser');
 const app = express();
 app.use(cookieParser());
-const SECRET_Key = config['Secret-key'];
+const key = process.env.SECRET_KEY;
 
 
 
@@ -14,11 +14,11 @@ const SECRET_Key = config['Secret-key'];
 const gosuVerifyToken = (req, res, next) => {
     const token = req.cookies.JWT;
     try {
-        const gosu = jwt.verify(token, SECRET_Key);
+        const gosu = jwt.verify(token, key);
         
         if(gosu.isMember) return res.json({"err" : "토큰이 유효하지 않습니다"})
         
-        req.idx = gosu.idx;
+        req.id = gosu.id;
         return next();
     } catch (error) {
         return gosuVerifyRefreshToken(req, res, next);
@@ -28,7 +28,7 @@ const gosuVerifyToken = (req, res, next) => {
 const gosuVerifyRefreshToken = (req, res, next) => {
     const refreshToken = req.cookies.refreshJWT;
     try {
-        const gosu = jwt.verify(refreshToken, SECRET_Key);
+        const gosu = jwt.verify(refreshToken, key);
 
         if(gosu.isMember) return res.json({"err" : "토큰이 유효하지 않습니다"})
 
@@ -37,7 +37,7 @@ const gosuVerifyRefreshToken = (req, res, next) => {
         res.cookie('JWT', newToken, {maxAge: 1800000,httpOnly: true})
         res.cookie('refreshJWT', newRefreshToken, {maxAge: 80000000, httpOnly: true})
 
-        req.idx = gosu.idx;
+        req.id = gosu.id;
         return next();
     } catch (error) {
         return res.json({"err" : "토큰이 유효하지 않습니다"})
@@ -53,11 +53,9 @@ const verifyToken = (req, res, next) => {
     const token = req.cookies.JWT;
 
     try {
-        const member = jwt.verify(token, SECRET_Key);
-        
-        if(!member.isMember) return res.json({"err" : "토큰이 유효하지 않습니다"})
-        
-        req.idx = member.idx;
+        const member = jwt.verify(token, key);
+        if(!member.isMember) return res.status(403).json({"err" : "토큰이 유효하지 않습니다"})
+        req.id = member.id;
         return next();
     } catch (error) {
         return RefreshToken(req, res, next);
@@ -68,7 +66,7 @@ const RefreshToken = (req, res, next) => {
     const refreshToken = req.cookies.refreshJWT;
 
     try {
-        const member = jwt.verify(refreshToken, SECRET_Key);
+        const member = jwt.verify(refreshToken, key);
 
         if(!member.isMember) return res.json({"err" : "토큰이 유효하지 않습니다"})
 
@@ -77,7 +75,7 @@ const RefreshToken = (req, res, next) => {
         res.cookie('JWT', newToken, {maxAge: 1800000,httpOnly: true})
         res.cookie('refreshJWT', newRefreshToken, {maxAge: 80000000, httpOnly: true})
 
-        req.idx = member.idx;
+        req.id = member.id;
         return next();
     } catch (error) {
         return res.json({"err" : "토큰이 유효하지 않습니다"})

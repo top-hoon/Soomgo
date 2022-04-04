@@ -27,7 +27,7 @@ module.exports = class member extends Sequelize.Model{
                 type:Sequelize.BOOLEAN,
                 allowNull:true,
             },
-            gosu_idx:{
+            gosu_id:{
                 type:Sequelize.INTEGER,
                 allowNull:true,
             },

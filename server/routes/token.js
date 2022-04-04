@@ -13,8 +13,8 @@ function createNewGosuToken(gosu){
         type : 'JWT',
         email: gosu.email,
         name: gosu.name,
-        idx: gosu.idx,
-        mem_idx: gosu.mem_idx,
+        id: gosu.id,
+        mem_id: gosu.mem_id,
         isMember: false
     }, SECRET_Key, {
         expiresIn: '25m',
@@ -25,7 +25,7 @@ function createNewGosuToken(gosu){
         type: 'refreshJWT',
         email: gosu.email,
         name: gosu.name,
-        idx: gosu.idx,
+        id: gosu.id,
         mem_idx: gosu.mem_idx,
         isMember: false
     }, SECRET_Key, {
@@ -41,7 +41,7 @@ function createNewMemberToken(member){
         type : 'JWT',
         email: member.email,
         name: member.name,
-        idx: member.idx,
+        id: member.id,
         gosu_idx: member.gosu_idx,
         isMember: true
     }, SECRET_Key, {
@@ -53,7 +53,7 @@ function createNewMemberToken(member){
         type: 'refreshJWT',
         email: member.email,
         name: member.name,
-        idx: member.idx,
+        id: member.id,
         gosu_idx: member.gosu_idx,
         isMember: true
     }, SECRET_Key, {

@@ -37,7 +37,6 @@ router.post('/login', async (req,res,next)=>{
       const {email, mem_password} = req.body;
       const exist = await Member.findOne({
           where: {email: email},
-          paranoid: false,
       });
       if (!exist) {
           console.log(exist)
@@ -114,7 +113,6 @@ router.get('/account-info/settings/name', verifyToken, async (req,res,next)=>{
         const result = await Member.findOne({
             attributes:['mem_name'],
             where:{id:req.id},
-            paranoid: false,
         })
         res.status(200).json(result);
     }catch (err){
@@ -147,7 +145,6 @@ router.get('/account-info/settings/email', verifyToken, async (req,res,next)=>{
         const result = await Member.findOne({
             attributes:['email'],
             where:{id:req.id},
-            paranoid: false,
         })
         res.status(200).json(result);
     }catch (err){
@@ -211,7 +208,6 @@ router.get('/list',async (req,res,next)=>{
     try{
         const result = await Member.findAll({
             attributes:{exclude:['mem_password', 'salt', 'deletedAt', 'image']},
-            paranoid:false
         });
         res.status(200).json(result);
     }catch (err){

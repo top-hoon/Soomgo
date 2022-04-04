@@ -1,4 +1,4 @@
-wconst Sequelize = require('sequelize');
+const Sequelize = require('sequelize');
 const Faq = require('./faq');
 const Notice = require('./notice');
 const Member = require('./member');

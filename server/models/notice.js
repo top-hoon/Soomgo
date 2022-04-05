@@ -34,6 +34,9 @@ module.exports = class notice extends Sequelize.Model{
         });
     }
     static associate(db) {
-        db.Notice.belongsTo(db.Member,{onDelete: 'cascade'});
+        db.Notice.belongsTo(db.Member,{
+            foreignKey:{name:'MemberId', allowNull: false },
+            onDelete: 'CASCADE',
+        });
     }
 };

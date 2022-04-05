@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const Notice = require('./notice');
 
 module.exports = class member extends Sequelize.Model{
     static init(sequelize){
@@ -51,9 +52,23 @@ module.exports = class member extends Sequelize.Model{
             tableName: 'member',
             charset: 'utf8',
             collate: 'utf8_general_ci',
+            hooks:{
+                afterBulkDestroy: function ( options) {
+                    console.log('Member: afterBulkDestroy');
+                },
+                afterDestroy: function (instance, options) {
+                    console.log('Member: afterDestroy')
+                },
+            },
         });
+        // member.addHook('afterDestroy','')
+
     }
     static associate(db) {
-        db.Member.hasMany(db.Notice);
+        db.Member.hasMany(db.Notice,{
+            foreignKey:{allowNull:false},
+            hooks:true,
+            onDelete: 'CASCADE',
+        });
     }
 };

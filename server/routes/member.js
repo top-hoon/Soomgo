@@ -16,15 +16,19 @@ router.post('/regist', async (req,res,next)=>{
     try {
         const Salt = crypto.randomBytes(64).toString('base64');
         const {mem_name, email, mem_password, hp, gender, sms_flag, gosu_idx, mem_site}  =req.body;
-        const exist = await Member.findOne({
-            where:{email:req.body.email},
-        });
-        if(exist){
-            return res.status(403).send("사용중인 아이디 입니다.");
-        }
+        // const exist = await Member.findOne({
+        //     where:{email:req.body.email},
+        // });
+        // if(exist){
+        //     return res.status(403).send("사용중인 아이디 입니다.");
+        // }
         const hashedPassword = crypto.createHash("sha512").update(mem_password + Salt).digest('base64');
-        await Member.create({mem_name, email, mem_password: hashedPassword, hp, gender, salt : Salt});
-        res.status(200).json("1");
+        const [results,created] = await Member.findOrCreate({
+            where: {email: email},
+            defaults: {mem_name, email, mem_password: hashedPassword, hp, gender, salt: Salt}
+        })
+        const result = results && results[0] ? results[0] : created;
+        res.status(200).json(result);
     }catch (err){
         console.log(err);
         next(err);
@@ -78,6 +82,7 @@ router.post('/login', async (req,res,next)=>{
                   Token: token,
                   RefreshToken: refreshToken,
               });
+              res.status(200).json(result);
           } else {
               console.log("비밀번호를 확인해주세요");
               res.end();
@@ -100,7 +105,7 @@ router.get('/account-info', verifyToken, async(req,res,next)=>{
         const result = await Member.findAll({
             where:{id:req.id}
         });
-        res.json(result)
+        res.status(200).json(result);
     }catch (err){
         console.log(err)
         next(err);
@@ -215,14 +220,30 @@ router.get('/list',async (req,res,next)=>{
         next(err);
     }
 })
-
+// 리스트 상세페이지
 router.get('/list/:id', async (req,res,next)=>{
     try{
         const result = await Member.findOne({
-            attributes:{exclude:['mem_password', 'salt', 'deletedAt', 'image']},
+            attributes:{exclude:['mem_password', 'salt', 'deletedAt']},
             where:{id:req.params.id}
         });
         res.status(200).json(result);
+    }catch (err){
+        console.log(err)
+        next(err);
+    }
+})
+
+// 회원탈퇴
+router.delete('/delete',  verifyToken, async (req,res, next)=>{
+    try {
+        const test = await Member.destroy({
+            where:{
+                id:req.id
+            },
+            individualHooks: true
+        });
+        res.status(200).json(test);
     }catch (err){
         console.log(err)
         next(err);

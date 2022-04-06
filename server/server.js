@@ -10,6 +10,13 @@ const { sequelize } = require('./models');
 const faq = require('./routes/faq');
 const member = require('./routes/member');
 const notice = require('./routes/notice');
+const category1 = require('./routes/category1');
+const category2 = require('./routes/category2');
+const category3 = require('./routes/category3');
+const cateQuestionTitle = require('./routes/cateQuestionTitle');
+const cateQuestionAnswer = require('./routes/cateQuestionAnswer');
+const cateQuestion = require('./routes/cateQuestion');
+
 
 const app = express();
 app.use(cookieParser());
@@ -33,6 +40,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/faq',faq);
 app.use('/member',member);
 app.use('/notice',notice);
+app.use('/category1',category1);
+app.use('/category2',category2);
+app.use('/category3',category3);
+app.use('/cateQuestionTitle',cateQuestionTitle);
+app.use('/cateQuestionAnswer',cateQuestionAnswer);
+app.use('/cateQuestion',cateQuestion);
+
+
 
 
 app.use((req, res, next) => {

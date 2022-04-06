@@ -33,14 +33,14 @@ router.get('/select', async (req,res,next)=>{
 router.patch('/update/:id',async (req,res,next)=>{
     try {
         const { title, content} =req.body;
-        await faq.update(
+        const result = await faq.update(
             {
                 title, content
             },{
             where :{id:req.params.id},
             }
         );
-        res.status(200).json(1);
+        res.status(200).json(result);
     }catch (err){
         console.log(err)
         next(err);
@@ -49,10 +49,10 @@ router.patch('/update/:id',async (req,res,next)=>{
 
 router.delete('/delete/:id',async (req,res,next)=>{
     try{
-        faq.destroy({
+        const result =await faq.destroy({
             where:{id:req.params.id}
         })
-        res.status(200).json(1);
+        res.status(200).json(result);
     }catch (err){
         console.log(err)
         next(err);

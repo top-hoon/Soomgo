@@ -2,12 +2,11 @@ const express = require('express');
 
 const Member = require('../models/member');
 const crypto = require("crypto");
-const cookieParser = require('cookie-parser');
 const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
 const {verifyToken} = require("./jwtcheck");
 const router = express.Router();
-router.use(cookieParser());
+
 
 
 

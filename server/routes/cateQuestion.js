@@ -68,14 +68,15 @@ router.get('/questionList', async (req,res,next)=>{
     try{
         const{cate1_id, cate2_id, cate3_id} = req.body;
         const result = await cateQuestion.findAll({
-            attributes:[],
+            // distinct: 'cate_question_answer_id',
+            attributes:['id'],
             include:[
                 {model: CateTitle,attributes:['id', 'title'],
                     include:[
-                        {model: CateAnswer, attributes:['id', 'des']}
+                        {model: CateAnswer, attributes:['id', 'des']},
                     ]},
             ],
-            where:{
+            where:{ // 수정해야함
                 [Op.or]:{
                     [Op.and]:[
                         {cate_level:'1'},
@@ -91,6 +92,7 @@ router.get('/questionList', async (req,res,next)=>{
                     ],
                 }
             },
+            // group:['CateAnswer.title_idx'],
             order:[['cate_level'],['cate_question_title_id'],['cate_question_answer_id']]
         });
         res.status(200).json(result);

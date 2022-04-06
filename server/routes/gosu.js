@@ -1,29 +1,25 @@
 const express = require('express');
-
+const Gosu = require('../models/gosu');
 const Member = require('../models/member');
 const crypto = require("crypto");
 const { Op } = require("sequelize");
+const { sequelize } = require("sequelize");
 const jwt = require("jsonwebtoken");
 const {verifyToken} = require("./jwtcheck");
 const router = express.Router();
 
-router.post('/regist', async (req,res,next)=>{
+
+router.post('/regist', verifyToken, async (req,res,next)=>{
     try {
-        const Salt = crypto.randomBytes(64).toString('base64');
-        const {mem_name, email, mem_password, hp, gender, sms_flag, gosu_idx, mem_site}  =req.body;
-        // const exist = await Member.findOne({
-        //     where:{email:req.body.email},
-        // });
-        // if(exist){
-        //     return res.status(403).send("사용중인 아이디 입니다.");
-        // }
-        const hashedPassword = crypto.createHash("sha512").update(mem_password + Salt).digest('base64');
-        const [results,created] = await Member.findOrCreate({
-            where: {email: email},
-            defaults: {mem_name, email, mem_password: hashedPassword, hp, gender, salt: Salt}
-        })
-        const result = results && results[0] ? results[0] : created;
-        res.status(200).json(result);
+         const result = await sequelize.transaction(async (t) => {
+             const {cate1_idx, cate2_idx, cate3_idx, gosu_name, my_place, distance, gender, hp} = req.body;
+             const [results, created] = await Gosu.findOrCreate({
+                 where: {mem_id: req.id},
+                 defaults: {my_place, distance, gender, hp, gosu_name}
+             }, {transaction: t});
+             const result = results && results[0] ? results[0] : created;
+             res.status(200).json(result);
+         });
     }catch (err){
         console.log(err);
         next(err);
@@ -34,9 +30,16 @@ router.post('/regist', async (req,res,next)=>{
 router.post('/login', async (req,res,next)=>{
   try {
       const {email, mem_password} = req.body;
-      const exist = await Member.findOne({
-          where: {email: email},
+      const exist = await Gosu.findAll({
+          attributes:['id','mem_id'],
+          include:[
+              {model:Member, attributes:['id', 'email','salt', 'mem_password', 'mem_name'],
+              // where:{email:email},
+              },
+          ],
+          where:{'"Member"."email"':email,id:'"Gosu"."mem_id"'}
       });
+      console.log(exist)
       if (!exist) {
           console.log(exist)
           return res.status(403).send("아이디가 존재하지않습니다.");
@@ -49,8 +52,7 @@ router.post('/login', async (req,res,next)=>{
                   name: exist.mem_name,
                   id: exist.id,
                   gosu_id: exist.gosu_id,
-                  isMember: true
-                  // exp = datetime.utcnow() + timedelta(hours = 9)
+                  isMember: false
               }, process.env.SECRET_KEY, {
                   expiresIn: '25m',
                   issuer: '관리자',
@@ -60,8 +62,8 @@ router.post('/login', async (req,res,next)=>{
                   email: exist.email,
                   name: exist.mem_name,
                   id: exist.id,
-                  gosu_id: exist.gosu_id,
-                  isMember: true
+                  mem_id: exist.mem_id,
+                  isMember: false
               }, process.env.SECRET_KEY, {
                   expiresIn: '1d',
                   issuer: '관리자',
@@ -73,7 +75,7 @@ router.post('/login', async (req,res,next)=>{
                   code: 200,
                   message: '토큰이 발급되었습니다.',
                   id: exist.id,
-                  gosu_id: exist.gosu_id,
+                  mem_id: exist.mem_id,
                   Token: token,
                   RefreshToken: refreshToken,
               });

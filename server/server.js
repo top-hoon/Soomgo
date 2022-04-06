@@ -9,6 +9,7 @@ dotenv.config();
 const { sequelize } = require('./models');
 const faq = require('./routes/faq');
 const member = require('./routes/member');
+const gosu = require('./routes/gosu');
 const notice = require('./routes/notice');
 const category1 = require('./routes/category1');
 const category2 = require('./routes/category2');
@@ -39,6 +40,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/faq',faq);
 app.use('/member',member);
+app.use('/gosu',gosu);
 app.use('/notice',notice);
 app.use('/category1',category1);
 app.use('/category2',category2);

@@ -70,5 +70,10 @@ module.exports = class member extends Sequelize.Model{
             hooks:true,
             onDelete: 'CASCADE',
         });
+        db.Member.hasOne(db.Gosu,{
+            foreignKey:{name:'mem_id',allowNull:false},
+            hooks:true,
+            onDelete: 'CASCADE',
+        });
     }
 };

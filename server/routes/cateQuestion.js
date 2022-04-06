@@ -2,6 +2,7 @@ const express = require('express');
 const cateQuestion = require('../models/cateQuestion');
 const CateTitle = require('../models/cateQuestionTitle');
 const CateAnswer = require('../models/cateQuestionAnswer');
+const { Op } = require("sequelize");
 
 
 const router = express.Router();
@@ -67,13 +68,29 @@ router.get('/questionList', async (req,res,next)=>{
     try{
         const{cate1_id, cate2_id, cate3_id} = req.body;
         const result = await cateQuestion.findAll({
+            attributes:[],
             include:[
                 {model: CateTitle,attributes:['id', 'title'],
                     include:[
                         {model: CateAnswer, attributes:['id', 'des']}
                     ]},
             ],
-            where:[],
+            where:{
+                [Op.or]:{
+                    [Op.and]:[
+                        {cate_level:'1'},
+                        {cate_id:cate1_id}
+                    ],
+                    [Op.and]:[
+                        {cate_level:'2'},
+                        {cate_id:cate2_id}
+                    ],
+                    [Op.and]:[
+                        {cate_level:'3'},
+                        {cate_id:cate3_id}
+                    ],
+                }
+            },
             order:[['cate_level'],['cate_question_title_id'],['cate_question_answer_id']]
         });
         res.status(200).json(result);

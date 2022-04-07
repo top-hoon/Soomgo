@@ -3,6 +3,7 @@ const Faq = require('./faq');
 const Notice = require('./notice');
 const Member = require('./member');
 const Gosu = require('./gosu');
+const GosuService = require('./gosuService');
 const Category1 = require('./category1');
 const Category2 = require('./category2');
 const Category3 = require('./category3');
@@ -24,7 +25,7 @@ db.Notice = Notice;
 
 db.Member = Member;
 db.Gosu = Gosu;
-
+db.GosuService =GosuService;
 db.Category1 = Category1;
 db.Category2 = Category2;
 db.Category3 = Category3;
@@ -37,6 +38,7 @@ Faq.init(sequelize);
 Notice.init(sequelize);
 Member.init(sequelize);
 Gosu.init(sequelize)
+GosuService.init(sequelize)
 Category1.init(sequelize);
 Category2.init(sequelize);
 Category3.init(sequelize);
@@ -47,6 +49,7 @@ CateQuestion.init(sequelize);
 Notice.associate(db);
 Member.associate(db);
 Gosu.associate(db);
+GosuService.associate(db);
 
 Category1.associate(db);
 Category2.associate(db);

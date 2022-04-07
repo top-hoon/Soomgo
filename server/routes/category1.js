@@ -7,7 +7,6 @@ const router = express.Router();
 
 router.post('/regist',async (req,res,next)=>{
     try{
-        console.log('dd'+req.body.cate_name);
         const result = await Category1.create({
             cate_name:req.body.cate_name
         })

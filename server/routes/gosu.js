@@ -1,6 +1,7 @@
 const express = require('express');
 const Gosu = require('../models/gosu');
 const Member = require('../models/member');
+const GosuService = require('../models/gosuService');
 const crypto = require("crypto");
 const { Op } = require("sequelize");
 const { sequelize } = require("sequelize");
@@ -12,7 +13,7 @@ const router = express.Router();
 router.post('/regist', verifyToken, async (req,res,next)=>{
     try {
          // const tran = await sequelize.transaction(async (t) => {
-             const {cate1_idx, cate2_idx, cate3_idx, gosu_name, my_place, distance, gender, hp} = req.body;
+             const {cate1_id, cate2_id, cate3_id, gosu_name, my_place, distance, gender, hp} = req.body;
              const [results, created] = await Gosu.findOrCreate({
                  where: {mem_id: req.id},
                  defaults: {my_place, distance, gender, hp, gosu_name},
@@ -23,9 +24,13 @@ router.post('/regist', verifyToken, async (req,res,next)=>{
                  },{    //,{transaction:t}
                      where:{id: req.id}
                  });
+             const Service = await GosuService.create({
+                 cate3_id:cate3_id, gosu_id:req.id
+             })// ,{transaction:t}
              const result = results && results[0] ? results[0] : created;
              console.log(result)
              console.log(gosu)
+             console.log(Service)
              res.status(200).json(result);
          // });
     }catch (err){
@@ -128,110 +133,53 @@ router.get('/logout', gosuVerifyToken, (req, res) => {
 //     }
 // })
 //
-// //마이페이지 수정
-// router.patch('/account-info/settings/edit',verifyToken, async (req,res,next)=>{
-//     try {
-//         const {mem_name, gender, email} = req.body;
-//         const result = await Member.update(
-//             {
-//                 mem_name, gender, email,
-//             },
-//             {
-//                 where:{id:req.id},
-//             });
-//         res.status(200).json(result);
-//     }catch (err){
-//         console.log(err)
-//         next(err);
-//     }
-// });
-//
-// // 마이페이지 /mypage/account-info/settings/name
-// router.get('/account-info/settings/email', verifyToken, async (req,res,next)=>{
-//     try {
-//         const result = await Member.findOne({
-//             attributes:['email'],
-//             where:{id:req.id},
-//         })
-//         res.status(200).json(result);
-//     }catch (err){
-//         console.log(err)
-//         next(err);
-//     }
-// })
-//
-// // 비밀번호 수정
-// router.patch('/mypage/account-info/settings/editPassword', verifyToken, async (req,res,next)=>{
-//     try{
-//         const {nowPassword, cPassword} = req.body;
-//         const pass = await Member.findOne({
-//             where: {id: req.id},
-//             attributes:['mem_password','salt'],
-//         });
-//         const password = crypto.createHash("sha512").update(nowPassword + pass.salt).digest('base64');
-//         if (password === pass.mem_password){
-//             console.log('비밀번호 맞음')
-//             const CPassword = crypto.createHash("sha512").update(cPassword + pass.salt).digest('base64');
-//             const result = await Member.update(
-//                 {
-//                     mem_password:CPassword
-//                 },
-//                 {
-//                     where:{id:req.id}
-//                 }
-//             );
-//             res.status(200).json(result);
-//         }else {
-//             res.status(999).json('비밀번호 오류');
-//         }
-//     }catch (err){
-//         console.log(err)
-//         next(err);
-//     }
-// })
-//
-// // 이미지 나중에
-//
-// // 회원목록(admin)
-// router.get('/list',async (req,res,next)=>{
-//     try{
-//         const result = await Member.findAll({
-//             attributes:{exclude:['mem_password', 'salt', 'deletedAt', 'image']},
-//         });
-//         res.status(200).json(result);
-//     }catch (err){
-//         console.log(err)
-//         next(err);
-//     }
-// })
-// // 리스트 상세페이지
-// router.get('/list/:id', async (req,res,next)=>{
-//     try{
-//         const result = await Member.findOne({
-//             attributes:{exclude:['mem_password', 'salt', 'deletedAt']},
-//             where:{id:req.params.id}
-//         });
-//         res.status(200).json(result);
-//     }catch (err){
-//         console.log(err)
-//         next(err);
-//     }
-// })
-//
-// // 회원탈퇴
-// router.delete('/delete',  verifyToken, async (req,res, next)=>{
-//     try {
-//         const test = await Member.destroy({
-//             where:{
-//                 id:req.id
-//             },
-//             individualHooks: true
-//         });
-//         res.status(200).json(test);
-//     }catch (err){
-//         console.log(err)
-//         next(err);
-//     }
-// })
+//마이페이지 수정
+router.patch('/profile/edit',gosuVerifyToken, async (req,res,next)=>{// multer buisness, certificate
+    try {
+        const {gosu_name, r_service, line_des, my_place, distance, hp_time_start, hp_time_end, payment_type, sumgopay_flag, card_flag,
+            bank_flag, cash_flag, career, staff_num, buisness, certificate, des, files, qna1,qna2,qna3,qna4,home_url,face_url,twit_url,insta_url,blog_url,kakao_url} = req.body;
+        console.log(req.body.gosu_name);
+        console.log(req.id);
+        const result = await Gosu.update(
+            {
+                gosu_name, r_service, line_des, my_place, distance, hp_time_start, hp_time_end, payment_type, sumgopay_flag, card_flag,
+                bank_flag, cash_flag, career, staff_num, buisness, certificate, des, files, qna1,qna2,qna3,qna4,home_url,face_url,twit_url,insta_url,blog_url,kakao_url
+            },
+            {
+                where:{id:req.id},
+            });
+        res.status(200).json(result);
+    }catch (err){
+        console.log(err)
+        next(err);
+    }
+});
+
+
+// 회원목록(admin)
+router.get('/list',async (req,res,next)=>{
+    try{
+        const result = await Gosu.findAll({
+            attributes:{exclude:['latitude', 'longitude', 'updatedAt', 'deletedAt']},
+        });
+        res.status(200).json(result);
+    }catch (err){
+        console.log(err)
+        next(err);
+    }
+})
+// 리스트 상세페이지
+router.get('/list/:id', async (req,res,next)=>{
+    try{
+        const result = await Gosu.findOne({
+            attributes:{exclude:['latitude', 'longitude', 'updatedAt', 'deletedAt']},
+            where:{id:req.params.id}
+        });
+        res.status(200).json(result);
+    }catch (err){
+        console.log(err)
+        next(err);
+    }
+})
 
 module.exports = router;

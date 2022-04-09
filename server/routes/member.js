@@ -1,5 +1,7 @@
 const express = require('express');
-
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
 const Member = require('../models/member');
 const crypto = require("crypto");
 const { Op } = require("sequelize");
@@ -22,6 +24,7 @@ router.post('/regist', async (req,res,next)=>{
             where: {email: email},
             defaults: {mem_name, email, mem_password: hashedPassword, hp, gender, salt: Salt}
         })
+        console.log(results)
         const result = results && results[0] ? results[0] : created;
         res.status(200).json(result);
     }catch (err){
@@ -182,7 +185,49 @@ router.patch('/mypage/account-info/settings/editPassword', verifyToken, async (r
     }
 })
 
-// 이미지 나중에
+// 이미지
+try {
+    fs.readdirSync('uploads');
+} catch (error) {
+    console.error('uploads 폴더가 없어 uploads 폴더를 생성합니다.');
+    fs.mkdirSync('uploads');
+}
+const storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, 'uploads/');
+    },
+    filename: (req, file, callback) => {
+        const ext = path.extname(file.originalname);
+        console.log(ext)
+        callback(null, req.id+"_" + Date.now()+file.originalname);
+    }
+});
+const fileFilter = (req, file, callback, next) => {
+    try {
+
+        if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {    // 파일허용범위
+            callback(null, true);
+        } else {
+            callback({msg:'이미지 파일만 업로드 가능합니다.'}, false);
+        }
+    }catch (err){
+        console.log(err);
+    }
+}
+upload = multer({ storage: storage, fileFilter: fileFilter , limits: { fileSize: 20 * 1024 * 1024 }});
+
+router.patch('/mypage/account-info/image',verifyToken,upload.single('image'), async (req,res,next)=>{
+    const image = req.file.path
+    try{
+        const result = await Member.update(
+            {image:image}, {where:{id:req.id}
+            });
+        res.status(200).json(result);
+    }catch (err){
+        console.log(err)
+        next(err);
+    }
+});
 
 // 회원목록(admin)
 router.get('/list',async (req,res,next)=>{

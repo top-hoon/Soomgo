@@ -3,10 +3,6 @@ const Sequelize = require('sequelize');
 module.exports = class gosuService extends Sequelize.Model{
     static init(sequelize){
         return super.init({
-            cate3_id:{
-                type:Sequelize.INTEGER,
-                allowNull:false,
-            },
         },{
             sequelize,
             timestamps: true,
@@ -22,6 +18,10 @@ module.exports = class gosuService extends Sequelize.Model{
         db.GosuService.belongsTo(db.Gosu,{
             foreignKey:{name:'gosu_id', allowNull:false},
             hooks:true,
+            onDelete: 'CASCADE',
+        });
+        db.GosuService.belongsTo(db.Category3,{
+            foreignKey:{name:'cate3_id', allowNull:false, unique: 'actions_unique'},
             onDelete: 'CASCADE',
         });
     }

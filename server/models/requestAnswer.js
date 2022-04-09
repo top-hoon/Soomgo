@@ -1,32 +1,32 @@
 const Sequelize = require('sequelize');
 
-module.exports = class cateQuestion extends Sequelize.Model{
+module.exports = class requestAnswer extends Sequelize.Model{
     static init(sequelize){
         return super.init({
-            cate_level:{
-                type:Sequelize.INTEGER,
-                allowNull:false,
-            },
-            cate_id:{
-                type:Sequelize.INTEGER,
-                allowNull:false,
+            answer_text:{
+                type:Sequelize.STRING(100),
+                allowNull:true,
             },
         },{
             sequelize,
             timestamps: true,
             paranoid: false,
-            modelName: 'CateQuestion',
-            tableName: 'cate_question',
+            modelName: 'RequestAnswer',
+            tableName: 'request_answer',
             charset: 'utf8',
             collate: 'utf8_general_ci',
         });
-    }
+    }c
     static associate(db) {
-        db.CateQuestion.belongsTo(db.CateTitle,{
+        db.RequestAnswer.belongsTo(db.Request,{
+            foreignKey:{name:'request_id', allowNull: false },
+            onDelete: 'CASCADE',
+        });
+        db.RequestAnswer.belongsTo(db.CateTitle,{
             foreignKey:{name:'title_id', allowNull: false },
             onDelete: 'CASCADE',
         });
-        db.CateQuestion.belongsTo(db.CateAnswer,{
+        db.RequestAnswer.belongsTo(db.Request,{
             foreignKey:{name:'answer_id', allowNull: false },
             onDelete: 'CASCADE',
         });

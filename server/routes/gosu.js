@@ -7,32 +7,26 @@ const { Op } = require("sequelize");
 const { sequelize } = require("sequelize");
 const jwt = require("jsonwebtoken");
 const {verifyToken, gosuVerifyToken} = require("./jwtcheck");
+const db = require("../models");
 const router = express.Router();
 
 
 router.post('/regist', verifyToken, async (req,res,next)=>{
     try {
-         // const tran = await sequelize.transaction(async (t) => {
+         const tran = await db.sequelize.transaction(async (t) => {
              const {cate1_id, cate2_id, cate3_id, gosu_name, my_place, distance, gender, hp} = req.body;
              const [results, created] = await Gosu.findOrCreate({
                  where: {mem_id: req.id},
                  defaults: {my_place, distance, gender, hp, gosu_name},
-             });    //,{transaction:t}
-             const gosu = await Member.update(
-                 {
-                     gosu_id:req.id
-                 },{    //,{transaction:t}
-                     where:{id: req.id}
-                 });
-             const Service = await GosuService.create({
-                 cate3_id:cate3_id, gosu_id:req.id
-             })// ,{transaction:t}
+                 transaction:t
+             });
+             const gosu = await Member.update({gosu_id:req.id},{where:{id: req.id},transaction:t});
+             const Service = await GosuService.create({cate3_id:cate3_id, gosu_id:req.id},{transaction:t});
              const result = results && results[0] ? results[0] : created;
-             console.log(result)
              console.log(gosu)
              console.log(Service)
              res.status(200).json(result);
-         // });
+         });
     }catch (err){
         console.log(err);
         next(err);
@@ -156,7 +150,7 @@ router.patch('/profile/edit',gosuVerifyToken, async (req,res,next)=>{// multer b
 });
 
 
-// 회원목록(admin)
+// 고수목록(admin)
 router.get('/list',async (req,res,next)=>{
     try{
         const result = await Gosu.findAll({

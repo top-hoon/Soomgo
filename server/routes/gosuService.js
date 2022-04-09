@@ -1,55 +1,43 @@
 const express = require('express');
-
-const faq = require('../models/faq');
 const router = express.Router();
+const GosuService = require('../models/gosuService');
+const Category3 = require('../models/category3');
+const {gosuVerifyToken} = require("./jwtcheck");
 
 
-router.post('/insert', async (req,res,next)=>{
+router.post('/insert', gosuVerifyToken,async (req,res,next)=>{
     try {
-        const {faq_type, subject, title, content} =req.body;
-        const insert = await faq.create({
-            faq_type, subject, title, content
+        const {cate3_id} =req.body;
+        const insert = await GosuService.create({
+            cate3_id, gosu_id:req.id
         });
-        res.status(200).json(1);
-
+        res.status(200).json(insert);
     }catch (err){
         console.log(err)
         next(err);
     }
 })
 
-router.get('/select', async (req,res,next)=>{
+router.get('/select', gosuVerifyToken, async (req,res,next)=>{
     try {
-        const result = await faq.findAll({
-            attributes:['title','content'],
+        const result = await GosuService.findAll({
+            attributes:['cate3_id'],
+            include:[
+                {model:Category3, attributes:['id','cate_name']},   // id는 굳이 안뽑아도 되긴함
+            ],
+            where:{gosu_id:req.id}
         });
-        res.json(result)
-    }catch (err){
-        console.log(err)
-        next(err);
-    }
-})
-
-router.patch('/update/:id',async (req,res,next)=>{
-    try {
-        const { title, content} =req.body;
-        const result = await faq.update(
-            {
-                title, content
-            },{
-            where :{id:req.params.id},
-            }
-        );
         res.status(200).json(result);
     }catch (err){
         console.log(err)
         next(err);
     }
-});
+})
 
-router.delete('/delete/:id',async (req,res,next)=>{
+
+router.delete('/delete/:id',gosuVerifyToken, async (req,res,next)=>{
     try{
-        const result =await faq.destroy({
+        const result =await GosuService.destroy({
             where:{id:req.params.id}
         })
         res.status(200).json(result);

@@ -31,11 +31,15 @@ module.exports = class cateQuestionAnswer extends Sequelize.Model{
     }
     static associate(db){
         db.CateAnswer.belongsTo(db.CateTitle,{
-            foreignKey:{name:'title_idx', allowNull: false },
+            foreignKey:{name:'title_id', allowNull: false },
             onDelete: 'CASCADE',
         });
         db.CateAnswer.hasMany(db.CateQuestion,{
-            foreignKey:{name:'cate_question_answer_id', allowNull: false },
+            foreignKey:{name:'answer_id', allowNull: false },
+            onDelete: 'CASCADE',
+        });
+        db.CateAnswer.hasMany(db.RequestAnswer,{
+            foreignKey:{name:'answer_id', allowNull: false },
             onDelete: 'CASCADE',
         });
     }

@@ -67,7 +67,7 @@ router.delete('/delete',async (req,res,next)=>{
 router.get('/questionList', async (req,res,next)=>{
     try{
         const{cate1_id, cate2_id, cate3_id} = req.body;
-        const result = await cateQuestion.findAll({
+        const result = await cateQuestion.findOne({
             // distinct: 'cate_question_answer_id',
             attributes:['id'],
             include:[

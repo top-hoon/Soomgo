@@ -34,5 +34,9 @@ module.exports = class category2 extends Sequelize.Model{
             foreignKey:{name:'cate2_id', allowNull: false },
             onDelete: 'CASCADE',
         });
+        db.Category3.hasMany(db.GosuService,{
+            foreignKey:{name:'cate3_id',allowNull: false,unique: 'actions_unique' },
+            onDelete: 'CASCADE',
+        });
     }
 }

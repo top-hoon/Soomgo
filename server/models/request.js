@@ -26,5 +26,9 @@ module.exports = class request extends Sequelize.Model{
             foreignKey:{name:'cate3_id',allowNull: false},
             onDelete: 'CASCADE',
         });
+        db.Request.hasMany(db.RequestAnswer,{
+            foreignKey:{name:'request_id',allowNull: false},
+            onDelete: 'CASCADE',
+        });
     }
 }

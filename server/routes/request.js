@@ -1,7 +1,9 @@
 const express = require('express');
 const Request = require('../models/request');
 const RequestAnswer = require('../models/requestAnswer');
-const {verifyToken} = require("./jwtcheck");
+const CateTitle = require('../models/cateQuestionTitle');
+const CateAnswer = require('../models/cateQuestionAnswer');
+const {verifyToken, gosuVerifyToken} = require("./jwtcheck");
 const db = require("../models");
 const router = express.Router();
 
@@ -13,10 +15,11 @@ router.post('/insert',verifyToken, async (req,res,next)=>{
         const { cate3_id, gosu_id, data } = req.body;
         const result = await Request.create({
             mem_id:req.id, gosu_id, cate3_id,
-        },{transaction:t});
-        const result2 = await RequestAnswer.bulkCreate({
-            data
-        },{transaction:t},{ validate: true });
+        });
+        for(let i=0;i<data.length; i++){
+            data[i].request_id = result.id
+        }
+        const result2 = await RequestAnswer.bulkCreate(data, {transaction:t},{ validate: true });
         res.status(200).json(result2);
         });
     }catch (err){
@@ -24,36 +27,47 @@ router.post('/insert',verifyToken, async (req,res,next)=>{
         next(err);
     }
 });
-
-router.get('/select', async (req,res,next)=>{
+// 고수 요청서
+router.get('/select', gosuVerifyToken, async (req,res,next)=>{
     try {
-        const result = await Category2.findOne({
-            attributes:['cate_name'],
-            where:{id:req.query.id},
+        const result = await Request.findAll({
+            attributes:['id', 'createdAt'],
+            include:[
+                {model:RequestAnswer, attributes:['id'],
+                include:[
+                    {model:CateTitle, attributes:['title']},
+                    {model:CateAnswer, attributes:['des','des_sub','text_flag']},
+                ]},
+            ],
+            where:{gosu_id:req.id}
         });
-        res.json(result)
+        res.status(200).json(result);
+    }catch (err){
+        console.log(err)
+        next(err);
+    }
+});
+// 고수 요청서 상세 -> 데이터 살짝 더뽑아와줘야함
+router.get('/select/:id', gosuVerifyToken, async (req,res,next)=>{
+    try {
+        const result = await Request.findAll({
+            attributes:['id', 'createdAt','mem_id'],
+            include:[
+                {model:RequestAnswer, attributes:['id'],
+                    include:[
+                        {model:CateTitle, attributes:['title']},
+                        {model:CateAnswer, attributes:['des','des_sub','text_flag']},
+                    ]},
+            ],
+            where:{id:req.params.id}
+        });
+        res.status(200).json(result);
     }catch (err){
         console.log(err)
         next(err);
     }
 });
 
-router.patch('/update',async (req,res,next)=>{
-    try {
-        const { id, cate1_id, cate_name} =req.body;
-        const result = await Category2.update(
-            {
-                cate_name, cate1_id
-            },{
-                where :{id:id},
-            }
-        );
-        res.status(200).json(result);
-    }catch (err){
-        console.log(err)
-        next(err);
-    }
-})
 
 router.delete('/delete',async (req,res,next)=>{
     try{

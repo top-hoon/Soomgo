@@ -182,6 +182,26 @@ module.exports = class member extends Sequelize.Model{
             hooks:true,
             onDelete: 'CASCADE',
         });
+        db.Gosu.hasMany(db.GosuService,{
+            foreignKey:{name:'gosu_id', allowNull:false},
+            hooks:true,
+            onDelete: 'CASCADE',
+        });
+        db.Gosu.hasMany(db.Payment,{
+            foreignKey:{name:'gosu_id', allowNull:false},
+            hooks:true,
+            onDelete: 'CASCADE',
+        });
+        db.Gosu.hasMany(db.CashBonus,{
+            foreignKey:{name:'gosu_id', allowNull:false},
+            hooks:true,
+            onDelete: 'CASCADE',
+        });
+        db.Gosu.hasMany(db.SoomgoCash,{
+            foreignKey:{name:'gosu_id', allowNull:false},
+            hooks:true,
+            onDelete: 'CASCADE',
+        });
         // db.Gosu.hasMany(db.GosuPersonal,{
         //     foreignKey:{name:'gosu_id', allowNull:false},
         //     hooks:true,

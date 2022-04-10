@@ -45,7 +45,6 @@ router.post('/login', async (req,res,next)=>{
               },
           ],
       });
-      console.log(exist)
       if (!exist) {
           return res.status(403).send("아이디가 존재하지않습니다.");
       } else {

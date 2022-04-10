@@ -12,6 +12,11 @@ const CateAnswer = require('./cateQuestionAnswer');
 const CateQuestion = require('./cateQuestion');
 const Request = require('./request');
 const RequestAnswer = require('./requestAnswer');
+const Estimate = require('./estimate');
+const EstimateOften = require('./estimateOften');
+const Payment = require('./payment');
+const CashBonus = require('./cashBonus');
+const SoomgoCash = require('./soomgoCash');
 
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config')[env];
@@ -31,6 +36,11 @@ db.GosuService =GosuService;
 
 db.Request =Request;
 db.RequestAnswer =RequestAnswer;
+db.Estimate =Estimate;
+db.EstimateOften =EstimateOften;
+db.Payment =Payment;
+db.CashBonus =CashBonus;
+db.SoomgoCash =SoomgoCash;
 
 
 db.Category1 = Category1;
@@ -54,18 +64,30 @@ Category3.init(sequelize);
 CateTitle.init(sequelize);
 CateAnswer.init(sequelize);
 CateQuestion.init(sequelize);
+Estimate.init(sequelize);
+EstimateOften.init(sequelize);
+Payment.init(sequelize);
+CashBonus.init(sequelize);
+SoomgoCash.init(sequelize);
 
 Notice.associate(db);
 Member.associate(db);
 Gosu.associate(db);
 GosuService.associate(db);
+
 Request.associate(db);
 RequestAnswer.associate(db);
+
+Estimate.associate(db);
+EstimateOften.associate(db);
+
+Payment.associate(db);
+CashBonus.associate(db);
+SoomgoCash.associate(db);
 
 Category1.associate(db);
 Category2.associate(db);
 Category3.associate(db);
-
 CateTitle.associate(db);
 CateAnswer.associate(db);
 CateQuestion.associate(db);

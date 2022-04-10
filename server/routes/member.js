@@ -184,7 +184,6 @@ router.patch('/mypage/account-info/settings/editPassword', verifyToken, async (r
         next(err);
     }
 })
-
 // 이미지
 try {
     fs.readdirSync('uploads');

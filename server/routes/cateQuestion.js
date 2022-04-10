@@ -3,6 +3,7 @@ const cateQuestion = require('../models/cateQuestion');
 const CateTitle = require('../models/cateQuestionTitle');
 const CateAnswer = require('../models/cateQuestionAnswer');
 const { Op } = require("sequelize");
+const RequestAnswer = require("../models/requestAnswer");
 
 
 const router = express.Router();
@@ -10,9 +11,9 @@ const router = express.Router();
 
 router.post('/regist',async (req,res,next)=>{
     try{
-        const {cate_level, cate_id , cate_question_title_id , cate_question_answer_id} = req.body;
+        const {cate_level, cate_id , title_id , answer_id} = req.body;
         const result = await cateQuestion.create({
-            cate_level, cate_id , cate_question_title_id , cate_question_answer_id
+            cate_level, cate_id , title_id , answer_id
         })
         res.status(200).json(1);
     }catch (err){
@@ -92,8 +93,18 @@ router.get('/questionList', async (req,res,next)=>{
                     ],
                 }
             },
-            // group:['CateAnswer.title_idx'],
-            order:[['cate_level'],['cate_question_title_id'],['cate_question_answer_id']]
+            // include:[ 이런식으로
+            //     {model:RequestAnswer,attributes:['id'],
+            //         include:[
+            //             {model:CateTitle, attributes:['id'],
+            //                 include:[{model:CateAnswer}
+            //                 ],
+            //                 where:{}},
+            //         ]},
+            // ],
+            // where:{id:req.id}
+            group:['CateAnswer.title_id'],
+            order:[['cate_level'],['title_id'],['answer_id']]
         });
         res.status(200).json(result);
     }catch (err){

@@ -19,6 +19,8 @@ const cateQuestionTitle = require('./routes/cateQuestionTitle');
 const cateQuestionAnswer = require('./routes/cateQuestionAnswer');
 const cateQuestion = require('./routes/cateQuestion');
 const request = require('./routes/request');
+const estimate = require('./routes/estimate');
+const payment = require('./routes/payment');
 
 
 const app = express();
@@ -52,6 +54,8 @@ app.use('/cateQuestionTitle',cateQuestionTitle);
 app.use('/cateQuestionAnswer',cateQuestionAnswer);
 app.use('/cateQuestion',cateQuestion);
 app.use('/request', request);
+app.use('/estimate', estimate);
+app.use('/payment', payment);
 
 
 

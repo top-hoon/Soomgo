@@ -16,7 +16,7 @@ module.exports = class requestAnswer extends Sequelize.Model{
             charset: 'utf8',
             collate: 'utf8_general_ci',
         });
-    }c
+    }
     static associate(db) {
         db.RequestAnswer.belongsTo(db.Request,{
             foreignKey:{name:'request_id', allowNull: false },
@@ -26,7 +26,7 @@ module.exports = class requestAnswer extends Sequelize.Model{
             foreignKey:{name:'title_id', allowNull: false },
             onDelete: 'CASCADE',
         });
-        db.RequestAnswer.belongsTo(db.Request,{
+        db.RequestAnswer.belongsTo(db.CateAnswer,{
             foreignKey:{name:'answer_id', allowNull: false },
             onDelete: 'CASCADE',
         });

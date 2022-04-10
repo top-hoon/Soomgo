@@ -7,9 +7,9 @@ const router = express.Router();
 
 router.post('/regist',async (req,res,next)=>{
     try{
-        const {title_idx , des  , des_sub  , text_flag, text_sample } = req.body;
+        const {title_id , des  , des_sub  , text_flag, text_sample } = req.body;
         const result = await cateQuestionAnswer.create({
-            title_idx , des  , des_sub  , text_flag, text_sample
+            title_id , des  , des_sub  , text_flag, text_sample
         })
         res.status(200).json(1);
     }catch (err){
@@ -62,7 +62,8 @@ router.delete('/delete',async (req,res,next)=>{
 
 router.get('/questionList',async (req,res,next)=>{
     try {
-
+        const result = await cateQuestionAnswer.findAll();
+        res.status(200).json(result);
     }catch (err){
         console.log(err)
         next(err);

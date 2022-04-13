@@ -43,24 +43,21 @@ const fileFilter = (req, file, callback, next) => {
 }
 upload = multer({ storage: storage, fileFilter: fileFilter , limits: { fileSize: 20 * 1024 * 1024 }});
 
-
-
 router.post('/insert',gosuVerifyToken, upload.single('files'),async (req,res,next)=>{
 
     try {
         const tran = await db.sequelize.transaction(async (t) => {
         const files = req.file.path
-        const {salary, price, content, mem_id, gosu_id, often, titlename, title = titlename + '과외 견적', pay} =req.body;  // often -> 0,1 (자주쓰는 견적서에 저장 하시겠습니까?)
+        const {salary, price, content, mem_id, often, titlename, title=titlename + '과외 견적', pay} =req.body;  // often -> 0,1 (자주쓰는 견적서에 저장 하시겠습니까?)
         const sm_type = 'U'; const details = pay + '원을 견적서 보내기에 사용하였습니다.';
         const insert = await Estimate.create({salary, price, content,files, mem_id, gosu_id:req.id}, {transaction:t}); // 견적서
         if(often ===0 || often === '0'){console.log("저장안함");}
         else {
-            const insert2 = await EstimateOften.create({salary, price, content,files, gosu_id:req.id}, {transaction:t}) // 자주쓰는 견적서에 저장
+            const insert2 = await EstimateOften.create({title, salary, price, content,files, gosu_id:req.id}, {transaction:t}) // 자주쓰는 견적서에 저장
         }
         const bonus = await Gosu.findOne({attributes:['cash_bonus','cash'],where:{id:req.id}}) // 보너스 캐쉬
 
         if(bonus.cash_bonus>=pay){    // 보너스캐쉬가 가격보다 높은지
-            console.log(bonus.cash_bonus)
             const bonus2 = await CashBonus.create({cash:pay,details,gosu_id:req.id},{transaction:t})
             const gosuB = await Gosu.decrement({cash_bonus:pay},{where:{id:req.id},transaction:t})
         }else {
@@ -74,7 +71,7 @@ router.post('/insert',gosuVerifyToken, upload.single('files'),async (req,res,nex
         next(err);
     }
 })
-
+// 자주쓰는 견적 따로 넣는것도 만들어야함 결제 시 말고, title 다시
 
 module.exports = router;
 

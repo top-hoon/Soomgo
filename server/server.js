@@ -3,7 +3,8 @@ const dotenv = require('dotenv');
 const path = require('path');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
+const cors = require('cors');
+
 
 dotenv.config();
 const { sequelize } = require('./models');
@@ -24,9 +25,9 @@ const payment = require('./routes/payment');
 
 
 const app = express();
+app.use(cors());
 app.use(cookieParser());
 app.set('port', process.env.PORT || 8081);
-
 
 sequelize.sync({ force: false })
     .then(() => {
@@ -35,6 +36,7 @@ sequelize.sync({ force: false })
     .catch((err) => {
         console.error(err);
     });
+
 
 app.use(morgan('dev'));
 // app.use(express.static(path.join(__dirname, 'public')));
@@ -77,3 +79,25 @@ app.use((err, req, res, next) => {
 const server = app.listen(app.get('port'), () => {
     console.log(app.get('port'), '번 포트에서 대기중');
 });
+
+
+
+
+
+
+// 채팅
+const io = require("socket.io")(server);
+module.exports={ io };
+
+app.get('/', (req,res)=>{
+    res.send('test');
+});
+
+const {webSocket} = require("./chat/websocket") // 경로
+
+// webSocket();
+
+module.exports = app;
+//https://www.youtube.com/watch?v=Ity1llEFsyA 참고
+// https://www.inflearn.com/course/node-js-%EA%B5%90%EA%B3%BC%EC%84%9C/lecture/14495?tab=curriculum&volume=1.00  -> 제로초 강의
+// https://www.npmjs.com/package/socket.io-sequelize  -> npm 홈페이지

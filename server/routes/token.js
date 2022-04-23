@@ -65,3 +65,4 @@ function createNewMemberToken(member){
 }
 
 exports.createNewToken = createNewToken;
+exports.createNewToken = createNewToken;
